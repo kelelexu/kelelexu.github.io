@@ -1,4 +1,4 @@
 # kelelexu.github.io
 My homepage
 
-# Some updates from Kele Xu
+Some updates from Kele Xu
