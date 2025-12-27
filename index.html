@@ -73,6 +73,7 @@
         h4 {
             font-size: 1.25rem;
             color: var(--dark);
+            margin-top: 1.5rem;
         }
 
         p {
@@ -90,7 +91,6 @@
         }
 
         ul, ol {
-            padding-left: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
@@ -324,6 +324,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .year-badge {
@@ -336,6 +338,26 @@
         }
 
         /* News Section */
+        .news-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .news-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .news-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .news-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
         .news-item {
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
@@ -422,6 +444,64 @@
             border-radius: 4px;
             font-size: 0.875rem;
             margin-right: 0.5rem;
+        }
+
+        /* Search and Filter */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            background-color: var(--gray-light);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         /* ===== Footer ===== */
@@ -570,6 +650,11 @@
                 align-items: center;
                 gap: 0.75rem;
             }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         @media (max-width: 576px) {
@@ -648,6 +733,52 @@
         .badge-accent {
             background-color: rgba(0, 168, 204, 0.1);
             color: var(--accent);
+        }
+        
+        .show-more-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: rgba(0, 86, 179, 0.1);
+            border: none;
+            border-radius: var(--border-radius);
+            color: var(--primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+        }
+        
+        .show-more-btn:hover {
+            background-color: rgba(0, 86, 179, 0.2);
+        }
+        
+        .collapsible {
+            max-height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .collapsible.expanded {
+            max-height: none;
+        }
+        
+        .collapsible::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.9) 70%, white);
+            pointer-events: none;
+            opacity: 1;
+            transition: var(--transition);
+        }
+        
+        .collapsible.expanded::after {
+            opacity: 0;
         }
     </style>
 </head>
@@ -762,17 +893,34 @@
             <section id="news">
                 <div class="section-header">
                     <h2>Recent News</h2>
-                    <div class="year-badge">2025</div>
+                    <div class="year-badge">2019-2025</div>
                 </div>
                 
-                <!-- News items will be populated here by JavaScript -->
-                <div id="news-container">
-                    <!-- News will be dynamically loaded -->
+                <!-- News Search -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="news-search" placeholder="Search news by keyword...">
                 </div>
                 
-                <div class="text-center mt-3">
-                    <a href="#news" id="load-more-news" class="badge badge-primary">Load More News <i class="fas fa-chevron-down"></i></a>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-year="all">All Years</button>
+                    <button class="filter-btn" data-year="2025">2025</button>
+                    <button class="filter-btn" data-year="2024">2024</button>
+                    <button class="filter-btn" data-year="2023">2023</button>
+                    <button class="filter-btn" data-year="2022">2022</button>
+                    <button class="filter-btn" data-year="2021">2021</button>
+                    <button class="filter-btn" data-year="2020">2020</button>
+                    <button class="filter-btn" data-year="2019">2019</button>
                 </div>
+                
+                <!-- News Container -->
+                <div class="news-container collapsible" id="news-container">
+                    <!-- All news items will be dynamically loaded here -->
+                </div>
+                
+                <button class="show-more-btn" id="toggle-news-btn">
+                    <i class="fas fa-chevron-down"></i> Show All News
+                </button>
             </section>
 
             <!-- Academic Services Section -->
@@ -781,60 +929,91 @@
                     <h2>Academic Services</h2>
                 </div>
                 
-                <div class="service-item">
-                    <h4><i class="fas fa-user-friends"></i> Memberships</h4>
-                    <div class="badges-container mt-1">
-                        <span class="badge badge-primary">Acoustical Society of America (ASA)</span>
-                        <span class="badge badge-primary">IEEE Senior Member</span>
-                        <span class="badge badge-primary">Association for Computing Machinery (ACM)</span>
-                        <span class="badge badge-primary">IEEE Image Analysis and Data Fusion (IADF) TC</span>
-                        <span class="badge badge-primary">China Computer Federation (CCF)</span>
-                        <span class="badge badge-primary">Chinese Association of Automation (CAA)</span>
-                        <span class="badge badge-primary">Acoustical Society of China (ASC)</span>
-                    </div>
+                <div class="collapsible" id="services-container">
+                    <!-- Memberships -->
+                    <h3>Memberships</h3>
+                    <ul>
+                        <li>Acoustical Society of America (ASA), Full Member</li>
+                        <li>IEEE Senior Member</li>
+                        <li>Association for Computing Machinery (ACM) Member</li>
+                        <li>IEEE Image Analysis and Data Fusion (IADF) Technical Committee Member</li>
+                        <li>China Computer Federation (CCF), Senior Member</li>
+                        <li>Chinese Association of Automation (CAA), Lifelong Member</li>
+                        <li>Acoustical Society of China (ASC), Member</li>
+                    </ul>
+                    
+                    <!-- Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer -->
+                    <h3>Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer</h3>
+                    <ul>
+                        <li>International Conference on Learning Representations (ICLR)</li>
+                        <li>Neural Information Processing Systems (NeurIPS)</li>
+                        <li>International Conference on Machine Learning (ICML)</li>
+                        <li>International Joint Conferences on Artificial Intelligence (IJCAI)</li>
+                        <li>AAAI Conference on Artificial Intelligence (AAAI)</li>
+                        <li>International Conference on Computer Vision (ICCV)</li>
+                        <li>IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</li>
+                        <li>ACM International Conference on Multimedia (ACM MM)</li>
+                        <li>ACM International Conference on Multimedia in Asia (MM Asia)</li>
+                        <li>International Conference on Acoustics, Speech & Signal Processing (ICASSP)</li>
+                        <li>Medical Image Computing and Computer Assisted Intervention (MICCAI)</li>
+                        <li>IEEE Conference on Multimedia Expo (ICME)</li>
+                        <li>European Conference on Computer Vision (ECCV)</li>
+                        <li>International Conference of the Speech Communication Association (INTERSPEECH)</li>
+                        <li>IEEE International Symposium on Biomedical Imaging (ISBI)</li>
+                        <li>IEEE International Conference on Mobility, Sensing and Networking (MSN)</li>
+                        <li>Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)</li>
+                        <li>IEEE International Conference on Bioinformatics and Biomedicine (BIBM)</li>
+                        <li>International Conference on Artificial Intelligence and Statistics (AISTATS)</li>
+                        <li>...</li>
+                    </ul>
+                    
+                    <!-- Journal Reviewer -->
+                    <h3>Journal Reviewer</h3>
+                    <ul>
+                        <li>Nature Communication</li>
+                        <li>Science Partner Journal Cyborg and Bionic Systems <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">[Guest Editor]</a></li>
+                        <li>The Journal of the Acoustical Society of America</li>
+                        <li>Acta Acustica united with Acustica</li>
+                        <li>Speech Communication</li>
+                        <li>Computer Speech & Language</li>
+                        <li>IEEE Transactions on Circuits and Systems for Video Technology <a href="https://ieee-cas.org/contact/kele-xu" target="_blank">[Editorial Board/Associate Editor]</a></li>
+                        <li>IEEE Transactions on Audio, Speech and Language Processing</li>
+                        <li>IEEE Transactions on Neural Networks and Learning Systems</li>
+                        <li>IEEE Transactions on Cognitive and Developmental Systems</li>
+                        <li>IEEE Transactions on Signal Processing</li>
+                        <li>IEEE Transactions on Image Processing</li>
+                        <li>IEEE Transactions on Artificial Intelligence</li>
+                        <li>IEEE Transactions on Geoscience and Remote Sensing</li>
+                        <li>IEEE Geoscience and Remote Sensing Letters</li>
+                        <li>IEEE Signal Processing Letters</li>
+                        <li>IEEE Transactions on Systems, Man and Cybernetics: Systems</li>
+                        <li>IEEE Journal of Biomedical and Health Informatics</li>
+                        <li>IEEE Internet of Things Journal</li>
+                        <li>IEEE Transactions on Services Computing</li>
+                        <li>ACM Transactions on Intelligent Systems and Technology</li>
+                        <li>SCIENCE CHINA Information Sciences</li>
+                        <li>Frontiers in Artificial intelligence <a href="https://www.frontiersin.org/journals/big-data/sections/machine-learning-and-artificial-intelligence/editors" target="_blank">[Associate Editor]</a></li>
+                        <li>Neural Networks</li>
+                        <li>Biocybernetics and Biomedical Engineering</li>
+                        <li>Engineering Applications of Artificial Intelligence</li>
+                        <li>Biomedical Signal Processing & Control</li>
+                        <li>BMC Medical Imaging</li>
+                        <li>Intelligent Medicine</li>
+                        <li>Computer Methods and Programs in Biomedicine</li>
+                        <li>Computers in Biology and Medicine</li>
+                        <li>Expert Systems With Applications</li>
+                        <li>Knowledge-Based Systems</li>
+                        <li>Frontiers in Neuroscience</li>
+                        <li>Frontiers in Big Data <a href="https://www.frontiersin.org/journals/artificial-intelligence" target="_blank">[Associate Editor]</a></li>
+                        <li>Neurocomputing</li>
+                        <li>Sensors <a href="https://www.mdpi.com/journal/sensors/special_issues/4PJ45YQ956" target="_blank">[Guest Editor]</a></li>
+                        <li>...</li>
+                    </ul>
                 </div>
                 
-                <div class="service-item">
-                    <h4><i class="fas fa-conference"></i> Conference Services</h4>
-                    <p>Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer for:</p>
-                    <div class="badges-container mt-1">
-                        <span class="badge badge-secondary">ICLR</span>
-                        <span class="badge badge-secondary">NeurIPS</span>
-                        <span class="badge badge-secondary">ICML</span>
-                        <span class="badge badge-secondary">IJCAI</span>
-                        <span class="badge badge-secondary">AAAI</span>
-                        <span class="badge badge-secondary">ICCV</span>
-                        <span class="badge badge-secondary">CVPR</span>
-                        <span class="badge badge-secondary">ACM MM</span>
-                        <span class="badge badge-secondary">ICASSP</span>
-                        <span class="badge badge-secondary">MICCAI</span>
-                        <span class="badge badge-secondary">ICME</span>
-                        <span class="badge badge-secondary">ECCV</span>
-                        <span class="badge badge-secondary">INTERSPEECH</span>
-                        <span class="badge badge-secondary">ISBI</span>
-                        <span class="badge badge-secondary">MSN</span>
-                        <span class="badge badge-secondary">APSIPA ASC</span>
-                        <span class="badge badge-secondary">BIBM</span>
-                        <span class="badge badge-secondary">AISTATS</span>
-                    </div>
-                </div>
-                
-                <div class="service-item">
-                    <h4><i class="fas fa-edit"></i> Journal Reviewer</h4>
-                    <p>Reviewer for prestigious journals including:</p>
-                    <div class="badges-container mt-1">
-                        <span class="badge badge-accent">Nature Communication</span>
-                        <span class="badge badge-accent">IEEE TCSVT <i>(Associate Editor)</i></span>
-                        <span class="badge badge-accent">IEEE TASLP</span>
-                        <span class="badge badge-accent">IEEE TNNLS</span>
-                        <span class="badge badge-accent">IEEE TIP</span>
-                        <span class="badge badge-accent">IEEE TAI</span>
-                        <span class="badge badge-accent">Neural Networks</span>
-                        <span class="badge badge-accent">Knowledge-Based Systems</span>
-                        <span class="badge badge-accent">Speech Communication</span>
-                        <span class="badge badge-accent">Frontiers in AI <i>(Associate Editor)</i></span>
-                    </div>
-                </div>
+                <button class="show-more-btn" id="toggle-services-btn">
+                    <i class="fas fa-chevron-down"></i> Show All Services
+                </button>
             </section>
 
             <!-- Competitions and Awards Section -->
@@ -843,39 +1022,19 @@
                     <h2>Awards & Competitions</h2>
                 </div>
                 
-                <div class="award-item">
-                    <span class="award-rank">1st Place</span>
-                    <strong>ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English</strong>
-                    <div class="text-right">2025</div>
+                <!-- Awards Search -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="awards-search" placeholder="Search awards by keyword...">
                 </div>
                 
-                <div class="award-item">
-                    <span class="award-rank">1st Place</span>
-                    <strong>MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge</strong>
-                    <div class="text-right">2024</div>
+                <div class="collapsible" id="awards-container">
+                    <!-- Awards will be dynamically loaded here -->
                 </div>
                 
-                <div class="award-item">
-                    <span class="award-rank">1st Place</span>
-                    <strong>IEEE ICME Grand Challenge on Detecting CheapFakes</strong>
-                    <div class="text-right">2023</div>
-                </div>
-                
-                <div class="award-item">
-                    <span class="award-rank">1st Place</span>
-                    <strong>ACM Multimedia Pre-training video understanding challenge Track 2</strong>
-                    <div class="text-right">2022</div>
-                </div>
-                
-                <div class="award-item">
-                    <span class="award-rank">1st Place</span>
-                    <strong>IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task</strong>
-                    <div class="text-right">2022</div>
-                </div>
-                
-                <div class="text-center mt-3">
-                    <a href="#competitions" id="load-more-awards" class="badge badge-primary">Load More Awards <i class="fas fa-chevron-down"></i></a>
-                </div>
+                <button class="show-more-btn" id="toggle-awards-btn">
+                    <i class="fas fa-chevron-down"></i> Show All Awards
+                </button>
             </section>
 
             <!-- Publications Section -->
@@ -887,19 +1046,32 @@
                 <p>A full list of publications is available on my <a href="https://scholar.google.com/citations?user=sou7o2EAAAAJ&hl=en" target="_blank">Google Scholar Profile</a>.</p>
                 <p><em>* denotes corresponding author</em></p>
                 
-                <div id="publications-container">
-                    <!-- Publications will be dynamically loaded -->
+                <!-- Publications Search -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="publications-search" placeholder="Search publications by title, author or venue...">
                 </div>
                 
-                <div class="text-center mt-3">
-                    <div class="year-filter">
-                        <span class="badge badge-primary filter-btn active" data-year="all">All</span>
-                        <span class="badge badge-secondary filter-btn" data-year="2025">2025</span>
-                        <span class="badge badge-secondary filter-btn" data-year="2024">2024</span>
-                        <span class="badge badge-secondary filter-btn" data-year="2023">2023</span>
-                        <span class="badge badge-secondary filter-btn" data-year="2022">2022</span>
-                    </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-year="all">All Years</button>
+                    <button class="filter-btn" data-year="2025">2025</button>
+                    <button class="filter-btn" data-year="2024">2024</button>
+                    <button class="filter-btn" data-year="2023">2023</button>
+                    <button class="filter-btn" data-year="2022">2022</button>
+                    <button class="filter-btn" data-year="2021">2021</button>
+                    <button class="filter-btn" data-year="2020">2020</button>
+                    <button class="filter-btn" data-year="2019">2019</button>
+                    <button class="filter-btn" data-year="before">Before 2019</button>
                 </div>
+                
+                <!-- Publications Container -->
+                <div id="publications-container">
+                    <!-- Publications will be dynamically loaded here -->
+                </div>
+                
+                <button class="show-more-btn" id="toggle-publications-btn">
+                    <i class="fas fa-chevron-down"></i> Show All Publications
+                </button>
             </section>
 
             <!-- Others Section -->
@@ -908,43 +1080,24 @@
                     <h2>Others</h2>
                 </div>
                 
-                <div class="quick-info">
-                    <div class="info-item">
-                        <i class="fas fa-edit"></i>
-                        <div>
-                            <strong>Guest Editor</strong>
-                            <div>SPJ-Cyborg and Bionic Systems</div>
-                            <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">Link</a>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <i class="fas fa-code"></i>
-                        <div>
-                            <strong>Open Source Libraries</strong>
-                            <div>AudioCIL & AutoX Automated Machine Learning</div>
-                            <div>
-                                <a href="https://github.com/colaudiolab/AudioCIL" target="_blank">AudioCIL</a> | 
-                                <a href="https://autox.readthedocs.io/en/latest/" target="_blank">AutoX</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <i class="fas fa-trophy"></i>
-                        <div>
-                            <strong>Winner Talks & Interviews</strong>
-                            <div>Kaggle, IEEE DCASE, TissueNet, CCF BDCI</div>
-                            <a href="https://medium.com/kaggle-blog/avito-duplicate-ads-detection-winners-interview-3rd-place-team-adad-mario-gerard-kele-e97aa5ca21ed" target="_blank">View Interviews</a>
-                        </div>
-                    </div>
-                </div>
+                <ul>
+                    <li>Guest Editor for SPJ-Cyborg and Bionic Systems. [<a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">Link</a>]</li>
+                    <li>IEEE Joint-Cloud Computing (JCC) 2024. [<a href="https://ieeejcc.com/call-for-papers/" target="_blank">Link</a>]</li>
+                    <li>The International Workshop on Artificial Intelligence Enhanced Internet of Things-IEEE ICA3PP 2023. [<a href="http://vlab.csu.edu.cn/AIEIoT/" target="_blank">Link</a>]</li>
+                    <li>Med-NeurIPS 2022. [<a href="https://sites.google.com/view/med-neurips-2022/organization" target="_blank">Link</a>]</li>
+                    <li>Signal Processing for Data Mining-Data. [<a href="https://www.mdpi.com/journal/data/special_issues/EPBDMT42J0" target="_blank">Link</a>]</li>
+                    <li>AutoX Automated Machine Learning Library (AutoX). [<a href="https://github.com/colaudiolab/AudioCIL">Link</a>]</li>
+                    <li>Audio Class Incremental Learning Library (AudioCIL). [<a href="https://autox.readthedocs.io/en/latest/">Link</a>]</li>
+                    <li>Kaggle Winner Talks. [<a href="https://medium.com/kaggle-blog/avito-duplicate-ads-detection-winners-interview-3rd-place-team-adad-mario-gerard-kele-e97aa5ca21ed">Link</a>]</li>
+                    <li>IEEE DCASE Winner. [<a href="https://www.iflytek.com/news/2622">Link</a>]</li>
+                    <li>TissueNet Winner Talks. [<a href="https://drivendata.co/blog/tissuenet-cervical-biopsies-winners">Link</a>]</li>
+                    <li>CCF BDCI Competition. [<a href="https://www.datafountain.cn/competitions/484">Link</a>]</li>
+                </ul>
                 
                 <div class="mt-3">
                     <h4>Visitor Map</h4>
                     <div style="width: 100%; height: 200px; background-color: #f0f0f0; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-globe-americas" style="font-size: 3rem; color: var(--primary);"></i>
-                        <p style="margin-left: 1rem;">Visitor map placeholder</p>
+                        <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=386&t=tt&d=C-OEA2o32D2NX7QBXg8USlrCArliZik1Tp-VJCZawBg"></script>
                     </div>
                 </div>
             </section>
@@ -993,78 +1146,358 @@
     </div>
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
+        // ===== 全局变量 =====
+        // 存储所有数据的变量
+        let allNewsData = [];
+        let allAwardsData = [];
+        let allPublicationsData = [];
         
-        // Back to top button
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        // ===== 初始化函数 =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动菜单切换
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('navLinks').classList.toggle('active');
             });
-        });
-        
-        // Active navigation highlighting
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-links a, .sidebar-links a');
-        
-        function highlightNavLink() {
-            let scrollPosition = window.pageYOffset + 100;
             
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                const sectionId = section.getAttribute('id');
-                
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${sectionId}`) {
-                            link.classList.add('active');
-                        }
-                    });
+            // 返回顶部按钮
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
                 }
             });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 导航链接高亮
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a, .sidebar-links a');
+            
+            function highlightNavLink() {
+                let scrollPosition = window.pageYOffset + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightNavLink);
+            
+            // 折叠/展开功能
+            const toggleButtons = document.querySelectorAll('.show-more-btn');
+            toggleButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetId = this.id.replace('toggle-', '').replace('-btn', '');
+                    const targetContainer = document.getElementById(targetId + '-container') || 
+                                          document.getElementById(targetId);
+                    
+                    if (targetContainer) {
+                        targetContainer.classList.toggle('expanded');
+                        
+                        if (targetContainer.classList.contains('expanded')) {
+                            this.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less';
+                        } else {
+                            this.innerHTML = '<i class="fas fa-chevron-down"></i> Show All';
+                        }
+                    }
+                });
+            });
+            
+            // 初始化所有数据
+            initializeNewsData();
+            initializeAwardsData();
+            initializePublicationsData();
+            
+            // 加载初始数据
+            loadNews();
+            loadAwards();
+            loadPublications();
+            
+            // 设置搜索功能
+            setupSearchFunctionality();
+            
+            // 设置筛选功能
+            setupFilterFunctionality();
+        });
+        
+        // ===== 新闻数据处理 =====
+        function initializeNewsData() {
+            // 原始新闻数据 - 从原始HTML中提取的所有新闻
+            const rawNews = [
+                {date: "2025-11", content: "One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (oral)</strong>."},
+                {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
+                {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Knowledge and Data Engineering</strong>."},
+                {date: "2025-10", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
+                {date: "2025-10", content: "One paper is accepted by <strong>Information Fusion</strong>."},
+                {date: "2025-09", content: "One paper is accepted by <strong>IEEE Transactions on Biometrics, Behavior, and Identity Science</strong>."},
+                {date: "2025-08", content: "I have been elevated to the grade of <strong>IEEE Senior Member</strong>."},
+                {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong>2025 ACM MultiMedia</strong> Intention-Oriented Controllable Video Captioning Challenge."},
+                {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong> IJCAI Challenge </strong> and will be invited to IJCAI in Guangzhou."},
+                {date: "2025-08", content: "<strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>."},
+                {date: "2025-07", content: "Several paper are accepted by <strong>ACM International Conference on Multimedia</strong>."},
+                {date: "2025-07", content: "One paper is accepted by <strong>Advanced Materials</strong>."},
+                {date: "2025-06", content: "I will serve as Technical Program Committee Member at <strong>IEEE International Conference on Smart Multimedia</strong> [<a href='http://smartmultimedia.org/' target='_blank'>Link</a>]."},
+                {date: "2025-05", content: "One paper is accepted by <strong>InterSpeech</strong>."},
+                {date: "2025-05", content: "One paper is accepted by <strong>International Conference on Machine Learning (ICML)</strong>."},
+                {date: "2025-05", content: "I will serve as Challenge Chair at <strong>MER25 Challenge@ACM MM</strong> and <strong>MRAC25 Workshop@ACM MM</strong> [<a href='https://zeroqiaoba.github.io/MER2025-website/#organization' target='_blank'>Link</a>]."},
+                {date: "2025-04", content: "Our Advanced Materials paper is selected as <strong>Editors' Choice</strong>."},
+                {date: "2025-04", content: "I will serve as <strong>Associate Editor</strong> at <strong> IEEE Transactions on Circuits and Systems for Video Technology (TCSVT)</strong>. [<a href='https://ieee-cas.org/contact/kele-xu' target='_blank'>Link</a>]"},
+                {date: "2025-04", content: "One paper is accepted by <strong>ACM International Conference on Multimedia Retrieval (ICMR)</strong>."},
+                {date: "2025-04", content: "Two papers are accepted by <strong>ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)</strong>."},
+                {date: "2025-03", content: "Ranked as the <strong>2nd</strong> place in <strong>2025 CVPR NTIRE Challenge on HR Depth from Images</strong>."},
+                {date: "2025-02", content: "Two paper are accepted by <strong>Computer Vision and Pattern Recognition (CVPR)</strong>."},
+                {date: "2025-02", content: "One paper is accepted by <strong>IEEE Transactions on Computational Social Systems</strong>."},
+                {date: "2025-02", content: "One paper is accepted by <strong>IEEE Signal Processing Letters</strong>."},
+                {date: "2025-02", content: "Our <strong>first AI4S work</strong> is accepted by <strong>Advanced Materials</strong>."},
+                {date: "2025-01", content: "One paper is accepted by <strong>IEEE International Conference on Robotics and Automation (ICRA)</strong>."},
+                {date: "2025-01", content: "One paper is accepted by <strong>International Conference on Learning Representations (ICLR)</strong>."},
+                {date: "2025-01", content: "Our challenge paper is accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>."},
+                {date: "2025-01", content: "One paper is accepted by <strong>Speech Communication</strong>."},
+                {date: "2024-12", content: "Seven papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>."},
+                {date: "2024-12", content: "One paper is accepted by <strong>IEEE Open Journal of the Computer Society</strong>."},
+                {date: "2024-12", content: "Four papers are accepted by <strong>AAAI Conference on Artificial Intelligence</strong>."},
+                {date: "2024-12", content: "Ranked as <strong>1st</strong> place in <strong>Track 1 (English) of the ICASSP 2025 MEIJU Challenge</strong>."},
+                {date: "2024-11", content: "One paper is accepted by <strong>IEEE Transactions on Instrumentation & Measurement</strong>."},
+                {date: "2024-10", content: "Ranked as <strong>1st</strong> place in <strong>MICCAI SELMA3D challenge</strong>."},
+                {date: "2024-10", content: "Ranked as <strong>2nd</strong> place in <strong>MICCAI mAIcetoma challenge</strong>."},
+                {date: "2024-10", content: "One paper is accepted by <strong>IEEE Transactions on Network and Service Management</strong>."},
+                {date: "2024-10", content: "I will serve as Area Chair at <strong>International Conference on Acoustics, Speech and Signal Processing 2025</strong>."},
+                {date: "2024-10", content: "One paper is accepted by <strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>."},
+                {date: "2024-09", content: "Two paper are accepted by <strong>Annual Conference on Neural Information Processing Systems (NeurIPS)</strong>."},
+                {date: "2024-09", content: "One paper is accepted by <strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>."},
+                {date: "2024-09", content: "One paper is accepted by <strong>Knowledge-Based Systems</strong>."},
+                {date: "2024-08", content: "One paper is accepted by <strong>The Journal of the Acoustical Society of America</strong>."},
+                {date: "2024-08", content: "Ranked as <strong>3rd </strong> place in <strong>2024 ACM MultiMedia Demonstrative Instruction Following Challenge</strong>."},
+                {date: "2024-07", content: "Five papers are accepted by <strong>ACM International Conference on Multimedia</strong>."},
+                {date: "2024-07", content: "One paper is accepted by <strong> Neural Networks</strong>."},
+                {date: "2024-07", content: "Ranked as <strong>1st</strong> place in <strong>2024 IEEE DCASE Challenge on Few-shot Bioacoustic Event Detection Task</strong>. [<a href='https://dcase.community/challenge2024/task-few-shot-bioacoustic-event-detection-results' target='_blank'>Link</a>]"},
+                {date: "2024-06", content: "One paper is accepted by <strong> IEEE Open Journal of Signal Processing</strong>."},
+                {date: "2024-06", content: "Ranked as <strong>2nd </strong> place in <strong>2024 ACM MultiMedia Face-voice Association in Multilingual Environment</strong>. [<a href='https://mavceleb.github.io/dataset/competition.html' target='_blank'>Link</a>]"},
+                {date: "2024-06", content: "One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>."},
+                {date: "2024-05", content: "Ranked as <strong>2nd </strong> place in <strong>2024 ACM MultiMedia Social Media Prediction Challenge</strong>. [<a href='http://smp-challenge.com/leaderboard.html' target='_blank'>Link</a>]"},
+                {date: "2024-05", content: "One paper is accepted by <strong> ACM Transactions on Multimedia Computing, Communications, and Applications</strong>."},
+                {date: "2024-05", content: "One paper is accepted by <strong>European Signal Processing Conference (EUSIPCO)</strong>."},
+                {date: "2024-05", content: "One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>."},
+                {date: "2024-05", content: "One paper is accepted by <strong>International Conference on Machine Learning (ICML)</strong>."},
+                {date: "2024-04", content: "I will serve as Data Chair at <strong>MER24 Challenge@IJCAI</strong> and <strong>MRAC24 Workshop@ACM MM</strong> [<a href='https://zeroqiaoba.github.io/MER2024-website/#organization' target='_blank'>Link</a>]."},
+                {date: "2024-04", content: "One paper is accepted by <strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>."},
+                {date: "2024-04", content: "Ranked as the <strong>3rd</strong> place in <strong>2024 CVPR NTIRE Challenge on HR Depth from Images</strong>."},
+                {date: "2024-03", content: "Two papers are accepted by <strong>IEEE Conference on Multimedia Expo (ICME)</strong>."},
+                {date: "2024-02", content: "One paper is accepted by <strong>IEEE Transactions on Cognitive and Developmental Systems</strong>."},
+                {date: "2023-12", content: "Four papers are accepted by <strong>International Conference on Acoustics, Speech and Signal Processing (ICASSP)</strong>."},
+                {date: "2023-12", content: "One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (AAAI)</strong>."},
+                {date: "2023-11", content: "One paper is accepted by <strong>Biomedical Signal Processing and Control</strong>."},
+                {date: "2023-10", content: "One paper is accepted by <strong>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing</strong>."},
+                {date: "2023-10", content: "One paper is accepted by <strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>."},
+                {date: "2023-09", content: "One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>."},
+                {date: "2023-09", content: "One paper is accepted by <strong>Intelligent Computing</strong>."},
+                {date: "2023-08", content: "One paper is accepted by <strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>."},
+                {date: "2023-08", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems II</strong>."},
+                {date: "2023-07", content: "Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>."},
+                {date: "2023-07", content: "We organised a special session at <strong>APSIPA ASC 2023.</strong> [<a href='https://www.apsipa2023.org/special.html' target='_blank'>Link</a>]"},
+                {date: "2023-07", content: "One paper is accepted by <strong>The Journal of the Acoustical Society of America.</strong> [<a href='https://doi.org/10.1121/10.0019937' target='_blank'>Link</a>]"},
+                {date: "2023-07", content: "Ranked as the <strong>2nd</strong> place in <strong>ACM MM 2023 Visual Text Question Answer (VTQA) Challenge</strong>."},
+                {date: "2023-06", content: "Two papers are accepted by <strong>Ultrasound in Obstetrics & Gynecology</strong>."},
+                {date: "2023-05", content: "Ranked as the <strong>3rd</strong> place in <strong>IEEE DCASE2023 Challenge on Few-shot Bioacoustic Event Detection Task</strong>."},
+                {date: "2023-04", content: "Ranked as the <strong>1st</strong> place in <strong>IEEE ICME 2023 - Grand Challenge on Detecting CheapFakes</strong>."},
+                {date: "2023-02", content: "Four papers are accepted by <strong>International Conference on Acoustics, Speech and Signal Processing (ICASSP)</strong>."},
+                {date: "2022-12", content: "<strong>Meritorious Winner Award</strong> in <strong>NeurIPS</strong> Multi-modality Cell Segmentation Challenge."},
+                {date: "2022-07", content: "One paper is accepted by <strong>IEEE/ACM International Conference on Automated Software Engineering</strong>."},
+                {date: "2022-07", content: "Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>."},
+                {date: "2022-07", content: "Ranked as the <strong>1st</strong> place in <strong>IEEE DCASE2022 Challenge on Few-shot Bioacoustic Event Detection Task</strong>."},
+                {date: "2022-06", content: "Ranked as the <strong>1st</strong> place in <strong>ACM Multimedia Pre-training video understanding challenge Track 2.</strong> [<a href='http://www.auto-video-captions.top/2022/leaderboard' target='_blank'>Link</a>]"},
+                {date: "2022-04", content: "One paper is accepted by <strong>International Joint Conference on Artificial Intelligence</strong>."},
+                {date: "2022-03", content: "One paper is accepted by <strong>Computers & Security</strong>."},
+                {date: "2022-01", content: "Two papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>."},
+                {date: "2021-12", content: "One paper is accepted by <strong>AAAI Conference on Artificial Intelligence</strong>."},
+                {date: "2021-10", content: "One paper is accepted by <strong>IEEE Transactions on Geoscience and Remote Sensing</strong>."},
+                {date: "2021-07", content: "Ranked as the <strong>1st</strong> place in <strong>ACM MM Multi-modal ads video understanding Challenge</strong> [<a href='https://arxiv.org/abs/2108.00679' target='_blank'>Link</a>]."},
+                {date: "2021-05", content: "One paper is accepted by <strong>IEEE Transactions on Medical Imaging</strong>."},
+                {date: "2021-04", content: "One paper is accepted by <strong>ACM International Conference on Multimedia Retrieval</strong>."},
+                {date: "2021-04", content: "<strong>Winner</strong> at <strong>IEEE ISBI A-AFMA</strong> Challenge."},
+                {date: "2021-04", content: "<strong>Winner</strong> at <strong>ACM International Conference on Multimedia Retrieval ROD </strong>Challenge."},
+                {date: "2021-02", content: "Two papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>."},
+                {date: "2021-01", content: "One paper is accepted by <strong>IEEE Geoscience and Remote Sensing Letters</strong>."},
+                {date: "2020-11", content: "Two papers are accepted by <strong>International Seminar on Speech Production</strong>."},
+                {date: "2020-10", content: "<strong>Prize Winner</strong> at TissueNet competition among more than 547 participants [<a href='https://www.drivendata.org/competitions/67/competition-cervical-biopsy/' target='_blank'>Link</a>]."},
+                {date: "2020-08", content: "Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>."},
+                {date: "2020-07", content: "One paper is accepted by <strong>Conference of the International Speech Communication Association (InterSpeech)</strong>."},
+                {date: "2020-07", content: "One paper is accepted by <strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>."},
+                {date: "2020-06", content: "<strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>."},
+                {date: "2020-05", content: "One paper is accepted by <strong>The Journal of the Acoustical Society of America EL</strong>."},
+                {date: "2020-02", content: "Ranked as the <strong>1st</strong> place in <strong>ECDP HEROHE Challenge</strong> [<a href='https://ecdp2020.grand-challenge.org/' target='_blank'>Link</a>]."},
+                {date: "2020-01", content: "One paper is accepted by <strong>SCIENCE CHINA Information Sciences</strong>."},
+            ];
+            
+            // 反转数组，使最新的新闻在前面
+            allNewsData = rawNews.reverse();
         }
         
-        window.addEventListener('scroll', highlightNavLink);
+        // ===== 奖项数据处理 =====
+        function initializeAwardsData() {
+            // 原始奖项数据 - 从原始HTML中提取的所有奖项
+            allAwardsData = [
+                {rank: "Outstanding Supervisor Award", title: "Outstanding Supervisor Award at CCF BDCI competition, 2020", year: "2020"},
+                {rank: "Meritorious Winner", title: "Meritorious Winner Award in NeurIPS Multi-modality Cell Segmentation Challenge, 2022", year: "2022"},
+                {rank: "1st", title: "1st place in ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English, 2025", year: "2025"},
+                {rank: "1st", title: "1st place in MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge, 2024", year: "2024"},
+                {rank: "1st", title: "1st place in IEEE ICME Grand Challenge on Detecting CheapFakes, 2023", year: "2023"},
+                {rank: "1st", title: "1st place in ACM Multimedia Pre-training video understanding challenge Track 2, 2022", year: "2022"},
+                {rank: "1st", title: "1st place in IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task, 2022", year: "2022"},
+                {rank: "1st", title: "1st place in ACM MM Multi-modal ads video understanding Challenge, 2021", year: "2021"},
+                {rank: "1st", title: "1st place in European Congress on Digital Pathology (ECDP2020) HEROHE Competition, Prize Winner, 2020", year: "2020"},
+                {rank: "1st", title: "1st place among more than 900 teams in Medical Health Big Data Innovation Application, Prize Winner, 2018", year: "2018"},
+                {rank: "1st", title: "1st place among more than 2000 teams in CCF BDCI, Prize Winner, 2016", year: "2016"},
+                {rank: "2nd", title: "2nd place in IJCAI The 2nd Challenge on Characterizing User Behavior in Social Networks: Propagation, Prediction, and Sensemaking, 2025", year: "2025"},
+                {rank: "2nd", title: "2nd place in ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2024), 2024", year: "2024"},
+                {rank: "2nd", title: "2nd place in CVPR NTIRE Challenge on HR Depth from Images, 2025", year: "2025"},
+                {rank: "2nd", title: "2nd place in ACM MultiMedia Face-voice Association in Multilingual Environment Challenge, 2024", year: "2024"},
+                {rank: "2nd", title: "2nd place (Runner-Up) in MICCAI Mycetoma MicroImage Challenge (mAIcetoma), 2024", year: "2024"},
+                {rank: "2nd", title: "2nd place in ACM MM Visual Text Question Answer (VTQA) Challenge, 2023", year: "2023"},
+                {rank: "2nd", title: "2nd place among more than 1000 teams in CCF BDCI, Prize Winner, 2017", year: "2017"},
+                {rank: "2nd", title: "2nd place among 5163 teams in Kaggle-Porto Seguro's Safe Driver Prediction, Prize Winner, 2018", year: "2018"},
+                {rank: "3rd", title: "3rd place in ACM MM Conversational Head Generation Challenge, 2023", year: "2023"},
+                {rank: "3rd", title: "3rd place in IEEE DCASE Challenge on Few-shot Bioacoustic Event Detection Task, 2023", year: "2023"},
+                {rank: "Top performance award", title: "Top performance award in ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2020), 2020", year: "2020"},
+                {rank: "3rd", title: "3rd place (Winner) in ACM International Conference on Multimedia Retrieval ROD Challenge, 2021", year: "2021"},
+                {rank: "3rd", title: "3rd place among more than 548 teams in Kaggle Avito Duplicate Ads Detection, Prize Winner, 2018", year: "2018"},
+                {rank: "3rd", title: "3rd place in CVPR NTIRE Challenge on HR Depth from Images, 2024", year: "2024"},
+                {rank: "3rd", title: "3rd place in ACM International Conference on Multimedia Retrieval ROD Challenge, 2021", year: "2021"},
+                {rank: "3rd", title: "3rd place in ACM MultiMedia Demonstrative Instruction Following Challenge, 2021", year: "2021"},
+                {rank: "3rd", title: "3rd place among 3513 teams in ACM KDD Cup Traffic Volume Prediction Track, Prize Winner, 2017", year: "2017"},
+                {rank: "3rd", title: "3rd place among more than 600 teams in Santa's Uncertain Bags Optimization Competition, Gold Medal, 2016", year: "2016"},
+                {rank: "4th", title: "4th place in International Conference on Acoustics, Speech, and Signal Processing NAD Challenge, 2021", year: "2021"},
+                {rank: "4th", title: "4th place in TissueNet Competition, Prize Winner, 2020", year: "2020"},
+                {rank: "4th", title: "4th place in ECCV AIM Challenge on Scene Relighting and Illumination Estimation, 2020", year: "2020"},
+                {rank: "4th", title: "4th place in InterSpeech AutoSpeech Challenge (AutoSpeech), 2020", year: "2020"},
+                {rank: "4th", title: "4th place among 3229 teams in Kaggle TGS Salt Identification Challenge, Prize Winner, 2018", year: "2018"},
+                {rank: "4th", title: "4th place among more than 800 teams in Rong360 Finance Risk Manangement Big Data Competition, Prize Winner, 2016", year: "2016"},
+                {rank: "5th", title: "5th place in CVPR NTIRE NonHomogeneous Dehazing challenge, 2024", year: "2024"},
+                {rank: "5th", title: "5th place among more than 600 teams in The 3rd Alibaba Cloud Security Algorithm Challenge, Prize Winner, 2018", year: "2018"},
+                {rank: "6th", title: "6th place in CVPR NTIRE Perceptual Image Quality Assessment Challenge, 2022", year: "2022"},
+                {rank: "6th", title: "6th place in CVPR NTIRE Multi-modal Aerial View Object Classification Challenge, 2021", year: "2021"},
+                {rank: "7th", title: "7th place in CVPR NTIRE Perceptual Image Quality Assessment Challenge, 2021", year: "2021"},
+                {rank: "8th", title: "8th place among more than 4800 teams in Daguan Cup: Long Sentence Classification Challenge, Prize Winner, 2019", year: "2019"},
+                {rank: "8th", title: "8th place among 1871 teams in Kaggle Avito Demand Prediction Challenge, Gold Medal, 2018", year: "2018"},
+                {rank: "10th", title: "10th place among 2382 teams in Kaggle Mercari Prize Suggestion Challenge, Gold Medal, 2018", year: "2018"},
+                {rank: "Prize Winner", title: "PPDAI Magic Mirror Data Application Contest, Prize Winner, 2018", year: "2018"},
+                {rank: "11th", title: "11th place among 5122 teams in Kaggle Santander Customer Satisfaction, Gold Medal, 2016", year: "2016"},
+                {rank: "23th", title: "23th place among 7190 teams in Kaggle Home Credit Default Risk Prediction, Gold Medal, 2016", year: "2016"},
+                {rank: "26th", title: "26th place among 8802 teams in Kaggle Santander Customer Transaction Prediction, Gold Medal, 2016", year: "2016"},
+                {rank: "...", title: "...", year: ""},
+            ];
+        }
         
-        // Sample news data - in a real implementation, this could come from an API or JSON file
-        const newsData = [
-            {date: "2025-11", content: "One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (oral)</strong>."},
-            {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
-            {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Knowledge and Data Engineering</strong>."},
-            {date: "2025-10", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
-            {date: "2025-10", content: "One paper is accepted by <strong>Information Fusion</strong>."},
-            {date: "2025-09", content: "One paper is accepted by <strong>IEEE Transactions on Biometrics, Behavior, and Identity Science</strong>."},
-            {date: "2025-08", content: "I have been elevated to the grade of <strong>IEEE Senior Member</strong>."},
-            {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong>2025 ACM MultiMedia</strong> Intention-Oriented Controllable Video Captioning Challenge."},
-            {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong> IJCAI Challenge </strong> and will be invited to IJCAI in Guangzhou."},
-            {date: "2025-08", content: "<strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>."},
-        ];
+        // ===== 出版物数据处理 =====
+        function initializePublicationsData() {
+            // 这里只包含部分代表性出版物，以保持代码简洁
+            // 在实际应用中，您可能需要将所有出版物数据存储在一个单独的JSON文件中
+            allPublicationsData = [
+                {
+                    year: "2025",
+                    authors: "Dulan Zhou, Zijian Gao, <u>Kele Xu*</u>",
+                    title: "Perturbing to Preserve: Defending Fragile Knowledge in Online Continual Learning",
+                    venue: "AAAI Conference on Artificial Intelligence (Oral)",
+                    links: []
+                },
+                {
+                    year: "2025",
+                    authors: "Zijian Gao, Xingxing Zhang, Huiping Zhuang, <u>Kele Xu*</u>, Tianjiao Wan, Bo Ding, Xinjun Mao, Huaimin Wang",
+                    title: "Rethinking Obscured Sub-optimality in Analytic Learning for Exemplar-Free Class-Incremental Learning",
+                    venue: "IEEE Transactions on Circuits and Systems for Video Technology",
+                    links: []
+                },
+                {
+                    year: "2024",
+                    authors: "Zijian Gao, <u>Kele Xu*</u>, Huiping Zhuang, Li Liu, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang",
+                    title: "Less Confidence, Less Forgetting: Learning with A Humbler Teacher in Exemplar-free Class-Incremental Learning",
+                    venue: "Neural Networks",
+                    links: [{text: "Paper", url: "https://www.sciencedirect.com/science/article/abs/pii/S0893608024004374"}]
+                },
+                {
+                    year: "2024",
+                    authors: "Zijian Gao, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang",
+                    title: "Self-Supervised Exploration via Temporal Inconsistency in Reinforcement Learning",
+                    venue: "IEEE Transactions on Artificial Intelligence",
+                    links: [{text: "Paper", url: "https://ieeexplore.ieee.org/document/10557253"}]
+                },
+                {
+                    year: "2023",
+                    authors: "Zijian Gao, Yiying Li, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang",
+                    title: "Dynamic Memory-Based Curiosity: A Bootstrap Approach for Exploration in Reinforcement Learning",
+                    venue: "IEEE Transactions on Emerging Topics in Computational Intelligence",
+                    links: []
+                },
+                {
+                    year: "2022",
+                    authors: "Boqing Zhu, <u>Kele Xu*</u>, Changjian Wang, Zheng Qin, Tao Sun, Huaimin Wang, Yuxing Peng",
+                    title: "Unsupervised Voice-Face Representation Learning by Cross-Modal Prototype Contrast",
+                    venue: "International Joint Conference on Artificial Intelligence",
+                    links: [{text: "Code", url: "https://github.com/Cocoxili/CMPC"}]
+                },
+                {
+                    year: "2021",
+                    authors: "<u>Kele Xu</u>, Tamas Gábor Csapó, Ming Feng",
+                    title: "Convolutional Neural Network-Based Age Estimation Using B-Mode Ultrasound Tongue Image",
+                    venue: "The Journal of the Acoustical Society of America",
+                    links: []
+                },
+                {
+                    year: "2020",
+                    authors: "<u>Kele Xu</u>, Tamás Gábor Csapó, Dawei Feng, Haibo Mi",
+                    title: "Ultrasound Tongue Gestural Sequence Classification Using Convolutional Auto-encoder and Recurrent Neural Network",
+                    venue: "International Seminar on Speech Production",
+                    links: []
+                },
+                {
+                    year: "2019",
+                    authors: "<u>Kele Xu</u>, Yuxiang Wu, Zhifeng Gao",
+                    title: "Ultrasound-Based Silent Speech Interface using Sequential Convolutional Auto-encoder",
+                    venue: "ACM International Conference on Multimedia",
+                    links: []
+                },
+                {
+                    year: "before",
+                    authors: "<u>Kele Xu</u>, Pierre Roussel, Tamás Gábor Csapó, Bruce Denby",
+                    title: "Convolutional neural network-based automatic classification of midsagittal tongue gestural targets using B-mode ultrasound images",
+                    venue: "The Journal of the Acoustical Society of America",
+                    links: []
+                },
+            ];
+        }
         
-        // Load initial news items
-        const newsContainer = document.getElementById('news-container');
-        let newsIndex = 0;
-        const newsPerLoad = 5;
-        
-        function loadNews() {
-            const endIndex = Math.min(newsIndex + newsPerLoad, newsData.length);
+        // ===== 新闻加载函数 =====
+        function loadNews(filteredData = null) {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';
             
-            for (let i = newsIndex; i < endIndex; i++) {
-                const news = newsData[i];
+            const dataToShow = filteredData || allNewsData;
+            
+            if (dataToShow.length === 0) {
+                newsContainer.innerHTML = '<div class="news-item"><div class="news-content">No news found matching your search.</div></div>';
+                return;
+            }
+            
+            dataToShow.forEach(news => {
                 const newsItem = document.createElement('div');
                 newsItem.className = 'news-item';
                 newsItem.innerHTML = `
@@ -1072,125 +1505,200 @@
                     <div class="news-content">${news.content}</div>
                 `;
                 newsContainer.appendChild(newsItem);
-            }
-            
-            newsIndex = endIndex;
-            
-            // Hide load more button if all news loaded
-            if (newsIndex >= newsData.length) {
-                document.getElementById('load-more-news').style.display = 'none';
-            }
-        }
-        
-        document.getElementById('load-more-news').addEventListener('click', function(e) {
-            e.preventDefault();
-            loadNews();
-        });
-        
-        // Load initial news
-        loadNews();
-        
-        // Sample publications data
-        const publicationsData = [
-            {year: "2025", authors: "Dulan Zhou, Zijian Gao, <u>Kele Xu*</u>", title: "Perturbing to Preserve: Defending Fragile Knowledge in Online Continual Learning", venue: "AAAI Conference on Artificial Intelligence (Oral)"},
-            {year: "2025", authors: "Zijian Gao, Xingxing Zhang, Huiping Zhuang, <u>Kele Xu*</u>, Tianjiao Wan, Bo Ding, Xinjun Mao, Huaimin Wang", title: "Rethinking Obscured Sub-optimality in Analytic Learning for Exemplar-Free Class-Incremental Learning", venue: "IEEE Transactions on Circuits and Systems for Video Technology"},
-            {year: "2025", authors: "Guohong Wang, Xiaohan Tan, Zengming Lin, Binli Luo, Shangjian Zhong, <u>Kele Xu*</u>", title: "FreqEvo: Enhancing Time Series Forecasting with Multi-Level Frequency Domain Feature Extraction", venue: "IEEE Transactions on Knowledge and Data Engineering"},
-            {year: "2024", authors: "Zijian Gao, <u>Kele Xu*</u>, Huiping Zhuang, Li Liu, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Less Confidence, Less Forgetting: Learning with A Humbler Teacher in Exemplar-free Class-Incremental Learning", venue: "Neural Networks", link: "https://www.sciencedirect.com/science/article/abs/pii/S0893608024004374"},
-            {year: "2024", authors: "Zijian Gao, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Self-Supervised Exploration via Temporal Inconsistency in Reinforcement Learning", venue: "IEEE Transactions on Artificial Intelligence", link: "https://ieeexplore.ieee.org/document/10557253"},
-            {year: "2023", authors: "Zijian Gao, Yiying Li, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Dynamic Memory-Based Curiosity: A Bootstrap Approach for Exploration in Reinforcement Learning", venue: "IEEE Transactions on Emerging Topics in Computational Intelligence"},
-            {year: "2022", authors: "Boqing Zhu, <u>Kele Xu*</u>, Changjian Wang, Zheng Qin, Tao Sun, Huaimin Wang, Yuxing Peng", title: "Unsupervised Voice-Face Representation Learning by Cross-Modal Prototype Contrast", venue: "International Joint Conference on Artificial Intelligence", link: "https://github.com/Cocoxili/CMPC"},
-        ];
-        
-        // Load publications
-        const publicationsContainer = document.getElementById('publications-container');
-        
-        function loadPublications(filterYear = 'all') {
-            publicationsContainer.innerHTML = '';
-            
-            const filteredPublications = filterYear === 'all' 
-                ? publicationsData 
-                : publicationsData.filter(pub => pub.year === filterYear);
-            
-            filteredPublications.forEach(pub => {
-                const pubItem = document.createElement('div');
-                pubItem.className = 'publication-item';
-                pubItem.setAttribute('data-year', pub.year);
-                
-                let linksHTML = '';
-                if (pub.link) {
-                    linksHTML = `<a href="${pub.link}" target="_blank"><i class="fas fa-external-link-alt"></i> Paper</a>`;
-                }
-                
-                pubItem.innerHTML = `
-                    <div class="publication-authors">${pub.authors}</div>
-                    <div class="publication-title">${pub.title}</div>
-                    <div class="publication-venue">${pub.venue}</div>
-                    <div class="publication-links">
-                        ${linksHTML}
-                        <span class="badge badge-secondary">${pub.year}</span>
-                    </div>
-                `;
-                
-                publicationsContainer.appendChild(pubItem);
             });
         }
         
-        // Filter publications by year
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                loadPublications(this.getAttribute('data-year'));
-            });
-        });
-        
-        // Load initial publications
-        loadPublications();
-        
-        // Sample awards data
-        const awardsData = [
-            {rank: "1st", title: "ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English", year: "2025"},
-            {rank: "1st", title: "MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge", year: "2024"},
-            {rank: "1st", title: "IEEE ICME Grand Challenge on Detecting CheapFakes", year: "2023"},
-            {rank: "1st", title: "ACM Multimedia Pre-training video understanding challenge Track 2", year: "2022"},
-            {rank: "1st", title: "IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task", year: "2022"},
-            {rank: "1st", title: "ACM MM Multi-modal ads video understanding Challenge", year: "2021"},
-            {rank: "1st", title: "European Congress on Digital Pathology (ECDP2020) HEROHE Competition, Prize Winner", year: "2020"},
-            {rank: "2nd", title: "IJCAI The 2nd Challenge on Characterizing User Behavior in Social Networks", year: "2025"},
-            {rank: "2nd", title: "ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2024)", year: "2024"},
-            {rank: "2nd", title: "CVPR NTIRE Challenge on HR Depth from Images", year: "2025"},
-        ];
-        
-        // Load more awards
-        let awardsIndex = 5; // Start after the first 5 displayed
-        
-        document.getElementById('load-more-awards').addEventListener('click', function(e) {
-            e.preventDefault();
+        // ===== 奖项加载函数 =====
+        function loadAwards(filteredData = null) {
+            const awardsContainer = document.getElementById('awards-container');
+            awardsContainer.innerHTML = '';
             
-            const awardsContainer = document.querySelector('#competitions');
+            const dataToShow = filteredData || allAwardsData;
             
-            for (let i = awardsIndex; i < Math.min(awardsIndex + 5, awardsData.length); i++) {
-                const award = awardsData[i];
+            if (dataToShow.length === 0) {
+                awardsContainer.innerHTML = '<div class="award-item"><div class="award-content">No awards found matching your search.</div></div>';
+                return;
+            }
+            
+            dataToShow.forEach(award => {
                 const awardItem = document.createElement('div');
                 awardItem.className = 'award-item';
-                awardItem.innerHTML = `
-                    <span class="award-rank">${award.rank} Place</span>
-                    <strong>${award.title}</strong>
-                    <div class="text-right">${award.year}</div>
-                `;
                 
-                // Insert before the load more button container
-                const loadMoreContainer = document.querySelector('#load-more-awards').parentElement;
-                awardsContainer.insertBefore(awardItem, loadMoreContainer);
+                let rankHTML = '';
+                if (award.rank && award.rank !== "...") {
+                    rankHTML = `<span class="award-rank">${award.rank}</span>`;
+                }
+                
+                awardItem.innerHTML = `
+                    ${rankHTML}
+                    <strong>${award.title}</strong>
+                    ${award.year ? `<div class="text-right">${award.year}</div>` : ''}
+                `;
+                awardsContainer.appendChild(awardItem);
+            });
+        }
+        
+        // ===== 出版物加载函数 =====
+        function loadPublications(filteredData = null) {
+            const publicationsContainer = document.getElementById('publications-container');
+            publicationsContainer.innerHTML = '';
+            
+            const dataToShow = filteredData || allPublicationsData;
+            
+            if (dataToShow.length === 0) {
+                publicationsContainer.innerHTML = '<div class="publication-item"><div class="publication-title">No publications found matching your search.</div></div>';
+                return;
             }
             
-            awardsIndex += 5;
+            // 按年份分组
+            const publicationsByYear = {};
+            dataToShow.forEach(pub => {
+                if (!publicationsByYear[pub.year]) {
+                    publicationsByYear[pub.year] = [];
+                }
+                publicationsByYear[pub.year].push(pub);
+            });
             
-            // Hide load more button if all awards loaded
-            if (awardsIndex >= awardsData.length) {
-                this.style.display = 'none';
-            }
-        });
+            // 显示按年份分组的出版物
+            Object.keys(publicationsByYear).sort().reverse().forEach(year => {
+                const yearHeader = document.createElement('h4');
+                yearHeader.textContent = year === "before" ? "Before 2019" : year;
+                publicationsContainer.appendChild(yearHeader);
+                
+                publicationsByYear[year].forEach(pub => {
+                    const pubItem = document.createElement('div');
+                    pubItem.className = 'publication-item';
+                    
+                    let linksHTML = '';
+                    if (pub.links && pub.links.length > 0) {
+                        linksHTML = pub.links.map(link => 
+                            `<a href="${link.url}" target="_blank"><i class="fas fa-external-link-alt"></i> ${link.text}</a>`
+                        ).join('');
+                    }
+                    
+                    pubItem.innerHTML = `
+                        <div class="publication-authors">${pub.authors}</div>
+                        <div class="publication-title">${pub.title}</div>
+                        <div class="publication-venue">${pub.venue}</div>
+                        ${linksHTML ? `<div class="publication-links">${linksHTML}</div>` : ''}
+                    `;
+                    publicationsContainer.appendChild(pubItem);
+                });
+            });
+        }
+        
+        // ===== 搜索功能设置 =====
+        function setupSearchFunctionality() {
+            // 新闻搜索
+            const newsSearchInput = document.getElementById('news-search');
+            newsSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    loadNews();
+                    return;
+                }
+                
+                const filteredNews = allNewsData.filter(news => 
+                    news.content.toLowerCase().includes(searchTerm) || 
+                    news.date.includes(searchTerm)
+                );
+                
+                loadNews(filteredNews);
+            });
+            
+            // 奖项搜索
+            const awardsSearchInput = document.getElementById('awards-search');
+            awardsSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    loadAwards();
+                    return;
+                }
+                
+                const filteredAwards = allAwardsData.filter(award => 
+                    award.title.toLowerCase().includes(searchTerm) || 
+                    award.rank.toLowerCase().includes(searchTerm) ||
+                    award.year.includes(searchTerm)
+                );
+                
+                loadAwards(filteredAwards);
+            });
+            
+            // 出版物搜索
+            const publicationsSearchInput = document.getElementById('publications-search');
+            publicationsSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    loadPublications();
+                    return;
+                }
+                
+                const filteredPublications = allPublicationsData.filter(pub => 
+                    pub.title.toLowerCase().includes(searchTerm) || 
+                    pub.authors.toLowerCase().includes(searchTerm) ||
+                    pub.venue.toLowerCase().includes(searchTerm)
+                );
+                
+                loadPublications(filteredPublications);
+            });
+        }
+        
+        // ===== 筛选功能设置 =====
+        function setupFilterFunctionality() {
+            // 新闻年份筛选
+            const newsFilterButtons = document.querySelectorAll('#news .filter-btn');
+            newsFilterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    newsFilterButtons.forEach(b => b.classList.remove('active'));
+                    // 给当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const year = this.getAttribute('data-year');
+                    
+                    if (year === 'all') {
+                        loadNews();
+                        return;
+                    }
+                    
+                    const filteredNews = allNewsData.filter(news => news.date.startsWith(year));
+                    loadNews(filteredNews);
+                });
+            });
+            
+            // 出版物年份筛选
+            const publicationFilterButtons = document.querySelectorAll('#publications .filter-btn');
+            publicationFilterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    publicationFilterButtons.forEach(b => b.classList.remove('active'));
+                    // 给当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const year = this.getAttribute('data-year');
+                    
+                    if (year === 'all') {
+                        loadPublications();
+                        return;
+                    }
+                    
+                    let filteredPublications;
+                    if (year === 'before') {
+                        filteredPublications = allPublicationsData.filter(pub => 
+                            pub.year === "before" || 
+                            parseInt(pub.year) < 2019
+                        );
+                    } else {
+                        filteredPublications = allPublicationsData.filter(pub => pub.year === year);
+                    }
+                    
+                    loadPublications(filteredPublications);
+                });
+            });
+        }
     </script>
 </body>
 </html>
