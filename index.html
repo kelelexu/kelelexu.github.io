@@ -5,1479 +5,1192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Homepage of Kele Xu</title>
+    <title>Kele Xu | Associate Professor | NUDT</title>
     <link rel="shortcut icon" href="KELE2.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Adjusted colors for better contrast */
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9; /* Light background for contrast */
-            color: #333; /* Dark text for readability */
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #003d82;
+            --secondary: #ff8800;
+            --accent: #00a8cc;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
         }
 
-        header {
-            background: #0056b3; /* Dark blue header */
-            color: orange; /* White text for contrast */
+        /* ===== Reset & Base Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9fbfd;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        section:hover {
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== Header ===== */
+        .main-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 1rem;
+        }
+
+        .header-content h1 {
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .header-content .subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-item i {
+            color: var(--secondary);
+        }
+
+        /* ===== Navigation ===== */
+        .main-nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        nav {
+        .nav-container {
             display: flex;
-            justify-content: center;
-            background: #007bff; /* Bright blue for navigation */
-            padding: 0.5rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
         }
 
-        nav a {
-            color: black; /* White text for contrast */
-            text-decoration: none;
-            margin: 0 1rem;
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
         }
 
-        main {
-            max-width: 1200px;
-            margin: auto;
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ===== Layout ===== */
+        .main-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 1.5rem;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .sidebar-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-links a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .sidebar-links a:hover,
+        .sidebar-links a.active {
+            background-color: rgba(0, 86, 179, 0.1);
+            color: var(--primary);
+        }
+
+        .sidebar-links i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .quick-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-item i {
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        /* ===== Section Styles ===== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .year-badge {
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* News Section */
+        .news-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-date {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .news-content {
+            color: var(--dark);
+        }
+
+        .news-content strong {
+            color: var(--primary);
+        }
+
+        /* Publications */
+        .publication-item {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent);
+            background-color: rgba(0, 168, 204, 0.05);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .publication-authors {
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .publication-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(0, 86, 179, 0.1);
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .publication-links a:hover {
+            background-color: rgba(0, 86, 179, 0.2);
+        }
+
+        /* Awards & Services */
+        .award-item, .service-item {
+            margin-bottom: 1rem;
             padding: 1rem;
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
         }
 
-        section {
+        .award-rank {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+
+        /* ===== Footer ===== */
+        .main-footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
-        section h2 {
-            border-bottom: 2px solid #007bff; /* Matching navigation color */
-            padding-bottom: 0.5rem;
-            color: #0056b3; /* Dark blue for headings */
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
         }
 
-        footer {
-            background: #0056b3; /* Dark blue footer */
-            color: white; /* White text */
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
             text-align: center;
-            padding: 1rem 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
 
-        ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
+        /* ===== Back to Top Button ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
         }
 
-        ul ul {
-            list-style-type: circle;
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
-        a {
-            color: #0056b3; /* Dark blue links */
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
         }
 
-        a:hover {
-            color: #ff8800; /* Bright orange on hover for emphasis */
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: none;
+                width: 100%;
+                position: static;
+            }
+            
+            .sidebar-content {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+            
+            .sidebar-card {
+                flex: 1;
+                min-width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container, .main-container {
+                padding: 0 1rem;
+            }
+            
+            .header-content h1 {
+                font-size: 1.75rem;
+            }
+            
+            .header-content .subtitle {
+                font-size: 1rem;
+            }
+            
+            .publication-links {
+                flex-wrap: wrap;
+            }
+            
+            .sidebar-content {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== Utility Classes ===== */
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .mb-0 {
+            margin-bottom: 0;
+        }
+        
+        .mt-1 {
+            margin-top: 0.5rem;
+        }
+        
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        
+        .mt-3 {
+            margin-top: 1.5rem;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 136, 0, 0.1);
+            padding: 0.125rem 0.25rem;
+            border-radius: 3px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-primary {
+            background-color: rgba(0, 86, 179, 0.1);
+            color: var(--primary);
+        }
+        
+        .badge-secondary {
+            background-color: rgba(255, 136, 0, 0.1);
+            color: var(--secondary);
+        }
+        
+        .badge-accent {
+            background-color: rgba(0, 168, 204, 0.1);
+            color: var(--accent);
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Kele Xu</h1>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container header-content">
+            <h1>Kele Xu</h1>
+            <p class="subtitle">Associate Professor, State Key Laboratory of Complex & Critical Software Environment, NUDT</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>kele.xu at ieee dot org</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>National University of Defense Technology, China</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
-	    <!-- Biography Section -->
-        <section id="bio">
-			
-            <h2>Brief Bio</h2>
-			<p>Currently, I serve as an Associate Professor at the State Key Laboratory of Complex & Critical Software Environment at NUDT, China.</p>
-            <p>I received my Ph.D. degree from Université Pierre et Marie Curie, Paris, France, working with Prof. Bruce Denby and Prof. Gerard Dreyfus (IEEE Fellow). My research focuses on <strong>Continual learning</strong>, <strong>Computer audition</strong>, and <strong>AI4Science</strong>.</p>
-            <p>In addition to academic pursuits, I actively participate in machine learning competition, having achieved top ranks in data mining and machine learning competitions, including the <a href="https://www.kdd.org/kdd2017/announcements/view/announcing-kdd-cup-2017-highway-tollgates-traffic-flow-prediction target="_blank">ACM KDD Cup</a>, Kaggle, Tianchi, and CCF BDCI. I am also a <a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><strong>Kaggle Grandmaster</strong></a>.</p>
-			<p>If you're interested in joining us, please drop me an email at: <strong>kele.xu at ieee dot org</strong></p>
-        </section>
-	
-        <!-- Recent News Section -->
-        <section id="news">
-            <h2>Recent News</h2>
-            <ul>
-				<li>2025-11: One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (oral)</strong>.</li>
-				<li>2025-11: One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>.</li>
-				<li>2025-11: One paper is accepted by <strong>IEEE Transactions on Knowledge and Data Engineering</strong>.</li>
-				<li>2025-10: One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>.</li>
-				<li>2025-10: One paper is accepted by <strong>Information Fusion</strong>.</li>
-				<li>2025-09: One paper is accepted by <strong>IEEE Transactions on Biometrics, Behavior, and Identity Science</strong>.</li>
-				<li>2025-08: I have been elevated to the grade of <strong>IEEE Senior Member</strong>.
-				<li>2025-08: Ranked as <strong>2nd</strong> place in <strong>2025 ACM MultiMedia</strong> Intention-Oriented Controllable Video Captioning Challenge.</li>
-				<li>2025-08: Ranked as <strong>2nd</strong> place in <strong> IJCAI Challenge </strong> and will be invited to IJCAI in Guangzhou.</li>
-				<li>2025-08: <strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>.</li>
-				<li>2025-07: Several paper are accepted by <strong>ACM International Conference on Multimedia</strong>.</li>
-				<li>2025-07: One paper is accepted by <strong>Advanced Materials</strong>.</li>
-				<li>2025-06: I will serve as Technical Program Committee Member at <strong>IEEE International Conference on Smart Multimedia</strong> [<a href="http://smartmultimedia.org/" target="_blank">Link</a>].
-				<li>2025-05: One paper is accepted by <strong>InterSpeech</strong>.</li>
-				<li>2025-05: One paper is accepted by <strong>International Conference on Machine Learning (ICML)</strong>.</li>
-				<li>2025-05: I will serve as Challenge Chair at <strong>MER25 Challenge@ACM MM</strong> and <strong>MRAC25 Workshop@ACM MM</strong> [<a href="https://zeroqiaoba.github.io/MER2025-website/#organization" target="_blank">Link</a>].</li>
-				<li>2025-04: Our Advanced Materials paper is selected as <strong>Editors' Choice</strong>.</li>
-				<li>2025-04: I will serve as <strong>Associate Editor</strong> at <strong> IEEE Transactions on Circuits and Systems for Video Technology (TCSVT)</strong>. [<a href="https://ieee-cas.org/contact/kele-xu target="_blank">Link</a>]</li>
-				<li>2025-04: One paper is accepted by <strong>ACM International Conference on Multimedia Retrieval (ICMR)</strong>.</li>
-				<li>2025-04: Two papers are accepted by <strong>ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)</strong>.</li>
-				<li>2025-03: Ranked as the <strong>2nd</strong> place in <strong>2025 CVPR NTIRE Challenge on HR Depth from Images</strong>.</li>
-				<li>2025-02: Two paper are accepted by <strong>Computer Vision and Pattern Recognition (CVPR)</strong>.</li>
-				<li>2025-02: One paper is accepted by <strong>IEEE Transactions on Computational Social Systems</strong>.</li>
-				<li>2025-02: One paper is accepted by <strong>IEEE Signal Processing Letters</strong>.</li>
-				<li>2025-02: Our <strong>first AI4S work</strong> is accepted by <strong>Advanced Materials</strong>.</li>
-				<li>2025-01: One paper is accepted by <strong>IEEE International Conference on Robotics and Automation (ICRA)</strong>.</li>
-				<li>2025-01: One paper is accepted by <strong>International Conference on Learning Representations (ICLR)</strong>.</li>
-				<li>2025-01: Our challenge paper is accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</li>
-				<li>2025-01: One paper is accepted by <strong>Speech Communication</strong>.</li>
-				<li>2024-12: Seven papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</li>
-				<li>2024-12: One paper is accepted by <strong>IEEE Open Journal of the Computer Society</strong>.</li>
-				<li>2024-12: Four papers are accepted by <strong>AAAI Conference on Artificial Intelligence</strong>.</li>
-				<li>2024-12: Ranked as <strong>1st</strong> place in <strong>Track 1 (English) of the ICASSP 2025 MEIJU Challenge</strong>.</li>
-				<li>2024-11: One paper is accepted by <strong>IEEE Transactions on Instrumentation & Measurement</strong>.</li>
-				<li>2024-10: Ranked as <strong>1st</strong> place in <strong>MICCAI SELMA3D challenge</strong>.</li>
-				<li>2024-10: Ranked as <strong>2nd</strong> place in <strong>MICCAI mAIcetoma challenge</strong>.</li>
-				<li>2024-10: One paper is accepted by <strong>IEEE Transactions on Network and Service Management</strong>.</li>
-				<li>2024-10: I will serve as Area Chair at <strong>International Conference on Acoustics, Speech and Signal Processing 2025</strong>.</li>
-				<li>2024-10: One paper is accepted by <strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>.</li>	
-				<li>2024-09: Two paper are accepted by <strong>Annual Conference on Neural Information Processing Systems (NeurIPS)</strong>.</li> 
-				<li>2024-09: One paper is accepted by <strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>.</li> 
-				<li>2024-09: One paper is accepted by <strong>Knowledge-Based Systems</strong>.</li> 
-				<li>2024-08: One paper is accepted by <strong>The Journal of the Acoustical Society of America</strong>.</li>
-				<li>2024-08: Ranked as <strong>3rd </strong> place in <strong>2024 ACM MultiMedia Demonstrative Instruction Following Challenge</strong>.</li>
-				<li>2024-07: Five papers are accepted by <strong>ACM International Conference on Multimedia</strong>.</li>
-				<li>2024-07: One paper is accepted by <strong> Neural Networks</strong>.</li>
-				<li>2024-07: Ranked as <strong>1st</strong> place in <strong>2024 IEEE DCASE Challenge on Few-shot Bioacoustic Event Detection Task</strong>. [<a href="https://dcase.community/challenge2024/task-few-shot-bioacoustic-event-detection-results" target="_blank">Link</a>]</li>
-				<li>2024-06: One paper is accepted by <strong> IEEE Open Journal of Signal Processing</strong>.				</li>
-				<li>2024-06: Ranked as <strong>2nd </strong> place in <strong>2024 ACM MultiMedia Face-voice Association in Multilingual Environment</strong>. [<a href="https://mavceleb.github.io/dataset/competition.html" target="_blank">Link</a>]</li>
-				<li>2024-06: One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>.</li>
-				<li>2024-05: Ranked as <strong>2nd </strong> place in <strong>2024 ACM MultiMedia Social Media Prediction Challenge</strong>. [<a href="http://smp-challenge.com/leaderboard.html" target="_blank">Link</a>]</li>
-				<li>2024-05: One paper is accepted by <strong> ACM Transactions on Multimedia Computing, Communications, and Applications</strong>.	</li>
-				<li>2024-05: One paper is accepted by <strong>European Signal Processing Conference (EUSIPCO)</strong>.</li>
-				<li>2024-05: One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>.</li>
-				<li>2024-05: One paper is accepted by <strong>International Conference on Machine Learning (ICML)</strong>.</li>
-				<li>2024-04: I will serve as Data Chair at <strong>MER24 Challenge@IJCAI</strong> and <strong>MRAC24 Workshop@ACM MM</strong> [<a href="https://zeroqiaoba.github.io/MER2024-website/#organization" target="_blank">Link</a>].				</li>
-				<li>2024-04: One paper is accepted by <strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>.</li>
-				<li>2024-04: Ranked as the <strong>3rd</strong> place in <strong>2024 CVPR NTIRE Challenge on HR Depth from Images</strong>.</li>
-				<li>2024-03: Two papers are accepted by <strong>IEEE Conference on Multimedia Expo (ICME)</strong>.</li>
-				<li>2024-02: One paper is accepted by <strong>IEEE Transactions on Cognitive and Developmental Systems</strong>.</li>
-				<li>2023-12: Four papers are accepted by <strong>International Conference on Acoustics, Speech and Signal Processing (ICASSP)</strong>.</li>
-				<li>2023-12: One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (AAAI)</strong>.</li>
-				<li>2023-11: One paper is accepted by <strong>Biomedical Signal Processing and Control</strong>.</li>
-				<li>2023-10: One paper is accepted by <strong>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing</strong>.</li>	
-				<li>2023-10: One paper is accepted by <strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>.</li>
-				<li>2023-09: One paper is accepted by <strong>IEEE Transactions on Artificial Intelligence</strong>.</li>
-				<li>2023-09: One paper is accepted by <strong>Intelligent Computing</strong>.</li>
-				<li>2023-08: One paper is accepted by <strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>.</li>	
-				<li>2023-08: One paper is accepted by <strong>IEEE Transactions on Circuits and Systems II</strong>.</li>
-				<li>2023-07: Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>.</li>
-				<li>2023-07: We organised a special session at <strong>APSIPA ASC 2023.</strong> [<a href="https://www.apsipa2023.org/special.html" target="_blank">Link</a>]</li>
-				<li>2023-07: One paper is accepted by <strong>The Journal of the Acoustical Society of America.</strong> [<a href="https://doi.org/10.1121/10.0019937" target="_blank">Link</a>]</li>
-				<li>2023-07: Ranked as the <strong>2nd</strong> place in <strong>ACM MM 2023 Visual Text Question Answer (VTQA) Challenge</strong>.</li>
-				<li>2023-06: Two papers are accepted by <strong>Ultrasound in Obstetrics & Gynecology</strong>.</li>
-				<li>2023-05: Ranked as the <strong>3rd</strong> place in <strong>IEEE DCASE2023 Challenge on Few-shot Bioacoustic Event Detection Task</strong>.</li>
-				<li>2023-04: Ranked as the <strong>1st</strong> place in <strong>IEEE ICME 2023 - Grand Challenge on Detecting CheapFakes</strong>.</li>
-				<li>2023-02: Four papers are accepted by <strong>International Conference on Acoustics, Speech and Signal Processing (ICASSP)</strong>.</li>
-				<li>2022-12: <strong>Meritorious Winner Award</strong> in <strong>NeurIPS</strong> Multi-modality Cell Segmentation Challenge.</li>
-				<li>2022-07: One paper is accepted by <strong>IEEE/ACM International Conference on Automated Software Engineering</strong>.</li>
-				<li>2022-07: Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>.</li>
-				<li>2022-07: Ranked as the <strong>1st</strong> place in <strong>IEEE DCASE2022 Challenge on Few-shot Bioacoustic Event Detection Task</strong>.</li>
-				<li>2022-06: Ranked as the <strong>1st</strong> place in <strong>ACM Multimedia Pre-training video understanding challenge Track 2.</strong> [<a href="http://www.auto-video-captions.top/2022/leaderboard" target="_blank">Link</a>]</li>
-				<li>2022-04: One paper is accepted by <strong>International Joint Conference on Artificial Intelligence</strong>.</li>
-				<li>2022-03: One paper is accepted by <strong>Computers & Security</strong>.</li>
-				<li>2022-01: Two papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</li>
-				<li>2021-12: One paper is accepted by <strong>AAAI Conference on Artificial Intelligence</strong>.</li>
-				<li>2021-10: One paper is accepted by <strong>IEEE Transactions on Geoscience and Remote Sensing</strong>.</li>
-				<li>2021-07: Ranked as the <strong>1st</strong> place in <strong>ACM MM Multi-modal ads video understanding Challenge</strong> [<a href="https://arxiv.org/abs/2108.00679" target="_blank">Link</a>].</li>
-				<li>2021-05: One paper is accepted by <strong>IEEE Transactions on Medical Imaging</strong>.</li>
-				<li>2021-04: One paper is accepted by <strong>ACM International Conference on Multimedia Retrieval</strong>.</li>
-				<li>2021-04: <strong>Winner</strong> at <strong>IEEE ISBI A-AFMA</strong> Challenge.</li>
-				<li>2021-04: <strong>Winner</strong> at <strong>ACM International Conference on Multimedia Retrieval ROD </strong>Challenge.</li>
-				<li>2021-02: Two papers are accepted by <strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</li>
-				<li>2021-01: One paper is accepted by <strong>IEEE Geoscience and Remote Sensing Letters</strong>.</li>
-				<li>2020-11: Two papers are accepted by <strong>International Seminar on Speech Production</strong>.</li>
-				<li>2020-10: <strong>Prize Winner</strong> at TissueNet competition among more than 547 participants [<a href="https://www.drivendata.org/competitions/67/competition-cervical-biopsy/" target="_blank">Link</a>].</li>
-				<li>2020-08: Three papers are accepted by <strong>ACM International Conference on Multimedia</strong>.</li>
-				<li>2020-07: One paper is accepted by <strong>Conference of the International Speech Communication Association (InterSpeech)</strong>.</li>
-				<li>2020-07: One paper is accepted by <strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>.</li>
-				<li>2020-06: <strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>.</li>
-				<li>2020-05: One paper is accepted by <strong>The Journal of the Acoustical Society of America EL</strong>.</li>
-				<li>2020-02: Ranked as the <strong>1st</strong> place in <strong>ECDP HEROHE Challenge</strong> [<a href="https://ecdp2020.grand-challenge.org/" target="_blank">Link</a>].</li>
-				<li>2020-01: One paper is accepted by <strong>SCIENCE CHINA Information Sciences</strong>.</li>
-            </ul>
-        </section>
-		
-        <!-- Academic Services Section -->
-        <section id="services">
-            <h2>Academic Services</h2>
-            <ul>
-                <li><strong>Memberships:</strong>
-                    <ul>
-						<li>Acoustical Society of America (ASA), Full Member </li>
-						<li>IEEE Senior Member </li>
-						<li>Association for Computing Machinery (ACM) Member </li>
-						<li>IEEE Image Analysis and Data Fusion (IADF) Technical Committee Member </li>
-						<li>China Computer Federation (CCF), Senior Member </li>
-						<li>Chinese Association of Automation (CAA), Lifelong Member </li>
-						<li>Acoustical Society of China (ASC), Member </li>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <div class="nav-logo">KX</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#bio">Bio</a>
+                <a href="#news">News</a>
+                <a href="#publications">Publications</a>
+                <a href="#services">Services</a>
+                <a href="#competitions">Awards</a>
+                <a href="#others">Others</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-card">
+                    <h3>Navigation</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#bio" class="active"><i class="fas fa-user"></i> Biography</a></li>
+                        <li><a href="#news"><i class="fas fa-newspaper"></i> Recent News</a></li>
+                        <li><a href="#publications"><i class="fas fa-book"></i> Publications</a></li>
+                        <li><a href="#services"><i class="fas fa-users"></i> Academic Services</a></li>
+                        <li><a href="#competitions"><i class="fas fa-trophy"></i> Awards</a></li>
+                        <li><a href="#others"><i class="fas fa-ellipsis-h"></i> Others</a></li>
                     </ul>
-                </li>
-				
-                <li><strong>Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer:</strong>
-					<ul>
-						<li>International Conference on Learning Representations (ICLR)</li>
-						<li>Neural Information Processing Systems (NeurIPS)</li>
-						<li>International Conference on Machine Learning (ICML)</li>
-						<li>International Joint Conferences on Artificial Intelligence (IJCAI)</li>
-						<li>AAAI Conference on Artificial Intelligence (AAAI)</li>
-						<li>International Conference on Computer Vision (ICCV)</li>
-						<li>IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</li>
-						<li>ACM International Conference on Multimedia (ACM MM)</li>
-						<li>ACM International Conference on Multimedia in Asia (MM Asia)</li>
-						<li>International Conference on Acoustics, Speech & Signal Processing (ICASSP)</li>
-						<li>Medical Image Computing and Computer Assisted Intervention (MICCAI)</li>
-						<li>IEEE Conference on Multimedia Expo (ICME)</li>
-						<li>European Conference on Computer Vision (ECCV)</li>
-						<li>International Conference of the Speech Communication Association (INTERSPEECH)</li>
-						<li>IEEE International Symposium on Biomedical Imaging (ISBI)</li> 
-						<li>IEEE International Conference on Mobility, Sensing and Networking (MSN)</li> 
-						<li>Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC) </li>
-						<li>IEEE International Conference on Bioinformatics and Biomedicine (BIBM)</li>
-						<li>International Conference on Artificial Intelligence and Statistics (AISTATS)</li>
-						<li>...</li>
-					</ul>
-				</li>
-				
-				<li><strong>Journal Reviewer: </strong>
-					<ul>
-						<li>Nature Communication </li>
-						<li>Science Partner Journal Cyborg and Bionic Systems <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">[Guest Editor]</a> </li>
-						<li>The Journal of the Acoustical Society of America</li>
-						<li>Acta Acustica united with Acustica</li>
-						<li>Speech Communication</li>
-						<li>Computer Speech & Language</li>
-						<li>IEEE Transactions on Circuits and Systems for Video Technology <a href="https://ieee-cas.org/contact/kele-xu" target="_blank">[Editorial Board/Associate Editor]</a> </li>
-						<li>IEEE Transactions on Audio, Speech and Language Processing</li>
-						<li>IEEE Transactions on Neural Networks and Learning Systems</li>
-						<li>IEEE Transactions on Cognitive and Developmental Systems</li>
-						<li>IEEE Transactions on Signal Processing </li>
-						<li>IEEE Transactions on Image Processing </li>
-						<li>IEEE Transactions on Artificial Intelligence </li>
-						<li>IEEE Transactions on Geoscience and Remote Sensing</li>
-						<li>IEEE Geoscience and Remote Sensing Letters</li>
-						<li>IEEE Signal Processing Letters</li>
-						<li>IEEE Transactions on Systems, Man and Cybernetics: Systems</li>
-						<li>IEEE Journal of Biomedical and Health Informatics</li>
-						<li>IEEE Internet of Things Journal</li>
-						<li>IEEE Transactions on Services Computing</li>
-						<li>ACM Transactions on Intelligent Systems and Technology</li>
-						<li>SCIENCE CHINA Information Sciences</li>
-						<li>Frontiers in Artificial intelligence  <a href="https://www.frontiersin.org/journals/big-data/sections/machine-learning-and-artificial-intelligence/editors target="_blank">[Associate Editor] </a></li>
-						<li>Neural Networks</li>
-						<li>Biocybernetics and Biomedical Engineering</li>
-						<li>Engineering Applications of Artificial Intelligence</li>
-						<li>Biomedical Signal Processing & Control</li>
-						<li>BMC Medical Imaging</li>
-						<li>Intelligent Medicine</li>
-						<li>Computer Methods and Programs in Biomedicine</li>
-						<li>Computers in Biology and Medicine</li>
-						<li>Expert Systems With Applications</li>
-						<li>Knowledge-Based Systems</li>
-						<li>Frontiers in Neuroscience</li>
-						<li>Frontiers in Big Data <a href="https://www.frontiersin.org/journals/artificial-intelligence" target="_blank">[Associate Editor]</a> </li>
-						<li>Neurocomputing</li>
-						<li>Sensors <a href="https://www.mdpi.com/journal/sensors/special_issues/4PJ45YQ956" target="_blank">[Guest Editor] </a> </li>
-						<li> ...</li>
-					</ul>
-				</li>
-            </ul>
-        </section>
+                </div>
+                
+                <div class="sidebar-card">
+                    <h3>Quick Info</h3>
+                    <div class="quick-info">
+                        <div class="info-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <strong>PhD</strong>
+                                <div>Université Pierre et Marie Curie</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <strong>Research Areas</strong>
+                                <div>Continual Learning, Computer Audition, AI4Science</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-chess-queen"></i>
+                            <div>
+                                <strong>Kaggle Grandmaster</strong>
+                                <div>Top ranks in ACM KDD Cup, Kaggle, Tianchi, CCF BDCI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card">
+                    <h3>External Links</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="https://scholar.google.com/citations?user=sou7o2EAAAAJ&hl=en" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a></li>
+                        <li><a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><i class="fab fa-kaggle"></i> Kaggle Profile</a></li>
+                        <li><a href="https://ieee-cas.org/contact/kele-xu" target="_blank"><i class="fas fa-edit"></i> TCSVT Editorial</a></li>
+                        <li><a href="https://zeroqiaoba.github.io/MER2025-website/#organization" target="_blank"><i class="fas fa-user-tie"></i> MER25 Challenge</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
 
-        <!-- Competitions and Awards Section -->
-        <section id="competitions">
-            <h2>Awards</h2>
-					<ul>
-					    <li><strong>Outstanding Supervisor Award at CCF BDCI competition, 2020</strong></li>
-						<li>Meritorious Winner Award in NeurIPS Multi-modality Cell Segmentation Challenge, 2022 </li>
-						<li>1st place in ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English, 2025</li>
-						<li>1st place in MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge, 2024</li>
-						<li>1st place in IEEE ICME Grand Challenge on Detecting CheapFakes, 2023</li>
-						<li>1st place in ACM Multimedia Pre-training video understanding challenge Track 2, 2022 </li>
-						<li>1st place in IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task, 2022 </li>
-						<li>1st place in ACM MM Multi-modal ads video understanding Challenge, 2021 </li>
-						<li>1st place in European Congress on Digital Pathology (ECDP2020) HEROHE Competition, Prize Winner, 2020</li>
-						<li>1st place among more than 900 teams in Medical Health Big Data Innovation Application, Prize Winner, 2018</li>
-						<li>1st place among more than 2000 teams in CCF BDCI, Prize Winner, 2016</li>
-						<li>2nd place in IJCAI The 2nd Challenge on Characterizing User Behavior in Social Networks: Propagation, Prediction, and Sensemaking, 2025</li>
-						<li>2nd place in ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2024), 2024</li>
-						<li>2nd place in CVPR NTIRE Challenge on HR Depth from Images, 2025</li>
-						<li>2nd place in ACM MultiMedia Face-voice Association in Multilingual Environment Challenge, 2024</li>
-						<li>2nd place (Runner-Up) in MICCAI Mycetoma MicroImage Challenge (mAIcetoma), 2024</li>
-						<li>2nd place in ACM MM Visual Text Question Answer (VTQA) Challenge, 2023</li>	
-						<li>2nd place among more than 1000 teams in CCF BDCI, Prize Winner, 2017 </li>
-						<li>2nd place among 5163 teams in Kaggle-Porto Seguro's Safe Driver Prediction, Prize Winner, 2018</li>
-						<li>3rd place in ACM MM Conversational Head Generation Challenge, 2023</li>
-						<li>3rd place in IEEE DCASE Challenge on Few-shot Bioacoustic Event Detection Task, 2023.</li>
-						<li>Top performance award in ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2020), 2020</li>
-						<li>3rd place (Winner) in ACM International Conference on Multimedia Retrieval ROD Challenge, 2021</li>
-						<li>3rd place among more than 548 teams in Kaggle Avito Duplicate Ads Detection, Prize Winner, 2018</li>
-						<li>3rd place in CVPR NTIRE Challenge on HR Depth from Images, 2024</li>
-						<li>3rd place in ACM International Conference on Multimedia Retrieval ROD Challenge, 2021</li>
-						<li>3rd place in ACM MultiMedia Demonstrative Instruction Following Challenge, 2021</li>
-						<li>3rd place among 3513 teams in ACM KDD Cup Traffic Volume Prediction Track, Prize Winner, 2017</li>
-						<li>3rd place among more than 600 teams in Santa's Uncertain Bags Optimization Competition, Gold Medal, 2016</li>
-						<li>4th place in International Conference on Acoustics, Speech, and Signal Processing NAD Challenge, 2021</li>
-						<li>4th place in TissueNet Competition, Prize Winner, 2020</li>
-						<li>4th place in ECCV AIM Challenge on Scene Relighting and Illumination Estimation, 2020</li>
-						<li>4th place in InterSpeech AutoSpeech Challenge (AutoSpeech), 2020</li>
-						<li>4th place among 3229 teams in Kaggle TGS Salt Identification Challenge, Prize Winner, 2018</li>
-						<li>4th place among more than 800 teams in Rong360 Finance Risk Manangement Big Data Competition, Prize Winner, 2016</li>
-						<li>5th place in CVPR NTIRE NonHomogeneous Dehazing challenge, 2024</li>
-						<li>5th place among more than 600 teams in The 3rd Alibaba Cloud Security Algorithm Challenge, Prize Winner, 2018</li>
-						<li>6th place in CVPR NTIRE Perceptual Image Quality Assessment Challenge, 2022</li>
-						<li>6th place in CVPR NTIRE Multi-modal Aerial View Object Classification Challenge, 2021</li>
-						<li>7th place in CVPR NTIRE Perceptual Image Quality Assessment Challenge, 2021</li>
-						<li>8th place among more than 4800 teams in Daguan Cup: Long Sentence Classification Challenge, Prize Winner, 2019</li>
-						<li>8th place among 1871 teams in Kaggle Avito Demand Prediction Challenge, Gold Medal, 2018</li>
-						<li>10th place among 2382 teams in Kaggle Mercari Prize Suggestion Challenge, Gold Medal, 2018</li>
-						<li>PPDAI Magic Mirror Data Application Contest, Prize Winner, 2018</li>
-						<li>11th place among 5122 teams in Kaggle Santander Customer Satisfaction, Gold Medal, 2016</li>
-						<li>23th place among 7190 teams in Kaggle Home Credit Default Risk Prediction, Gold Medal, 2016</li>
-						<li>26th place among 8802 teams in Kaggle Santander Customer Transaction Prediction, Gold Medal, 2016</li>
-						<li>...</li>
-					</ul>
-        </section>
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Biography Section -->
+            <section id="bio">
+                <div class="section-header">
+                    <h2>Brief Biography</h2>
+                </div>
+                <p>Currently, I serve as an Associate Professor at the State Key Laboratory of Complex & Critical Software Environment at NUDT, China.</p>
+                <p>I received my Ph.D. degree from Université Pierre et Marie Curie, Paris, France, working with Prof. Bruce Denby and Prof. Gerard Dreyfus (IEEE Fellow). My research focuses on <span class="highlight">Continual learning</span>, <span class="highlight">Computer audition</span>, and <span class="highlight">AI4Science</span>.</p>
+                <p>In addition to academic pursuits, I actively participate in machine learning competitions, having achieved top ranks in data mining and machine learning competitions, including the <a href="https://www.kdd.org/kdd2017/announcements/view/announcing-kdd-cup-2017-highway-tollgates-traffic-flow-prediction" target="_blank">ACM KDD Cup</a>, Kaggle, Tianchi, and CCF BDCI. I am also a <a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><strong>Kaggle Grandmaster</strong></a>.</p>
+                <p>If you're interested in joining us, please drop me an email at: <strong>kele.xu at ieee dot org</strong></p>
+            </section>
 
-        <!-- Publications Section -->
-        <section id="publications">
-            <h2>Selected Publications</h2>
-            <p>
-                A full list of publications is available on my 
-                <a href="https://scholar.google.com/citations?user=sou7o2EAAAAJ&hl=en" target="_blank">Google Scholar Profile</a>.
-            </p>
-			
-			<li> <em>* denotes for corresponding author. </em> </li>
-			
-			<h4>
-				Books:
-			</h4>
-				<ul>
-					<li>
-						<u>Kele Xu</u>, Data Mining Competition Practice: Methods and Cases. Tsinghua University Press.
-						</i><a href="https://www.tup.com.cn/booksCenter/book_10078401.html" target="_blank">[In Chinese] </a>
-						</i><a href="https://books.google.com.sg/books/about/Data_Mining_Competition_Practices.html?id=h1KU0QEACAAJ&redir_esc=y"target="_blank">[In English] </a>
-					</li>
-					
-					<li>
-						<u>Kele Xu</u>, Jisheng Bai, Boqing Zhu, Qisheng Xu, Yi Su and Mou Wang. General Audio Signal Processing with Deep Learning. Springer-Verlag.
-						</i><a href="https://books.google.com.hk/books/about/General_Audio_Signal_Processing_with_Dee.html?id=1Vd00QEACAAJ&redir_esc=y" target="_blank">[Link] </a>
-					</li>
-				</ul>
-			
-			<h4>
-				Preprint & to appear:
-			</h4>
-			
-				<ul>
-				<li>
-					Xuyao Deng, Yong Dou, <u>Kele Xu*</u>.
-					"BeamformNet: Deep Learning-Based Beamforming Method for DoA Estimation via Implicit Spatial Signal Focusing and Noise Suppression",
-					<i><strong>IEEE Transactions on Cognitive Communications and Networking</strong>.</i>
-				</li>
-						
-				<li>
-					Hui Geng, Tianjiao Wan, Yi Su, Qisheng Xu, Zijian Gao, Hengzhu Liu, Dawei Feng, <u>Kele Xu*</u>.
-					"A Dual-Memory Consolidation Framework for Data-Efficient Active Learning",
-					<i><strong>IEEE Transactions on Knowledge and Data Engineering</strong>.</i>
-				</li>
-				
-				<li>
-					Tianjiao Wan, Zijian Gao, Jingyu Wei, Jiaxin Chen, Dawei Feng, Bo Ding, Yijie Wang, and Huaimin Wang, <u>Kele Xu*</u>.
-					"Graph-based Mutual Influence for Active Learning",
-					<i><strong>IEEE Transactions on Knowledge and Data Engineering</strong>.</i>
-				</li>
-				
-				<li>
-					Man Xiao, Jianbin Ye, Bo Liu, Xingkong Ma, Tianjiao Wang, Qisheng Xu, Huaimin Wang, <u>Kele Xu</u>*.
-					"Multimodal Deepfake DNA-Purified Cascaded Diversification for Continual Few-shot Detection",
-					<i><strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>.</i>	
-				</li>
-				
-				<li>
-					Qian Zhu, Qisheng Xu, Yi Su, Yulin Sun, Yutao Dou, Tao Li, <u>Kele Xu</u>*.
-					"UACIL: A Large-Scale Dataset for Class Incremental Learning in Underwater Acoustic Target Recognition",
-					<i><strong>Nature Partner Journals Acoustics</strong>.</i>	
-				</li>
-				
-				<li>
-					Xiaoyi Tan, Qisheng Xu, Boqing Zhu, Huaimin Wang, Yutao Dou, <u>Kele Xu</u>*.
-					"Representation-Decoupled and Classifier-Refined Learning for Fully Few-shot Class-Incremental Audio Classification",
-					<i><strong>ACM Transactions on Multimedia Computing Communications and Applications</strong>.</i>	
-				</li>
-				
-				<li>
-					Hui Geng, Tianjiao Wa, Qisheng Xu, Zijian Gao, Boqing Zhu, Wen Zhang, <u>Kele Xu</u>*.
-					"Uncertainty-Guided Active Learning for Underwater Acoustic Target Recognition Via Attention-Aware Inconsistency",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				
-				<li>
-					Xuyao Deng, Yanjie Sun, Yong Dou, <u>Kele Xu</u>*.
-					"Unify Variables in Neural Scaling Laws for General Audio Representations via Embedding Effective Rank",
-					<i><strong>IEEE Transactions on Audio, Speech and Language Processing</strong>.</i>	
-				</li>
-				
-				<li>
-					Xuyao Deng, Yong Dou, <u>Kele Xu</u>*.
-					"Spatial Signal Focusing and Noise Suppression for Direction-of-Arrival Estimation in Large-Aperture 2D Arrays under Demanding Conditions",
-					<i><strong>IEEE Transactions on Signal Processing</strong>.</i>	
-				</li>
-				
-				<li>
-					Tao Sun, Yuhao Huang, Li Shen, <u>Kele Xu</u>, Xinwang Liu, Bao Wang.
-					"How Does Weight Decay Improve the Nonconvex SGD: When and Why?",
-					<i><strong> IEEE Transactions on Pattern Analysis and Machine Intelligence</strong>.</i>
-				</li>		
-				
-				<li>
-					Zhiyan Wang, Changjian Wang*, <u>Kele Xu*</u>, Zhongshun Tang, Yan Zhuang, Jiani Zou, Fangyi Liu. 
-					"MCDNet: Morphological-Conditional Dual-view Fusion for 3D Tubular Structure Segmentation",
-					<i><strong>Neural Networks</strong>.</i>
-				</li>
-				
-				<li>
-					<u>Kele Xu</u>, Guojiang Zhao, Zheng Cheng, Tianjiao Wan, Ming Feng, Shuqi Lu, Hongshuai Wang, Zijian Gao, Qi Ou, Liang Hu, Dawei Feng, Zifeng Zhao, Zhifeng Gao.
-					"Fast and flexible 3D molecule design framework for novel organic optoelectronic materials",
-					<i><strong>Preprint</strong>.</i>
-					</i><a href="https://chemrxiv.org/engage/chemrxiv/article-details/67ae0f2cfa469535b92fae05" target="_blank">[Paper] </a>
-				</li>
-				
-				<li>
-					Yi Su, Jisheng Bai, Qisheng Xu, <u>Kele Xu*</u>, Yong Dou.
-					"Audio-Language Models for Audio-Centric Tasks: A survey",
-					<i><strong> IEEE Transactions on Neural Networks and Learning Systems</strong>.</i>
-					</i><a href="https://arxiv.org/abs/2412.11907" target="_blank"> [Paper] </a>
-				</li>
-				
-				<li>
-					Wuyang Chen, Yanjie Sun, <u>Kele Xu*</u>, Xinwang Liu, Xingyi Li, Yong Dou, Huaimin Wang.
-					"A Survey on Human-centric Voice-Face Multimodal Learning",
-					<i><strong> IEEE Transactions on Neural Networks and Learning Systems</strong>.</i>
-				</li>
-						
-				<li>
-					Qisheng Xu, Yulin Sun, Yi Su, Qian Zhu, Xiaoyi Tan, Hongyu Wen, Zijian Gao, <u>Kele Xu*</u>, Yong Dou, Dawei Feng.
-					"AudioCIL: A Python Toolbox for Audio Class-Incremental Learning with Multiple Scenes",
-					<i><strong>Arxiv</strong>.</i>
-					</i><a href="https://arxiv.org/abs/2412.11907" target="_blank">[Paper] </a>
-				</li>
-						
-				<li>
-					Huanxi Liu, Jiaqi Liao, Dawei Feng, <u>Kele Xu</u>, Huaimin Wang.
-					"AutoFeedback: An LLM-based Framework for Efficient and Accurate API Request Generation",
-					<i><strong>Arxiv</strong>.</i>
-					</i><a href="https://arxiv.org/abs/2410.06943" target="_blank">[Paper] </a>
-				</li>
-								
-				<li>
-					Xiao Teng, Guochun Chen, Dingyao Chen, <u>Kele Xu</u>, Xinwang Liu, Long Lan.
-					"Hybrid Association-Based Cross-Modality Learning for Unsupervised Visible-Infrared Person Re-Identification",
-					<i><strong>IEEE Transactions on Intelligent Transportation Systems</strong>.</i>
-				</li>
-				
-				<li>
-					Jianbin Ye, Man Xiao, Bo Liu, Huaping Hu, Zijian Gao, Wuyang Chen, Shaojing Fu, Huaimin Wang, <u>Kele Xu</u>*.
-					"MDCD-DB: Benchmarking Multimodal Deepfake Continual Detection Against Evolving Forgery Threats",
-					<i><strong>Expert Systems with Applications</strong>.</i>
-				</li>
-				
-				<li>
-					Man Xiao, Jianbin Ye, Bo Liu, Zijian Gao, Wuyang Chen, Tao Li, Huaimin Wang, <u>Kele Xu</u>*.
-					"Adaptive Affinity Memorization with Layer Mutation for Multimodal Deepfake Continual Detection",
-					<i><strong>IEEE Transactions on Information Forensics and Security</strong>.</i>
-				</li>
-				
-				<li>
-					Jianbin Ye, Yanjie Sun, Man Xiao, Bo Liu, Huaimin Wang, <u>Kele Xu</u>*.
-					"Enhance EEG Decoding with Selective Augmentation Integration",
-					<i><strong>Frontier of Computer Science</strong>.</i>
-				</li>
-				
-				<li>
-					Yuxuan Li, Jianguo Wei, Qiang Fang*, <u>Kele Xu</u>*, Lu Wang, Xugang Lu.
-					"Ultrasound Tongue Imaging Calibration Helmet based on Skull Feature for Articulatory Data Observation",
-					<i><strong>IEEE Transactions on Instrumentation & Measurement</strong>.</i>	
-				</li>
-				
-				<li>
-					Qisheng Xu, Zijian Gao, Yong Dou, <u>Kele Xu</u>*, Caili Gao, Dawei Feng, Xinjun Mao.
-					"Uncertainty-guided Few-shot Class-incremental Audio Classification",
-				   <i><strong>Pattern Recognition</strong>.</i>	
-				</li>
-				
-				<li>
-					Yanjie Sun, Wuyang Chen, Siwen Guo, <u>Kele Xu</u>*, Junhua Liu, Yong Dou.
-					"A Systematic Survey for Audio Data Augmentation",
-				   <i><strong>ACM Computing Surveys</strong>.</i>	
-				</li>
-				
-				<li>
-					Yanjie Sun, Wuyang Chen, <u>Kele Xu</u>*, Xuyao Deng, Yong Dou.
-					"Identifying a Highly Efficient Length in Audio SSL: An Audio-specific Scaling Law",
-				   <i><strong>IEEE Transactions on Audio, Speech and Language Processing</strong>.</i>	
-				</li>
-				</ul>
-			
-			<h4>
-				2025:
-			</h4>
-			
-			<ul>
-			
-				<li>
-					Yuanzhao Zhai, Yu Lei, Han Zhang, Yue Yu, <u>Kele Xu</u>, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Uncertainty-Penalized Reinforcement Learning from Human Feedback with Diversified Reward LoRA Ensembles",
-					<i><strong>Information Processing and Management</strong>.</i>
-				</li>
-			
-				<li>
-					Dulan Zhou, Zijian Gao, <u>Kele Xu</u>*,
-					"Perturbing to Preserve: Defending Fragile Knowledge in Online Continual Learning",
-					<i><strong>AAAI Conference on Artificial Intelligence (Oral)</strong>.</i>	
-				</li>
-				
-				<li>
-					Cheng Yang, Qisheng Xu, Ming Feng, Hui Yang, Yulei Yuan, Yutao Dou, <u>Kele Xu*</u>.
-					"Hybrid Local-Global Representation Learning with Stochastic Gaussian Classification for Underwater Acoustic Target Recognition",
-					<i><strong>Scientific Reports</strong>.</i>
-				</li>
-			
-				<li>
-					Zijian Gao, Xingxing Zhang, Huiping Zhuang, <u>Kele Xu</u>*, Tianjiao Wan, Bo Ding, Xinjun Mao, Huaimin Wang,
-					"Rethinking Obscured Sub-optimality in Analytic Learning for Exemplar-Free Class-Incremental Learning",
-					<i><strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>.</i>	
-				</li>
-				
-				<li>
-					Guohong Wang, Xiaohan Tan, Zengming Lin, Binli Luo, Shangjian Zhong, <u>Kele Xu*</u>.
-					"FreqEvo: Enhancing Time Series Forecasting with Multi-Level Frequency Domain Feature Extraction",
-					<i><strong>IEEE Transactions on Knowledge and Data Engineering</strong>.</i>
-				</li>
-						
-				<li>
-					Tianjiao Wan, Zijian Gao, Xudong Gong, Dawei Feng, Xingxing Zhang, Bo Ding, Yijie Wang, Huaimin Wang, <u>Kele Xu</u>*.
-					"Dynamic Confidence Variance for Generalized Coreset in Active Learning",
-					<i><strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>.</i>	
-				</li>
-			
-				<li>
-					Yutao Dou, Yaoyu Liu, Haitao Zou, Wenwu Zeng, <u>Kele Xu</u>, Shaoliang Peng.
-					"A Survey on Electronic Health Record Driven Multimodal Representation Learning",
-					<i><strong>Information Fusion</strong>.</i>
-				</li>
-							
-				<li>
-					Wuyang Chen, <u>Kele Xu*</u>, Yanjie Sun, Yong Dou, Huaimin Wang.
-					"Voice2Visage: Deciphering Faces from Voices".
-					<i><strong>IEEE Transactions on Biometrics, Behavior, and Identity Science</strong>.</i>
-				</li>
-			
-				<li>
-					Yulin Sun, Qisheng Xu, Yi Su, Qian Zhu, Yong Dou, Xinwang Liu, <u>Kele Xu*</u>.
-					"AudioSet-R: A Refined AudioSet with Multi-Stage LLM Label Reannotation",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>	
-				</li>
-			
-				<li>
-					<u>Kele Xu</u>, Qisheng Xu, Binli Luo, Han Zhou, Zengming Lin, Hui Geng, Xianhan Tan.
-					"Higher-Order Vision-Language Fusion for Video Polularity Prediction",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>	
-				</li>
-				
-				<li>
-					Zheng Lian, Rui Liu, <u>Kele Xu</u>, Bin Liu, Xuefei Liu, Yazhou Zhang, Xin Liu, Yong Li, Zebang Cheng, Haolin Zuo, Ziyang Ma, Xiaojiang Peng, Xie Chen, Ya Li, Erik Cambria, Guoying Zhao, Björn W Schuller, Jianhua Tao.
-					"MER 2025: When Affective Computing Meets Large Language Models",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-					</i><a href="https://arxiv.org/abs/2504.19423" target="_blank">[Challenge Summary] </a>
-				</li>
-				
-				<li>
-					Tianheng Qiu, Jingchun Gao, Jingyu Li, Huiyi Leong, Xuan Huang, Xi Wang, Xiaocheng Zhang, <u>Kele Xu</u>, and Lan Zhang.
-					"IntentVCNet: Bridging Spatio-Temporal Gaps for Intention-Oriented Controllable Video Captioning",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>	
-				</li>
-				
-				<li>
-					Man Xiao, Jianbin Ye, Bo Liu, Zijian Gao, <u>Kele Xu*</u>, Xiaodong Wang.
-					"Analytic Synaptic Dynamic Scaling Balancer for Multimodal Deepfake Continual Detection",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>	
-				</li>
-				
-				<li>
-					Shen'ao Xue, Zheng Luo, Aolin Li, Ming Feng, Shouheng Li, Shen Zhou, <u>Kele Xu</u>, Huaimin Wang, Jin Zhang, Fangping Ouyang, Shanshan Wang.
-					"Machine Learning-Assisted Active Center Exploration in Atomically Thin MoSxTe2-x Electrocatalysts for Efficient Hydrogen Evolution",
-					<i><strong>Advanced Materials</strong>.</i>
-					</i><a href="https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202503474" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Yulu Fang, Mingyue He, Qisheng Xu, Jianqiao Zhao, Cheng Yang, <u>Kele Xu</u>, Yong Dou.
-					"Multi-view Fusion and Parameter Perturbation for Few-Shot Class-Incremental Audio Classification",
-					<i><strong>Annual Conference of the International Speech Communication Association (InterSpeech)</strong>.</i>	
-				</li>
-			
-				<li>
-					Xudong Gong, Sen Yang, Dawei Feng, <u>Kele Xu</u>, Bo Ding, Huaimin Wang, Yong Dou.
-					"Improving the Continuity of Goal-Achievement Ability via Policy Self-Regularization for Goal-Conditioned Reinforcement Learning",
-					<i><strong>International Conference on Machine Learning (ICML)</strong>.</i>	
-				</li>
-			
-				<li>
-					Man Xiao, Jianbin Ye, Bo Liu, Zijian Gao, <u>Kele Xu*</u>, Xiaodong Wang.
-					"Self-supervised Bidirectional Synchronization Estimation for Multimodal Deepfake Detection with Short-term Dependency",
-					<i><strong>ACM International Conference on Multimedia Retrieval (ICMR)</strong>.</i>	
-				</li>
-				
-				<li>
-					Qiang Wang, <u>Kele Xu*</u>, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Memory replay with unlabeled data for semi-supervised class-incremental learning via temporal consistency",
-					<i><strong>Frontiers of Computer Science</strong>.</i>	
-				</li>
-				
-				<li>
-					Yuanzhao Zhai, Huanxi Liu, Zhuo Zhang, Tong Lin, <u>Kele Xu</u>, Cheng Yang, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Empowering Large Language Model Agent through Step-Level Self-Critique and Self-Training",
-					<i><strong>ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)</strong>.</i>	
-				</li>
-				
-				<li>
-					Yuanzhao Zhai, Zhuo Zhang, Cheng Yang, <u>Kele Xu</u>, Yue Yu, Wei Li, Hui Wang, Zenglin Xu, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Preference-Strength-Aware Self-Improving Alignment with Generative Preference Models",
-					<i><strong>ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)</strong>.</i>	
-				</li>
-			
-				<li>
-					Tao Sun, Yuhao Huang, Li Shen, <u>Kele Xu</u>, Bao Wang.
-					"Investigating the Role of Weight Decay in Enhancing Nonconvex SGD",
-					<i><strong>IEEE Conference on Computer Vision and Pattern Recognition</strong>.</i>	
-				</li>
-				
-				<li>
-					Zijian Gao, Wangwang Jia, Xingxing Zhang, Dulan Zhou, <u>Kele Xu*</u>, Dawei Feng, Yong Dou, Xinjun Mao, Huaimin Wang.
-					"Knowledge Memorization and Rumination for Pre-trained Model-based Class-Incremental Learning",
-					<i><strong>IEEE Conference on Computer Vision and Pattern Recognition</strong>.</i>	
-				</li>
-			
-				<li>
-					Zekun Tao, Changjian Wang*, <u>Kele Xu</u>*, Tao Sun, Yong Guo, Kun Qian, Yanru Bai and Shanshan Li.
-					"Information Diffusion Prediction with Augmented Diffusion Dependency and Multi-Granularity Temporal Influence",
-					<i><strong>IEEE Transactions on Computational Social Systems</strong>.</i>	
-				</li>
-			
-				<li>
-					Zheng Luo, Ming Feng, Zijian Gao, Jinyang Yu, Liang Hu, Tao Wang, Shenao Xue, Shen Zhou, Fangping Ouyang, Dawei Feng, <u>Kele Xu*</u>, Shanshan Wang*.
-					"Exploring Structure Diversity in Atomic Resolution Microscopy With Graph",
-					<i><strong>Advanced Materials</strong>.</i>
-					</i><a href="https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202417478" target="_blank">[Paper] </a>
-				</li>
-				
-				<li>
-					Chenxi Zhou, Tianjiao Wan, <u>Kele Xu*</u>, Peng Qiao, Yong Dou.
-					"Segment Anything for Visual Bird Sound Denoising",
-					<i><strong>IEEE Signal Processing Letters</strong>.</i>
-				</li>
-								
-				<li>
-					Zijian Gao, Bo Liu, <u>Kele Xu</u>*, Xinjun Mao, Huaimin Wang.
-					"Correlation-based Knowledge Distillation in Exemplar-Free Class-Incremental Learning",
-					<i><strong>IEEE Open Journal of the Computer Society</strong>.</i>	
-				</li>
-			
-				<li> 
-					Xudong Gong, Dawei Feng, <u>Kele Xu</u>, Xing Zhou, Si Zheng, Bo Ding, Huaimin Wang.
-					"A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations",
-					<i><strong>IEEE International Conference on Robotics and Automation (ICRA)</strong>.</i>
-				</li>
-			
-				<li> 
-					Xudong Gong, Dawei Feng, <u>Kele Xu</u>, Weijia Wang, Zhangjun Sun, Xing Zhou, Si Zheng, Bo Ding, Huaimin Wang.
-					"VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems",
-					<i><strong>International Conference on Learning Representations (ICLR)</strong>.</i>
-				</li>
-		
-				<li> 
-					Yu Zhang, Bin Chen, Hongfei Ye, Zijian Gao, Tianjiao Wan, Long Lan, <u>Kele Xu</u>*.
-					"Text-guided Multimodal Fusion for the Multimodal Emotion and Intent Joint Understanding",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-			
-				<li>
-					Xi Dan, <u>Kele Xu</u>*, Yihang Zhou, Chuangguang Yang, Yihao Chen, Yutao Dou, Cheng Yang.
-					"Spatio-Temporal Masked Autoencoder-based Phonetic Segments Classification From Ultrasound",
-					<i><strong>Speech Communication</strong>.</i>	
-				</li>
-			
-				<li> 
-					Xuyao Deng, Tianjiao Wan, <u>Kele Xu</u>*, Tian Gao, Peng Qiao, Dawei Feng, Yong Dou.
-					"Scaling Bioacoustic Signal Pre-training with Million Samples Via Mask-Modeling",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				
-				<li> 
-					Hui Geng, Zijian Gao, Tianjiao Wan, Dawei Feng, Changjian Wang, <u>Kele Xu</u>*.
-					"Complementary Learning System Theory-based Active Learning for Audio Classification",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				
-				<li> 
-					Zeyun Zhao, Changjian Wang*, <u>Kele Xu</u>*, Zhen Huang, Gaojin He, Xu Liu.
-					"HyperMST: Multi-scale Spatio-Temporal Hypercorrelation Network for POI Recommendation",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-			
-				<li>
-				    Yan Jia, Yuqing Cheng, <u>Kele Xu</u>*, Peng Qiao, Yong Dou.
-					"A Counterfactual Ultrasound Anti-Interference Self-Supervised Network for B-mode Ultrasound Tongue Extraction",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				
-				<li> 
-					Weiguo Chen, Changjian Wang*, <u>Kele Xu</u>*, Yuan Yuan, Wei Chen, Zixuan Dong.
-					"SPEA: Large-Scale Entity Alignment via Self-Partitioning",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				
-				<li> 
-					Shijun Li, Changjian Wang, <u>Kele Xu*</u>, Xiaojin Li, Gaojin He, Xu Liu.
-					"Mutual-View Contrastive Generative Framework for Attribute-Missing Graph Clustering",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				
-				<li> 
-					Qian Zhu, Qisheng Xu, Boqing Zhu, Zijian Gao, Lingbin Zeng*, <u>Kele Xu*</u>.
-					"AST-Adapter: A Parameter-efficient Incremental Learning Algorithm for Underwater Acoustic Target Recognition",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-			
-				<li>
-					Xu Wang, Qisheng Xu, <u>Kele Xu</u>*, Ting Yu, Bo Ding, Dawei Feng.
-					"Large Pretrained Foundation Model for Key Performance Indicator Multivariate Time Series Anomaly Detection",
-					<i><strong>IEEE Open Journal of the Computer Society</strong>.</i>	
-				</li>
-			
-				<li>
-					Xiao Teng, Long Lan, Dingyao Chen, <u>Kele Xu</u>, Nan Yin.
-					"Relieving Universal Label Noise for Unsupervised Visible-Infrared Person Re-Identification by Inferring from Neighbors",
-					<i><strong>AAAI Conference on Artificial Intelligence</strong>.</i>
-				</li>
-				
-				<li>
-					Weiguo Chen, Changjian Wang, Shijun Li, <u>Kele Xu</u>*, Yanru Bai, Wei Chen,
-					"Debiased Active Learning with Variational Gradient Rectifier",
-					<i><strong>AAAI Conference on Artificial Intelligence</strong>.</i>
-				</li>
-				
-				<li>
-					Yuanzhao Zhai, Tingkai Yang, <u>Kele Xu</u>, Dawei Feng, Cheng Yang, Bo Ding, Huaimin Wang,
-					"Enhancing Decision-Making for LLM Agents via Step-Level Q-Value Models",
-					<i><strong>AAAI Conference on Artificial Intelligence</strong>.</i>
-				</li>
-				
-				<li>
-					Zijian Gao, Shanhao Han, Xingxing Zhang, <u>Kele Xu</u>*, Dulan Zhou, Xinjun Mao, Yong Dou, Huaimin Wang,
-					"Maintaining Fairness in Logit-based Knowledge Distillation for Class-Incremental Learning",
-					<i><strong>AAAI Conference on Artificial Intelligence</strong>.</i>
-				</li>
-			</ul>	
-			
-			<h4>
-				2024:
-			</h4>
-			<ul>
-				<li>
-					Yuxuan Li, Jianguo Wei, Qiang Fang, <u>Kele Xu</u>, Ruiteng Zhang, Xugang Lu.
-					"An Evaluation Framework for An Ultrasound Imaging-based Articulatory Observation Instrument",
-					<i><strong>IEEE Transactions on Instrumentation & Measurement</strong>.</i>
-				</li>
-			
-				<li>
-					Ting Yu, Zijian Gao, <u>Kele Xu</u>*, Xu Wang, Peichang Shi, Bo Ding, Dawei Feng.
-					"Dual Temporal Masked Modeling for KPI Anomaly Detection via Similarity Aggregation",
-					<i><strong>IEEE Transactions on Network and Service Management</strong>.</i>
-				</li>
-				
-				<li>
-					Shaoqi Sun, Hui Liu, <u>Kele Xu</u>*, Bo Ding.
-					"Collective Incentive Policy for Solving Sparse Reward in Multi-Agent Reinforcement Learning",
-					<i><strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>.</i>
-				</li>
-				
-				<li> 
-					Yan Jia, Yong Dou, Peng Qiao, Yuqing Cheng, <u>Kele Xu</u>, Zhouyu He.
-					"A Connectivity-Enhanced Multi-Task Learning based on Anatomical Priors for 3D Class-Balanced Pulmonary Airway Segmentation",
-					<i><strong>IEEE International Conference on Bioinformatics and Biomedicine (BIBM)</strong></i>
-				</li>
-			
-				<li>
-					Zijian Gao, Xingxing Zhang, <u>Kele Xu</u>*, Xinjun Mao, Huaimin Wang.
-					"Stabilizing Zero-Shot Prediction: A Novel Antidote to Forgetting in Continual Vision-Language Tasks",
-					<i><strong>Annual Conference on Neural Information Processing Systems (NeurIPS)</strong>.</i>	
-				</li>
-				
-				<li>
-					Xudong Gong, Dawei Feng, <u>Kele Xu</u>*, Bo Ding, Huaimin Wang.
-					"Goal-Conditioned On-Policy Reinforcement Learning",
-					<i><strong>Annual Conference on Neural Information Processing Systems (NeurIPS)</strong>.</i>	
-				</li>
-				
-				<li>
-					Zekun Tao, Changjian Wang, Zhiliang Tian, <u>Kele Xu</u>*, Yong Guo, Shanshan Li, Yanru Bai, Da Xie.
-					"SIAT: Document-level Event Extraction via Spatiality-Augmented  Interaction Model with Adaptive Thresholding",
-					<i><strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>.</i>
-				</li>
-			
-				<li>
-					Boqing Zhu, Changjian Wang, <u>Kele Xu</u>*, Dawei Feng, Zemin Zhou, Yuxing Peng, Xiaoqian Zhu.
-					"Continual Audio-Visual Representation Learning for Class Incremental Scenario",
-				   <i><strong>Knowledge-Based Systems</strong>.</i>	
-				</li>
-			
-				<li>
-					Zhen Xia, Ruicheng Yuan, Yuan Cao, Tao Sun, Yunsheng Xiong, <u>Kele Xu</u>*.
-					"A Systematic Review of the Application of Machine Learning Techniques to Ultrasound Tongue Imaging Analysis",
-					<i><strong> The Journal of the Acoustical Society of America</strong>.</i>	
-				</li>
-			
-				<li>
-					Jingyu Wei, Yi Su, <u>Kele Xu</u>*, Lingbin Zeng, Bo Liu, Huaimin Wang.
-					"Demonstrative Instruction Following in Multimodal LLMs via Integrating Low-Rank Adaptation with Ensemble Learning",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					Mingsheng Tu, Tianjiao Wan, Qisheng Xu, Xinhao Jiang, <u>Kele Xu</u>*, Cheng Yang.
-					"Higher-Order Vision-Language Alignment for Social Media Prediction",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					Wuyang Chen, Yanjie Sun, <u>Kele Xu</u>*, Yong Dou.
-					"Contrastive Learning-based Chaining-Cluster for Multilingual Voice-Face Association",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					Xiao Teng, Xingyu Shen, <u>Kele Xu</u>, Long Lan.
-					"Enhancing Unsupervised Visible-Infrared Person Re-Identification with Bidirectional-Consistency Gradual Matching",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				
-				<li>
-					Tianjiao Wan, <u>Kele Xu</u>*, Long Lan, Zijian Gao, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Tracing Training Progress: Dynamic Influence Based Selection for Active Learning",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					Zijian Gao, <u>Kele Xu</u>*, Huiping Zhuang, Li Liu, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang.
-					"Less Confidence, Less Forgetting: Learning with A Humbler Teacher in Exemplar-free Class-Incremental Learning",
-				   <i><strong>Neural Networks</strong>.</i>	
-				   </i><a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608024004374" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Ting Yu, <u>Kele Xu</u>*, Xu Wang, Bo Ding, Dawei Feng.
-					"Self-Supervised Learning-Based Time Series Classification via Hierarchical Sparse Convolutional Masked-Autoencoder",
-					<i><strong>IEEE Open Journal of Signal Processing</strong>.</i>
-				</li>
-			
-				<li>
-					Zijian Gao, <u>Kele Xu</u>*, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang.
-					"Self-Supervised Exploration via Temporal Inconsistency in Reinforcement Learning",
-				   <i><strong>IEEE Transactions on Artificial Intelligence</strong>.</i><a href="https://ieeexplore.ieee.org/document/10557253" target="_blank">[Paper] </a>	
-				</li>
-				
-				<li>
-					Wuyang Chen, Boqing Zhu, <u>Kele Xu</u>*, Yong Dou, Dawei Feng.
-					"VoiceStyle: Voice-based Face Generation Via Cross-modal Prototype Contrastive Learning",
-					<i><strong>ACM Transactions on Multimedia Computing, Communications, and Applications</strong>.</i><a href="https://dl.acm.org/doi/10.1145/3671002" target="_blank">[Paper] </a>
-				</li>
-					
-				<li>
-					Jiahao Ji, Lixian Zhu, Haojie Zhang, Kun Qian, <u>Kele Xu</u>, Zikai Song, Bin Hu, Björn W. Schuller, Yoshiharu Yamamoto.
-					"Weight Light, Hear Right: Heart Sound Classification with a low-complexity model."
-					<i><strong>European Signal Processing Conference</strong>.</i>
-					</i><a href="https://cmsworkshops.com/EUSIPCO2024/view_paper.php?PaperNum=1125" target="_blank">[Paper] </a>	
-				</li>
-				
-				<li>
-					Shaoqi Sun, <u>Kele Xu</u>*, Dawei Feng, Bo Ding.
-					"Bi-Directional lnfluence and interaction for Multi-Agent Reinforcement Learning",
-					<i><strong>IEEE Transactions on Artificial Intelligence</strong>.</i>
-					</i><a href="https://www.computer.org/csdl/journal/ai/5555/01/10531155/1WXSUGwUPC0" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Xudong Gong, Dawei Feng, <u>Kele Xu</u>, Yuanzhao Zhai, Chengkang Yao, Weijia Wang, Bo Ding, Huaimin Wang.
-					"Iterative Regularized Policy Optimization with Imperfect Demonstrations",
-					<i><strong>International Conference on Machine Learning</strong>.</i>
-					</i><a href="https://icml.cc/virtual/2024/poster/34488" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Yanjie Sun, <u>Kele Xu</u>*, Chaorun Liu, Yong Dou, Huaimin Wang, Bo Ding, Qinghua Pan.
-					"Automated Data Augmentation for Audio Classification",
-				   <i><strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>.</i>
-					</i><a href="https://icml.cc/virtual/2024/poster/34488" target="_blank">[Paper] </a>				   
-				</li>
-			
-				<li>
-					Yanjie Sun, <u>Kele Xu</u>*, Yong Dou, Tian Gao.
-					"Self-Supervised Learning-Based General Fine-tuning Framework For Audio Classification and Event Detection",
-					<i><strong>IEEE Conference on Multimedia Expo</strong>.</i>
-				</li>
-				
-				<li>
-					Wuyang Chen, <u>Kele Xu</u>*, Yong Dou, Tian Gao.
-					"Voice-to-Face Generation: Couple of Self-Supervised Representation Learning with Diffusion Model",
-					<i><strong>IEEE Conference on Multimedia Expo</strong>.</i>
-				</li>
-			
-				<li>
-					Weiguo Chen, Changjian Wang*, <u>Kele Xu</u>*, Yuan Yuan, Yanru Bai, Dongsong Zhang.
-					"D-FaST: Cognitive Signal Decoding with Disentangled Frequency-Spatial-Temporal Attention",
-					<i><strong>IEEE Transactions on Cognitive and Developmental Systems</strong>.</i>
-					</i><a href="https://ieeexplore.ieee.org/document/10445385" target="_blank">[Paper] </a>					
-				</li>
-				
-				<li>
-					<u>Kele Xu</u>, Kang You, Boqing Zhu, Ming Feng, Dawei Feng, Cheng Yang.
-					"Masked Modeling-Based Ultrasound Image Classification Via Self-Supervised Learning",
-					<i><strong>IEEE Open Journal of Engineering in Medicine and Biology</strong>.</i>	
-				</li>
-				
-				<li>
-					Huanxi Liu, Yuanzhao Zhai, <u>Kele Xu</u>, Dawei Feng, Yiying Li,
-					"Nuclear-norm Maximization for Low-Rank Updates",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-					</i><a href="https://ieeexplore.ieee.org/document/10448410" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Tianjiao Wan, Yutao Dou, <u>Kele Xu</u>, Zijian Gao, Bo Ding, Dawei Feng, Huaimin Wang,
-					"Temporal Inconsistency-based Active Learning",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</i><a href="https://ieeexplore.ieee.org/document/10446899" target="_blank">[Paper] </a>
-				</li>
-				
-				<li>
-					Caili Gao, Qisheng Xu, Peng Qiao, <u>Kele Xu</u>, Xifu Qian, Yong Dou.
-					"Adapter-based Incremental Learning for Face Forgery Detection",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</i><a href="https://ieeexplore.ieee.org/document/10446543/" target="_blank">[Paper] </a>
-				</li>
-				
-				<li>
-					Xu Wang, <u>Kele Xu</u>, Ting Yu, Bo Ding, Dawei Feng.
-					"Transformer-inspired Lightweight Model for Efficient Time Series Forecasting",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-					</i><a href="https://ieeexplore.ieee.org/abstract/document/10448163" target="_blank">[Paper] </a>
-				</li>
-			
-				<li>
-					Ming Feng, <u>Kele Xu</u>*, Nanhui Wu, Weiquan Huang, Yan Bai, Changjian Wang, Huaimin Wang.
-					"Trusted Multi-Scale Classification Framework for Whole Slide Image",
-					<i><strong>Biomedical Signal Processing and Control</strong>.</i>
-					</i><a href="https://www.sciencedirect.com/science/article/abs/pii/S1746809423012235" target="_blank">[Paper] </a>
-				</li>
-				
-				<li>
-					Yuanzhao Zhai, Yiying Li, Zijian Gao, Xudong Gong, <u>Kele Xu</u>, Dawei Feng, Bo Ding, Huaimin Wang.
-					"Optimistic Model Rollouts for Pessimistic Offline Policy Optimization",
-					<i><strong>AAAI Conference on Artificial Intelligence</strong>.</i>
-					</i><a href="https://ojs.aaai.org/index.php/AAAI/article/view/29607" target="_blank">[Paper] </a>
-				</li>
-			</ul>
-		
-			<h4>
-				2023:
-			</h4>
-			<ul>
-				<li>
-					Qisheng Xu, Jingfei Jiang, Yong Dou, <u>Kele Xu</u>, Kang You, Boqing Zhu, Caili Gao.
-					"Self-supervised Learning-for Underwater Acoustic Signal Classification with Mixup",
-					<i><strong>IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing</strong>.<a href=https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10288071>[Paper] </a></i>
-				</li>
-			
-				<li>
-					Da Li, Boqing Zhu, Sen Yang, <u>Kele Xu</u>*, Ming Yi, Yukai He, Huaimin Wang.
-					"Multi-task Pre-training Language Model for Semantic Network Completion",
-					<i><strong>ACM Transactions on Asian and Low-Resource Language Information Processing</strong>.</i>
-				</li>
-			
-				<li>
-					Chao Chen, Yuanzhao Zhai, Zijian Gao, <u>Kele Xu</u>*, Sen Yang, Yiying Li, Bo Ding, Dawei Feng, Huaimin Wang.
-					"Nuclear Norm Maximization Based Curiosity-Driven Reinforcement Learning",
-					<i><strong>IEEE Transactions on Artificial Intelligence</strong>.</i>
-				</li>
-			
-				<li>
-					Tianjiao Wan, <u>Kele Xu</u>*, Ting Yu, Xu Wang, Dawei Feng, Bo Ding, Huaimin Wang.
-					"A Survey of Deep Active Learning For Foundation Model",
-					<i><strong>Intelligent Computing</strong>.</i>	
-				</li>
-							
-				<li>
-					Zijian Gao, Yiying Li, <u>Kele Xu</u>*, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang.
-					"Dynamic Memory-Based Curiosity: A Bootstrap Approach for Exploration in Reinforcement Learning",
-				   <i><strong>IEEE Transactions on Emerging Topics in Computational Intelligence</strong>.</i>	
-				</li>
-			
-			
-				<li>
-					Da Li, Boqing Zhu, <u>Kele Xu</u>*, Sen Yang, Dawei Feng, Bo Liu, Huaimin Wang.
-					"Enhanced Cross-Modal Transformer Model for Video Semantic Similarity Measurement",
-					<i><strong>IEEE Transactions on Circuits and Systems II: Express Briefs</strong>.</i>	
-				</li>
-			
-				<li>
-					Yanjie Sun, <u>Kele Xu</u>*, Chaorun Liu, Yong Dou, Kun Qian.
-					"Automatic Audio Augmentation for Requests Sub-Challenge",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-		
-				<li>
-					Ming Feng, <u>Kele Xu</u>*, Hengxin Cai.
-					"IFS-SED: Incremental Few-Shot Sound Event Detection Using Explicit Learning and Calibration",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				
-				<li>
-					Haoru Chen, Tianjiao Wan, Zhimin Lin, <u>Kele Xu</u>*, Jin Wang, Huaimin Wang.
-					"VTQAGen: BART-based Generative Model For Visual Text Question Answering",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					<u>Kele Xu</u>, Qisheng Xu, Kang You, Ming Feng, Boqing Zhu, Ming Feng, Dawei Feng, Bo Liu.
-					"Self-Supervised Learning-Based Underwater Acoustical Signal Classification Via Mask Modeling",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>	
-				</li>
-				
-				<li>
-					Qisheng Xu, <u>Kele Xu</u>*, Yong Dou, Boqing Zhu, Caili Gao, Peng Qiao, Dawei Feng. 
-					"A review of underwater target recognition based on passive sonar signals",
-					<i><strong>Aata Automatica Sinica</strong>.</i>
-				</li>
-				
-				<li>
-					Ming Feng, <u>Kele Xu</u>*, Yingting Liu, Yang Liu, Bo Liu.
-					"A morphology-based deep learning for fetal head circumference measurement",
-					<i><strong>Ultrasound in Obstetrics & Gynecology </strong>. </i>
-				</li>
-				
-				<li>
-					Ming Feng, <u>Kele Xu</u>*, Yingting Liu, Yang Liu, Ruicheng Yuan.
-					"Self-supervised learning-based automated classification model for fetal ultrasound planes",
-					<i><strong>Ultrasound in Obstetrics & Gynecology</strong>. </i>
-				</li>
-				
-				<li>
-					Zijian Gao, <u>Kele Xu</u>*, Hongda Jia, Tianjiao Wan, Ding Bo, Dawei Feng, Xinjun Mao, Huaimin Wang.
-					"Complementary Learning System Based Intrinsic Rewards in Reinforcement Learning",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</li>
-			
-				<li>
-					Kang You, Bo Liu, <u>Kele Xu</u>, Yunsheng Xiong, Qisheng Xu, Ming Feng, Tamás Csapó, Boqing Zhu.
-					"Raw Ultrasound-based Phonetic Segments Classification Via Mask Modeling",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</li>
-				
-				<li>
-					Shaoqi Shun, Yuanzhao Zhai, <u>Kele Xu</u>, Dawei Feng, Bo Ding.
-					"Progressive Diversifying Policy for Multi-Agent Reinforcement Learning",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</li>
-				
-				<li>
-					Yuanzhao Zhai, <u>Kele Xu</u>, Bo Ding, Dawei Feng, Huaimin Wang. 
-					"Diversifying Message Aggregation in Multi-Agent Communication via Normalized Tensor Nuclear Norm Regularization"
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>	
-				</li>
-				
-				<li>
-					<u>Kele Xu</u>*, Kang You, Ming Feng, Boqing Zhu.
-					"Trust-worth Multi-Representation Learning For Audio Classification With Uncertainty Estimation",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				
-				<li>
-					Kang You, <u>Kele Xu</u>*, Jilong Wang, Ming Feng.
-					"Domain adaptation towards speaker-independent ultrasound tongue imaging based articulatory-to-acoustic conversion",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-			</ul>
-			<h4>
-			
-			
-			<h4>
-				2022:
-			</h4>
-			<ul>
-				<li>
-					Kang You, <u>Kele Xu</u>*, Ming Feng, Boqing Zhu.
-					"Underwater acoustic classification using masked modeling-based swin Transformer",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				
-				<li>
-					Nicolas Loménie, Capucine Bertrand, Rutger HJ Fick, Saima Ben Hadj, Brice Tayart, Cyprien Tilmant, Isabelle Farré, Soufiane Z Azdad, Samy Dahmani, Gilles Dequen, Ming Feng, <u>Kele Xu</u>, et al.
-					"Can AI predict epithelial lesion categories via automated analysis of cervical biopsies: The TissueNet challenge?",
-					<i><strong>Journal of Pathology Informatics</strong>.</i>
-				</li>
-				
-				<li>
-					Yiwen Wu, Yang Zhang, <u>Kele Xu</u>, Tao Wang, Huaimin Wang.
-					"Understanding and Predicting Docker Build Duration: An Empirical Study of Containerized Workflow of OSS Projects",
-					<i><strong>IEEE/ACM International Conference on Automated Software Engineering</strong>.</i>
-				</li>
-				
-				<li>
-					Xiaochen Cai, Hengxing Cai, Boqing Zhu, <u>Kele Xu</u>*, Wei-Wei Tu, Dawei Feng.
-					"Multiple Temporal Fusion based Weakly-supervised Pre-training Techniques for Video Categorization",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				
-				<li>
-					Kang You, <u>Kele Xu</u>*, Boqing Zhu, Ming Feng, Dawei Feng, Bo Liu, Tian Gao, Bo Ding.
-					"Masked Modeling-based Audio Representation for ACM Multimedia 2022 Computational Paralinguistics ChallengE",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				
-				<li>
-					<u>Kele Xu</u>, Ming Feng, Weiquan Huang.
-					"Seeing Speech: Magnetic Resonance Imaging-Based Vocal Tract Deformation Visualization Using Cross-Modal Transformer",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-			
-				<li>
-					Boqing Zhu, <u>Kele Xu</u>*, Changjian Wang, Zheng Qin, Tao Sun, Huaimin Wang, Yuxing Peng.
-					"Unsupervised Voice-Face Representation Learning by Cross-Modal Prototype Contrast",
-					<i><strong>International Joint Conference on Artificial Intelligence</strong>.</i>
-					<a href="https://github.com/Cocoxili/CMPC" target="_blank">[Code]</a>
-				</li>
-				
-				<li>
-					Bin Li, Yijie Wang, <u>Kele Xu</u>, Li Cheng, Zhiquan Qin.
-					"DFAID: Density-aware and Feature-deviated Active Intrusion Detection with Limited Query Data over Network Traffic Stream",
-					<i><strong>Computers & Security</strong>.
-					</i>
-				</li>
-				
-				<li>
-					Yunsheng Xiong, <u>Kele Xu</u>*, Yong Dou, Yang Zhao, Zikai Gao.
-					"WRMatch: Improving FixMatch with Weighted Nuclear-Norm Regularization for Few-Shot Remote Sensing Scene Classification",
-					<i><strong>IEEE Transactions on Geoscience and Remote Sensing</strong>.</i>
-					<a href="https://ieeexplore.ieee.org/document/9585097/" target="_blank">[Paper]</a>
-				</li>
-				
-				<li>
-					Zhishan Zhao, Sen Yang, Guohui Liu, Dawei Feng, <u>Kele Xu</u>*.
-					"FINT: Field-aware INTeraction Neural Network For CTR Prediction",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing </strong>.</i>
-					<a href="https://github.com/zhishan01/FINT" target="_blank">[Code]</a>
-				</li>	
-				
-				<li>
-					Yunsheng Xiong, <u>Kele Xu</u>*, Meng Jiang, Liang Cheng, Yong Dou, Jinjia Wang.
-					"Improving the Classification of Phonetic Segments from Raw Ultrasound Using Self-Supervised Learning and Hard Example Mining",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing </strong>.</i>
-					<a href="https://github.com/randallfuhao/ultrasound-selfsup" target="_blank">[Code]</a>
-				</li>
-				
-				<li>
-					Qingsong Zhou, <u>Kele Xu</u>*, Ming Feng. 
-					"EasySED: Trusted Sound Event Detection With Self-Distillation". 
-					<i><strong>Thirty-Sixth AAAI Conference on Artificial Intelligence </strong>.</i>
-				</li>
-			</ul>
-			<h4>	
-			
-			<h4>
-				2021:
-			</h4>
-			<ul>
-				<li>
-					<u>Kele Xu</u>, Tamas Gábor Csapó, Ming Feng.
-					"Convolutional Neural Network-Based Age Estimation Using B-Mode Ultrasound Tongue Image",
-					<i><strong>The Journal of the Acoustical Society of America </strong>.</i>
-				</li>
-				<li>
-					Liang Gao, <u>Kele Xu</u>*, Huaimin Wang, Yuxing Peng.
-					"Multi-representation knowledge distillation for audio classification",
-					<i><strong>Multimedia Tools and Applications</strong>.</i>
-				</li>
+            <!-- Recent News Section -->
+            <section id="news">
+                <div class="section-header">
+                    <h2>Recent News</h2>
+                    <div class="year-badge">2025</div>
+                </div>
+                
+                <!-- News items will be populated here by JavaScript -->
+                <div id="news-container">
+                    <!-- News will be dynamically loaded -->
+                </div>
+                
+                <div class="text-center mt-3">
+                    <a href="#news" id="load-more-news" class="badge badge-primary">Load More News <i class="fas fa-chevron-down"></i></a>
+                </div>
+            </section>
 
-				<li>
-					Ruchika Verma, Neeraj Kumar,..., <u>Kele Xu</u>.
-					"MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge",
-					<i><strong>IEEE Transactions on Medical Imaging</strong>.</i>
-				</li>
-				<li>
-					Pengliang Sun, Xuetong Niu, Pengfei Sun, <u>Kele Xu</u>*.
-					"Squeeze-and-Excitation network-Based Radar Object Detection With Weighted Location Fusion",
-					<i><strong>ACM International Conference on Multimedia Retrieval</strong>.</i>
-				</li>
-				<li>
-					Yunsheng Xiong, Peng Zhang, Yong Dou, <u>Kele Xu</u>, Xin Niu.
-					"Focus on Hard Categories and Hard Examples: Remote Sensing Image Scene Classification via Expert Model and Hard Example Mining",
-					<i><strong>IEEE Geoscience and Remote Sensing Letters</strong>.</i>
-					<a href="https://ieeexplore.ieee.org/abstract/document/9343675/" target="_blank">[Paper]</a>
-				</li>
-				<li>
-					Feng Ming, <u>Kele Xu</u>*, Yin Wang, Bo Ding, Huaimin Wang.
-					"Improving ultrasound tongue contour extraction using U-Net and shape consistency-based regularizer",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing </strong>.</i>
-					<a href="https://ieeexplore.ieee.org/document/9414420" target="_blank">[Paper]</a>
-				</li>
-				<li>
-					Bin Li, Yijie Wang, Mingyu Liu, <u>Kele Xu</u>, Zhongyang Wang, Li Cheng, Yizhou Li.
-					"FDEN: Mining Effective Information of Features in Detecting Network Anomalies",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing </strong>.</i>
-					<a href="https://ieeexplore.ieee.org/document/9415099" target="_blank">[Paper]</a>
-				</li>
+            <!-- Academic Services Section -->
+            <section id="services">
+                <div class="section-header">
+                    <h2>Academic Services</h2>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-user-friends"></i> Memberships</h4>
+                    <div class="badges-container mt-1">
+                        <span class="badge badge-primary">Acoustical Society of America (ASA)</span>
+                        <span class="badge badge-primary">IEEE Senior Member</span>
+                        <span class="badge badge-primary">Association for Computing Machinery (ACM)</span>
+                        <span class="badge badge-primary">IEEE Image Analysis and Data Fusion (IADF) TC</span>
+                        <span class="badge badge-primary">China Computer Federation (CCF)</span>
+                        <span class="badge badge-primary">Chinese Association of Automation (CAA)</span>
+                        <span class="badge badge-primary">Acoustical Society of China (ASC)</span>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-conference"></i> Conference Services</h4>
+                    <p>Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer for:</p>
+                    <div class="badges-container mt-1">
+                        <span class="badge badge-secondary">ICLR</span>
+                        <span class="badge badge-secondary">NeurIPS</span>
+                        <span class="badge badge-secondary">ICML</span>
+                        <span class="badge badge-secondary">IJCAI</span>
+                        <span class="badge badge-secondary">AAAI</span>
+                        <span class="badge badge-secondary">ICCV</span>
+                        <span class="badge badge-secondary">CVPR</span>
+                        <span class="badge badge-secondary">ACM MM</span>
+                        <span class="badge badge-secondary">ICASSP</span>
+                        <span class="badge badge-secondary">MICCAI</span>
+                        <span class="badge badge-secondary">ICME</span>
+                        <span class="badge badge-secondary">ECCV</span>
+                        <span class="badge badge-secondary">INTERSPEECH</span>
+                        <span class="badge badge-secondary">ISBI</span>
+                        <span class="badge badge-secondary">MSN</span>
+                        <span class="badge badge-secondary">APSIPA ASC</span>
+                        <span class="badge badge-secondary">BIBM</span>
+                        <span class="badge badge-secondary">AISTATS</span>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-edit"></i> Journal Reviewer</h4>
+                    <p>Reviewer for prestigious journals including:</p>
+                    <div class="badges-container mt-1">
+                        <span class="badge badge-accent">Nature Communication</span>
+                        <span class="badge badge-accent">IEEE TCSVT <i>(Associate Editor)</i></span>
+                        <span class="badge badge-accent">IEEE TASLP</span>
+                        <span class="badge badge-accent">IEEE TNNLS</span>
+                        <span class="badge badge-accent">IEEE TIP</span>
+                        <span class="badge badge-accent">IEEE TAI</span>
+                        <span class="badge badge-accent">Neural Networks</span>
+                        <span class="badge badge-accent">Knowledge-Based Systems</span>
+                        <span class="badge badge-accent">Speech Communication</span>
+                        <span class="badge badge-accent">Frontiers in AI <i>(Associate Editor)</i></span>
+                    </div>
+                </div>
+            </section>
 
-			</ul>
-			<h4>
-				2020:
-			</h4>
+            <!-- Competitions and Awards Section -->
+            <section id="competitions">
+                <div class="section-header">
+                    <h2>Awards & Competitions</h2>
+                </div>
+                
+                <div class="award-item">
+                    <span class="award-rank">1st Place</span>
+                    <strong>ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English</strong>
+                    <div class="text-right">2025</div>
+                </div>
+                
+                <div class="award-item">
+                    <span class="award-rank">1st Place</span>
+                    <strong>MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge</strong>
+                    <div class="text-right">2024</div>
+                </div>
+                
+                <div class="award-item">
+                    <span class="award-rank">1st Place</span>
+                    <strong>IEEE ICME Grand Challenge on Detecting CheapFakes</strong>
+                    <div class="text-right">2023</div>
+                </div>
+                
+                <div class="award-item">
+                    <span class="award-rank">1st Place</span>
+                    <strong>ACM Multimedia Pre-training video understanding challenge Track 2</strong>
+                    <div class="text-right">2022</div>
+                </div>
+                
+                <div class="award-item">
+                    <span class="award-rank">1st Place</span>
+                    <strong>IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task</strong>
+                    <div class="text-right">2022</div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <a href="#competitions" id="load-more-awards" class="badge badge-primary">Load More Awards <i class="fas fa-chevron-down"></i></a>
+                </div>
+            </section>
 
-			<ul>
-				<li>
-					<u>Kele Xu</u>, Tamás Gábor Csapó, Dawei Feng, Haibo Mi.
-					"Ultrasound Tongue Gestural Sequence Classification Using Convolutional Auto-encoder and Recurrent Neural Network",
-					<i><strong>International Seminar on Speech Production</strong>.</i> 
-				</li>
-				<li>
-					Tamás Gábor Csapó, <u>Kele Xu</u>, Andrea Deme, Tekla Etelka Gráczi, Alexandra Markó.
-					"Transducer Misalignment in Ultrasound Tongue Imaging",
-					<i><strong>International Seminar on Speech Production</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Zhimin Lin, Jianqiao Zhao, Peicang Shi, Wei Deng, Huaimin Wang.
-					"Multimodal Deep Learning for Social Media Popularity Prediction With Attention Mechanism",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					Ming Feng, <u>Kele Xu</u>*, Yin Wang.
-					"A Quantitative Comparison of Different Machine Learning Approaches for Human Spermatozoa Quality Prediction Using Multimodal Datasets",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Yuzhong Liu, Ming Feng, Jianqiao Zhao, Huaimin Wang, Hengxing Cai, "Multi-Scale Generalized Attention-Based Regional Maximum Activation of Convolutions for Beauty Product Retrieval",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					Tamás Gábor Csapó, <u>Kele Xu</u>.
-					"Quantification of Transducer Misalignment in Ultrasound Tongue Imaging",
-					<i><strong>Conference of the International Speech Communication Association (InterSpeech)</strong>.</i>
-				</li>
-				<li>
-					Boqing Zhu, <u>Kele Xu</u>*, Qiuqiang Kong, Huaimin Wang, Yuxing Peng.
-					"Audio Tagging by Cross Filtering Noisy Labels",
-					<i><strong>IEEE/ACM Transactions on Audio, Speech, and Language Processing</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Jianqiao Zhao, Boqing Zhu, Chaojie Zhao.
-					"Predicting ultrasound tongue image from lip images using sequence to sequence learning",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
+            <!-- Publications Section -->
+            <section id="publications">
+                <div class="section-header">
+                    <h2>Selected Publications</h2>
+                </div>
+                
+                <p>A full list of publications is available on my <a href="https://scholar.google.com/citations?user=sou7o2EAAAAJ&hl=en" target="_blank">Google Scholar Profile</a>.</p>
+                <p><em>* denotes corresponding author</em></p>
+                
+                <div id="publications-container">
+                    <!-- Publications will be dynamically loaded -->
+                </div>
+                
+                <div class="text-center mt-3">
+                    <div class="year-filter">
+                        <span class="badge badge-primary filter-btn active" data-year="all">All</span>
+                        <span class="badge badge-secondary filter-btn" data-year="2025">2025</span>
+                        <span class="badge badge-secondary filter-btn" data-year="2024">2024</span>
+                        <span class="badge badge-secondary filter-btn" data-year="2023">2023</span>
+                        <span class="badge badge-secondary filter-btn" data-year="2022">2022</span>
+                    </div>
+                </div>
+            </section>
 
-				<li>
-					Haibo Mi, <u>Kele Xu</u>*, Dawei Feng, HuaiMin Wang, Yiming Zhang, Zibin Zheng, Chuan Chen, Xu Lan.
-					"Collaborative Deep Learning Across Multiple Data Centers",
-					<i><strong>SCIENCE CHINA Information Sciences</strong>.</i>
-				</li>
+            <!-- Others Section -->
+            <section id="others">
+                <div class="section-header">
+                    <h2>Others</h2>
+                </div>
+                
+                <div class="quick-info">
+                    <div class="info-item">
+                        <i class="fas fa-edit"></i>
+                        <div>
+                            <strong>Guest Editor</strong>
+                            <div>SPJ-Cyborg and Bionic Systems</div>
+                            <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">Link</a>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <strong>Open Source Libraries</strong>
+                            <div>AudioCIL & AutoX Automated Machine Learning</div>
+                            <div>
+                                <a href="https://github.com/colaudiolab/AudioCIL" target="_blank">AudioCIL</a> | 
+                                <a href="https://autox.readthedocs.io/en/latest/" target="_blank">AutoX</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-trophy"></i>
+                        <div>
+                            <strong>Winner Talks & Interviews</strong>
+                            <div>Kaggle, IEEE DCASE, TissueNet, CCF BDCI</div>
+                            <a href="https://medium.com/kaggle-blog/avito-duplicate-ads-detection-winners-interview-3rd-place-team-adad-mario-gerard-kele-e97aa5ca21ed" target="_blank">View Interviews</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <h4>Visitor Map</h4>
+                    <div style="width: 100%; height: 200px; background-color: #f0f0f0; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-globe-americas" style="font-size: 3rem; color: var(--primary);"></i>
+                        <p style="margin-left: 1rem;">Visitor map placeholder</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-			</ul>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Kele Xu</h3>
+                <p>Associate Professor at NUDT<br>
+                Research in Continual Learning, Computer Audition, AI4Science<br>
+                Kaggle Grandmaster</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> kele.xu at ieee dot org</li>
+                    <li><i class="fas fa-map-marker-alt"></i> NUDT, Changsha, China</li>
+                    <li><i class="fas fa-graduation-cap"></i> <a href="https://scholar.google.com/citations?user=sou7o2EAAAAJ&hl=en" target="_blank">Google Scholar</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#bio">Biography</a></li>
+                    <li><a href="#news">Recent News</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#competitions">Awards</a></li>
+                    <li><a href="#services">Academic Services</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container copyright">
+            <p>&copy; 2025 Kele Xu. All rights reserved.</p>
+        </div>
+    </footer>
 
-			<h4>
-				2019:
-			</h4>
- 
-			<ul>
-				<li>
-					<u>Kele Xu</u>, Yuxiang Wu, Zhifeng Gao.
-					"Ultrasound-Based Silent Speech Interface using Sequential Convolutional Auto-encoder",
-					<i><strong>ACM International Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					Yingwei Fu, <u>Kele Xu</u>, Haibo Mi, Huaimin Wang, Dezhi Wang, Boqing Zhu.
-					"A Mobile Application for Sound Event Detection",
-					<i><strong> International Joint Conference on Artificial Intelligence</strong>.</i>
-				</li>
-				<li>
-					Haibo Mi, <u>Kele Xu</u>, Yang Xiang, Yulin He, Dawei Feng, Huaimin Wang, Chun Wu, Yanming Song, Xiaolei Sun.
-					"A Quantitative Analysis Platform for PD-L1 Immunohistochemistry Based on Point-Level Supervision Model",
-					<i><strong> International Joint Conference on Artificial Intelligence</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Boqing Zhu, Qiuqiang Kong, Haibo Mi, Bo Ding, Dezhi Wang, Huaimin Wang.
-					"General audio tagging with ensembling convolutional neural network and statistical features",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					Bo Li, <u>Kele Xu</u>*, Dawei Feng, Haibo Mi, Huaimin Wang, Jian Zhu,
-					"Denoising convolutional autoencoder based B-mode ultrasound tongue image feature extraction",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				<li>
-					Chaojie Zhao, Peng Zhang, Jian Zhu, Chengrui Wu, Huaimin Wang, <u>Kele Xu</u>*,
-					"Predicting tongue motion in unlabeled ultrasound videos using convolutional LSTM neural network",
-					<i><strong>IEEE International Conference on Acoustics, Speech, and Signal Processing</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>,
-					"Mixup-Based Data Augmentation for Histopathologic Cancer Detection",
-					<i><strong>Medical Physics</strong>.</i>
-				</li>
-			</ul>
-			
-			<h4>
-				Before 2019:
-			</h4>
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
 
-			<ul>
-				<li>
-					<u>Kele Xu</u>, Jian Zhu,
-					"Articulatory feature extraction from ultrasound images using pretrained convolutional neural networks",
-					<i><strong>The Journal of the Acoustical Society of America </strong>.</i>
-				</li>
-				<li>
-					Dezhi Wang, Lilun Zhang, Changchun Bao, <u>Kele Xu</u>, Boqing Zhu, Zengquan Lu,
-					"Adaptive beamforming for uniformly-spaced linear hydrophone array using temporal convolutional neural networks",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Dawei Feng, Haibo Mi, Boqing Zhu, Dezhi Wang, Lilun Zhang, Hengxing Cai, Shuwen Liu.
-					"Mixup-Based Acoustic Scene Classification Using Multi-Channel Convolutional Neural Network",
-					<i><strong>Pacific Rim Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					Boqing Zhu, <u>Kele Xu</u>, Dezhi Wang, Lilun Zhang, Bo Li, Yuxing Peng.
-					"Environmental sound classification based on multi-temporal resolution convolutional neural network combining with multi-level features",
-					<i><strong>Pacific Rim Conference on Multimedia</strong>.</i>
-				</li>
-				<li>
-					Xi Liu, <u>Kele Xu</u>.
-					"Similarity measurement based rest position re-initialization in the MRI vocal tract image sequences",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Pierre Roussel, Bruce Denby.
-					"Is speckle tracking feasible for ultrasound tongue images?",
-					<i><strong>Acta Acustica united with Acustica</strong>.</i>
-				</li>
-				<li>
-					Bruce Denby, Shicheng Chen, Yifeng Zheng, <u>Kele Xu</u>, Yin Yang, Clemence Leboullenger, Pierre Roussel.
-					"Recent results in silent speech interfaces",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Pierre Roussel, Tamás Gábor Csapó, Bruce Denby.
-					"Convolutional neural network-based automatic classification of midsagittal tongue gestural targets using B-mode ultrasound images",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>,Hengxing Cai, Xi Liu, Zhifeng Gao, Bingbing Zhang.
-					"North atlantic right whale call detection with very deep convolutional neural networks",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Yin Yang, Maureen Stone, Aurore Jaumard-Hakoun, Clémence Leboullenger, Gérard Dreyfus, Pierre Roussel, Bruce Denby.
-					"Robust contour tracking in ultrasound tongue image sequences",
-					<i><strong>Clinical linguistics & phonetics</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Tamás Gábor Csapó, Pierre Roussel, Bruce Denby.
-					"A comparative study on the contour tracking algorithms in ultrasound tongue images with automatic re-initialization",
-					<i><strong>The Journal of the Acoustical Society of America</strong>.</i>
-				</li>
-				<li>
-					Aurore Jaumard-Hakoun, <u>Kele Xu</u>, Clémence Leboullenger, Pierre Roussel-Ragot, Bruce Denby,
-					"Robust contour tracking in ultrasound tongue image sequences",
-					<i><strong>Conference of the International Speech Communication Association (InterSpeech)</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Yin Yang, Clémence Leboullenger, Pierre Roussel, Bruce Denby,
-					"Contour-based 3D tongue motion visualization using the ultrasound image sequences",
-					<i><strong>International Conference on Acoustics, Speech, and Signal Processing (ICASSP)</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Yin Yang, Aurore Jaumard-Hakoun, Clémence Leboullenger, Gérard Dreyfus, Pierre Roussel, Maureen Stone, Bruce Denby.
-					"Devolopment of A 3D Tongue Motion Visualization Platform Based on ultrasound tongue image sequences",
-					<i><strong>International Congress of Phonetic Sciences</strong>.</i>
-				</li>
-				<li>
-					Aurore Jaumard-Hakoun, <u>Kele Xu</u>, Pierre Roussel-Ragot, Gérard Dreyfus, Maureen Stone, Bruce Denby.
-					"Tongue contour extraction from ultrasound images based on deep neural network",
-					<i><strong>International Congress of Phonetic Sciences</strong>.</i>
-				</li>
-				<li>
-					<u>Kele Xu</u>, Yin Yang, Aurore Jaumard-Hakoun, Martine Adda-Decker, Angélique Amelot, SK Al Kork, Lise Crevier-Buchman, P Chawah, Gérard Dreyfus, Thibaut Fux, Claire Pillot-Loiseau, Pierre Roussel, Maureen Stone, Bruce Denby.
-					"3D tongue motion visualization based on ultrasound image sequences",
-					<i><strong>Conference of the International Speech Communication Association (InterSpeech)</strong>.</i>
-				</li>
-				<li>
-					Patrick Chawah, Samer K Al Kork, Thibaut Fux, Martine Adda-Decker, Angelique Amelot, Nicolas Audibert, Bruce Denby, Gerard Dreyfus, Aurore Jaumard-Hakoun, Claire Pillot-Loiseau, Pierre Roussel, Maureen Stone, <u>Kele Xu</u>, Lise Buchman.
-					"An educational platform to capture, visualize and analyze rare singing",
-					<i><strong>Conference of the International Speech Communication Association (InterSpeech)</strong>.</i>
-				</li>
-				
-				<li>
-					Samer K Al Kork, Aurore Jaumard-Hakoun, Martine Adda-Decker, Angelique Amelot, Lise Buchman, Patrick Chawah, Gerard Dreyfus, Thibaut Fux, Claire Pillot-Loiseau, Pierre Roussel, Maureen Stone, <u>Kele Xu</u>, Bruce Denby.
-					"A Multi-Sensor Helmet to Capture Rare Singing, An Intangible Cultural Heritage Study",
-					<i><strong>International Seminar on Speech Production</strong>.</i>
-				</li>
-				<li>
-				...
-				</li>
-			</ul>
-        </section>
-		
-		
-	     <!-- others Section -->
-        <section id="others">
-            <h2>Others</h2>
-			<ul>
-				<li>Guest Editor for SPJ-Cyborg and Bionic Systems. [<a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">Link</a>]</li>
-				<li>IEEE Joint-Cloud Computing (JCC) 2024. [<a href="https://ieeejcc.com/call-for-papers/" target="_blank">Link</a>]</li>
-				<li>The International Workshop on Artificial Intelligence Enhanced Internet of Things-IEEE ICA3PP 2023. [<a href="http://vlab.csu.edu.cn/AIEIoT/" target="_blank">Link</a>]	</li>
-				<li>Med-NeurIPS 2022. [<a href="https://sites.google.com/view/med-neurips-2022/organization" target="_blank">Link</a>]</li>
-				<li>Signal Processing for Data Mining-Data. [<a href="https://www.mdpi.com/journal/data/special_issues/EPBDMT42J0" target="_blank">Link</a>]</li>
-				<li>AutoX Automated Machine Learning Library (AutoX). [<a href="https://github.com/colaudiolab/AudioCIL">Link</a>]</li>
-				<li>Audio Class Incremental Learning Library (AudioCIL). [<a href="https://autox.readthedocs.io/en/latest/">Link</a>]</li>
-				<li>Kaggle Winner Talks. [<a href="https://medium.com/kaggle-blog/avito-duplicate-ads-detection-winners-interview-3rd-place-team-adad-mario-gerard-kele-e97aa5ca21ed">Link</a>]	</li>
-				<li>IEEE DCASE Winner. [<a href=https://www.iflytek.com/news/2622">Link</a>]</li>
-				<li>TissueNet Winner Talks. [<a href="https://drivendata.co/blog/tissuenet-cervical-biopsies-winners">Link</a>]	</li>
-				<li>CCF BDCI Competition. [<a href= https://www.datafountain.cn/competitions/484">Link</a>]</li>
-			</ul>
-				
-        </section>	
-        <section id="others">
-            <h2></h2>
-			<ul><script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=386&t=tt&d=C-OEA2o32D2NX7QBXg8USlrCArliZik1Tp-VJCZawBg"></script></ul>
-		</section>	
-		
-		</main>
-
-    <footer>
-        <p>&copy; 2025 Kele Xu
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a, .sidebar-links a');
+        
+        function highlightNavLink() {
+            let scrollPosition = window.pageYOffset + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', highlightNavLink);
+        
+        // Sample news data - in a real implementation, this could come from an API or JSON file
+        const newsData = [
+            {date: "2025-11", content: "One paper is accepted by <strong>AAAI Conference on Artificial Intelligence (oral)</strong>."},
+            {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
+            {date: "2025-11", content: "One paper is accepted by <strong>IEEE Transactions on Knowledge and Data Engineering</strong>."},
+            {date: "2025-10", content: "One paper is accepted by <strong>IEEE Transactions on Circuits and Systems for Video Technology</strong>."},
+            {date: "2025-10", content: "One paper is accepted by <strong>Information Fusion</strong>."},
+            {date: "2025-09", content: "One paper is accepted by <strong>IEEE Transactions on Biometrics, Behavior, and Identity Science</strong>."},
+            {date: "2025-08", content: "I have been elevated to the grade of <strong>IEEE Senior Member</strong>."},
+            {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong>2025 ACM MultiMedia</strong> Intention-Oriented Controllable Video Captioning Challenge."},
+            {date: "2025-08", content: "Ranked as <strong>2nd</strong> place in <strong> IJCAI Challenge </strong> and will be invited to IJCAI in Guangzhou."},
+            {date: "2025-08", content: "<strong>Top performance award</strong> in <strong>ACM MultiMedia Social Media Prediction Challenge</strong>."},
+        ];
+        
+        // Load initial news items
+        const newsContainer = document.getElementById('news-container');
+        let newsIndex = 0;
+        const newsPerLoad = 5;
+        
+        function loadNews() {
+            const endIndex = Math.min(newsIndex + newsPerLoad, newsData.length);
+            
+            for (let i = newsIndex; i < endIndex; i++) {
+                const news = newsData[i];
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                newsItem.innerHTML = `
+                    <div class="news-date">${news.date}</div>
+                    <div class="news-content">${news.content}</div>
+                `;
+                newsContainer.appendChild(newsItem);
+            }
+            
+            newsIndex = endIndex;
+            
+            // Hide load more button if all news loaded
+            if (newsIndex >= newsData.length) {
+                document.getElementById('load-more-news').style.display = 'none';
+            }
+        }
+        
+        document.getElementById('load-more-news').addEventListener('click', function(e) {
+            e.preventDefault();
+            loadNews();
+        });
+        
+        // Load initial news
+        loadNews();
+        
+        // Sample publications data
+        const publicationsData = [
+            {year: "2025", authors: "Dulan Zhou, Zijian Gao, <u>Kele Xu*</u>", title: "Perturbing to Preserve: Defending Fragile Knowledge in Online Continual Learning", venue: "AAAI Conference on Artificial Intelligence (Oral)"},
+            {year: "2025", authors: "Zijian Gao, Xingxing Zhang, Huiping Zhuang, <u>Kele Xu*</u>, Tianjiao Wan, Bo Ding, Xinjun Mao, Huaimin Wang", title: "Rethinking Obscured Sub-optimality in Analytic Learning for Exemplar-Free Class-Incremental Learning", venue: "IEEE Transactions on Circuits and Systems for Video Technology"},
+            {year: "2025", authors: "Guohong Wang, Xiaohan Tan, Zengming Lin, Binli Luo, Shangjian Zhong, <u>Kele Xu*</u>", title: "FreqEvo: Enhancing Time Series Forecasting with Multi-Level Frequency Domain Feature Extraction", venue: "IEEE Transactions on Knowledge and Data Engineering"},
+            {year: "2024", authors: "Zijian Gao, <u>Kele Xu*</u>, Huiping Zhuang, Li Liu, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Less Confidence, Less Forgetting: Learning with A Humbler Teacher in Exemplar-free Class-Incremental Learning", venue: "Neural Networks", link: "https://www.sciencedirect.com/science/article/abs/pii/S0893608024004374"},
+            {year: "2024", authors: "Zijian Gao, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Self-Supervised Exploration via Temporal Inconsistency in Reinforcement Learning", venue: "IEEE Transactions on Artificial Intelligence", link: "https://ieeexplore.ieee.org/document/10557253"},
+            {year: "2023", authors: "Zijian Gao, Yiying Li, <u>Kele Xu*</u>, Yuanzhao Zhai, Bo Ding, Dawei Feng, Xinjun Mao, Huaimin Wang", title: "Dynamic Memory-Based Curiosity: A Bootstrap Approach for Exploration in Reinforcement Learning", venue: "IEEE Transactions on Emerging Topics in Computational Intelligence"},
+            {year: "2022", authors: "Boqing Zhu, <u>Kele Xu*</u>, Changjian Wang, Zheng Qin, Tao Sun, Huaimin Wang, Yuxing Peng", title: "Unsupervised Voice-Face Representation Learning by Cross-Modal Prototype Contrast", venue: "International Joint Conference on Artificial Intelligence", link: "https://github.com/Cocoxili/CMPC"},
+        ];
+        
+        // Load publications
+        const publicationsContainer = document.getElementById('publications-container');
+        
+        function loadPublications(filterYear = 'all') {
+            publicationsContainer.innerHTML = '';
+            
+            const filteredPublications = filterYear === 'all' 
+                ? publicationsData 
+                : publicationsData.filter(pub => pub.year === filterYear);
+            
+            filteredPublications.forEach(pub => {
+                const pubItem = document.createElement('div');
+                pubItem.className = 'publication-item';
+                pubItem.setAttribute('data-year', pub.year);
+                
+                let linksHTML = '';
+                if (pub.link) {
+                    linksHTML = `<a href="${pub.link}" target="_blank"><i class="fas fa-external-link-alt"></i> Paper</a>`;
+                }
+                
+                pubItem.innerHTML = `
+                    <div class="publication-authors">${pub.authors}</div>
+                    <div class="publication-title">${pub.title}</div>
+                    <div class="publication-venue">${pub.venue}</div>
+                    <div class="publication-links">
+                        ${linksHTML}
+                        <span class="badge badge-secondary">${pub.year}</span>
+                    </div>
+                `;
+                
+                publicationsContainer.appendChild(pubItem);
+            });
+        }
+        
+        // Filter publications by year
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                loadPublications(this.getAttribute('data-year'));
+            });
+        });
+        
+        // Load initial publications
+        loadPublications();
+        
+        // Sample awards data
+        const awardsData = [
+            {rank: "1st", title: "ICASSP Multimodal Emotion and Intent Joint Understanding (MEIJU) challenge Track 1-English", year: "2025"},
+            {rank: "1st", title: "MICCAI Self-supervised learning for 3D light-sheet microscopy image segmentation (SELMA3D) challenge", year: "2024"},
+            {rank: "1st", title: "IEEE ICME Grand Challenge on Detecting CheapFakes", year: "2023"},
+            {rank: "1st", title: "ACM Multimedia Pre-training video understanding challenge Track 2", year: "2022"},
+            {rank: "1st", title: "IEEE DCASE Challenge Few-shot Bioacoustic Event Detection Task", year: "2022"},
+            {rank: "1st", title: "ACM MM Multi-modal ads video understanding Challenge", year: "2021"},
+            {rank: "1st", title: "European Congress on Digital Pathology (ECDP2020) HEROHE Competition, Prize Winner", year: "2020"},
+            {rank: "2nd", title: "IJCAI The 2nd Challenge on Characterizing User Behavior in Social Networks", year: "2025"},
+            {rank: "2nd", title: "ACM MultiMedia Social Media Prediction (SMP) Challenge (SMP2024)", year: "2024"},
+            {rank: "2nd", title: "CVPR NTIRE Challenge on HR Depth from Images", year: "2025"},
+        ];
+        
+        // Load more awards
+        let awardsIndex = 5; // Start after the first 5 displayed
+        
+        document.getElementById('load-more-awards').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const awardsContainer = document.querySelector('#competitions');
+            
+            for (let i = awardsIndex; i < Math.min(awardsIndex + 5, awardsData.length); i++) {
+                const award = awardsData[i];
+                const awardItem = document.createElement('div');
+                awardItem.className = 'award-item';
+                awardItem.innerHTML = `
+                    <span class="award-rank">${award.rank} Place</span>
+                    <strong>${award.title}</strong>
+                    <div class="text-right">${award.year}</div>
+                `;
+                
+                // Insert before the load more button container
+                const loadMoreContainer = document.querySelector('#load-more-awards').parentElement;
+                awardsContainer.insertBefore(awardItem, loadMoreContainer);
+            }
+            
+            awardsIndex += 5;
+            
+            // Hide load more button if all awards loaded
+            if (awardsIndex >= awardsData.length) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
