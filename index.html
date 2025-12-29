@@ -1956,28 +1956,28 @@
             ];
         }
         
-        // ===== 新闻加载函数 =====
-        function loadNews(filteredData = null) {
-            const newsContainer = document.getElementById('news-container');
-            newsContainer.innerHTML = '';
-            
-            const dataToShow = filteredData || allNewsData;
-            
-            if (dataToShow.length === 0) {
-                newsContainer.innerHTML = '<div class="news-item"><div class="news-content">No news found matching your search.</div></div>';
-                return;
-            }
-            
-            dataToShow.forEach(news => {
-                const newsItem = document.createElement('div');
-                newsItem.className = 'news-item';
-                newsItem.innerHTML = `
-                    <div class="news-date">${news.date}</div>
-                    <div class="news-content">${news.content}</div>
-                ;
-                newsContainer.appendChild(newsItem);
-            });
-        }
+		// ===== 新闻加载函数 =====
+		function loadNews(filteredData = null) {
+			const newsContainer = document.getElementById('news-container');
+			newsContainer.innerHTML = '';
+			
+			const dataToShow = filteredData || allNewsData;
+			
+			if (dataToShow.length === 0) {
+				newsContainer.innerHTML = '<div class="news-item"><div class="news-content">No news found matching your search.</div></div>';
+				return;
+			}
+			
+			dataToShow.forEach(news => {
+				const newsItem = document.createElement('div');
+				newsItem.className = 'news-item';
+				newsItem.innerHTML = `
+					<div class="news-date">${news.date}</div>
+					<div class="news-content">${news.content}</div>
+				`;  // 这里缺少结束的反引号
+				newsContainer.appendChild(newsItem);
+			});
+		}
         
         // ===== 奖项加载函数 =====
         function loadAwards(filteredData = null) {
