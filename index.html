@@ -1073,6 +1073,7 @@
                     <button class="filter-btn" data-year="2019">2019</button>
                     <button class="filter-btn" data-year="before">Before 2019</button>
                     <button class="filter-btn active" data-year="preprint">Preprint</button>
+					<button class="filter-btn" data-year="monograph">Monograph</button>
                     <button class="filter-btn" data-year="all">All Years</button>
                 </div>
                 
@@ -1255,6 +1256,7 @@
         function initializeNewsData() {
             // 原始新闻数据 - 从原始HTML中提取的所有新闻，按时间倒序排列
             const rawNews = [
+				{date: "2026-01", content: "Join as <strong>Editorial Board</strong> of <strong>Scientific Reports</strong>."},
 				{date: "2026-01", content: "One paper is accepted by <strong>Advanced Science</strong>."},
 				{date: "2026-01", content: "One paper is accepted by <strong>IEEE Transactions on Instrumentation & Measurement</strong>."},
 				{date: "2025-12", content: "Appointed as an inaugural <strong>Young Editorial Board Member</strong> of <strong>Machine Intelligence Research (MIR)</strong>."},
@@ -1429,7 +1431,7 @@
 
 				// Book 部分
 				  {
-					"year": "preprint",
+					"year": "monograph",
 					"authors": "<u>Kele Xu</u>",
 					"title": "Data Mining Competition Practice: Methods and Cases",
 					"venue": "Tsinghua University Press",
@@ -1439,8 +1441,8 @@
 					]
 				  },
 				  {
-					"year": "preprint",
-					authors: "<u>Kele Xu</u>, Jisheng Bai, Boqing Zhu, Qisheng Xu, Yi Su, Mou Wang",
+					"year": "monograph",
+					authors: "<u>Kele Xu*</u>, Jisheng Bai, Boqing Zhu, Qisheng Xu, Yi Su, Mou Wang",
 					"title": "General Audio Signal Processing with Deep Learning",
 					"venue": "Springer nature",
 					"links": [
@@ -1448,9 +1450,14 @@
 					]
 				  },
 
-
-
                 // Preprint 部分
+					{
+						"year": "preprint",
+						"authors": "Yi Su, Hui Geng, Qisheng Xu, Yong Dou, Tianjiao Wan, <u>Kele Xu*</u>",
+						"title": "Audio Active Learning with Noisy Labels",
+						"venue": "IEEE Transactions on Audio, Speech and Language Processing",
+						"links": []
+					},
 					{
 						"year": "preprint",
 						"authors": "Yi Su, Jisheng Bai, Qisheng Xu, <u>Kele Xu*</u>, Yong Dou",
@@ -2870,7 +2877,7 @@
             });
             
             // 定义显示顺序：Preprint, 2025, 2024, 2023, 2022, 2021, 2020, 2019, before
-            const yearOrder = ['preprint', '2026', '2025','2024', '2023', '2022', '2021', '2020', '2019', 'before'];
+            const yearOrder = ['preprint', 'monograph', '2026', '2025','2024', '2023', '2022', '2021', '2020', '2019', 'before'];
             
             // 显示按年份分组的出版物
             yearOrder.forEach(year => {
@@ -2907,6 +2914,7 @@
             switch(year) {
                 case 'preprint': return 'Under-revision/review & Preprint ';
                 case 'before': return 'Before 2019';
+				case 'monograph': return 'Monograph';
                 default: return year;
             }
         }
