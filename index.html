@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -443,6 +443,42 @@
             padding: 0.75rem 0.9rem;
             background-color: var(--gray-light);
             border-radius: var(--border-radius);
+        }
+        .service-grid {
+            display: grid;
+            gap: 0.85rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .service-card {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 0.85rem 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .service-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .service-card ul {
+            margin-bottom: 0;
+            padding-left: 1.15rem;
+        }
+
+        .service-card li {
+            margin-bottom: 0.3rem;
+        }
+
+        .service-card p {
+            margin-bottom: 0.45rem;
+        }
+
+        .service-card .compact-note {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0;
         }
 
         .award-rank {
@@ -916,7 +952,7 @@
                 <div class="section-header">
                     <h2>Brief Biography</h2>
                 </div>
-                <p class="mb-0">I am an <span class="bio-highlight">Associate Professor at the National University of Defense Technology (NUDT)</span> and a <span class="bio-highlight">Kaggle Grandmaster</span>. I received my Ph.D. from Université Pierre et Marie Curie in 2017. My research focuses on <span class="bio-highlight">computer audition</span>, <span class="bio-highlight">multimodal continual learning</span>, and <span class="bio-highlight">AI4Science</span>. I have authored <span class="bio-metric">over 100 publications</span> in top-tier conferences and journals, with <span class="bio-metric">over 4,000 citations</span> and an <span class="bio-metric">h-index of 36</span>. In addition to winning top awards in major ML competitions like the <span class="bio-highlight">ACM KDD Cup</span>, I serve as an <span class="bio-highlight">Associate Editor for IEEE TCSVT</span>. For collaborations or joining my research group, please contact me at kele.xu at ieee dot org.</p>
+                <p class="mb-0">I am an <span class="bio-highlight">Associate Professor at the National University of Defense Technology (NUDT)</span> and a <span class="bio-highlight">Kaggle Grandmaster</span>. I received my Ph.D. from Université Pierre et Marie Curie in 2017. My research focuses on <span class="bio-highlight">computer audition</span>, <span class="bio-highlight">multimodal continual learning</span>, and <span class="bio-highlight">AI4Science</span>. I have authored <span class="bio-metric">over 100 publications</span> in top-tier conferences and journals, with <span class="bio-metric">over 5,000 citations</span> and an <span class="bio-metric">h-index of 36</span>. In addition to winning top awards in major ML competitions like the <span class="bio-highlight">ACM KDD Cup</span>, I serve as an <span class="bio-highlight">Associate Editor for IEEE TCSVT</span>. For collaborations or joining my research group, please contact me at kele.xu at ieee dot org.</p>
             </section>
 
             <!-- Recent News Section -->
@@ -960,88 +996,42 @@
                 </div>
                 
                 <div class="collapsible" id="services-container">
-                    <!-- Memberships -->
-                    <h3>Memberships</h3>
-                    <ul>
-                        <li>Acoustical Society of America (ASA), Full Member</li>
-                        <li>IEEE Senior Member</li>
-                        <li>Association for Computing Machinery (ACM) Member</li>
-                        <li>IEEE Image Analysis and Data Fusion (IADF) Technical Committee Member</li>
-                        <li>China Computer Federation (CCF), Senior Member</li>
-                        <li>Chinese Association of Automation (CAA), Lifelong Member</li>
-                        <li>Acoustical Society of China (ASC), Member</li>
-                    </ul>
-                    
-                    <!-- Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer -->
-                    <h3>Session Chair, Area Chair, PC Member, Meta-Reviewer or External Reviewer</h3>
-                    <ul>
-                        <li>International Conference on Learning Representations (ICLR)</li>
-                        <li>Neural Information Processing Systems (NeurIPS)</li>
-                        <li>International Conference on Machine Learning (ICML)</li>
-                        <li>International Joint Conferences on Artificial Intelligence (IJCAI)</li>
-                        <li>AAAI Conference on Artificial Intelligence (AAAI)</li>
-                        <li>International Conference on Computer Vision (ICCV)</li>
-                        <li>IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</li>
-                        <li>ACM International Conference on Multimedia (ACM MM)</li>
-                        <li>ACM International Conference on Multimedia in Asia (MM Asia)</li>
-                        <li>International Conference on Acoustics, Speech & Signal Processing (ICASSP)</li>
-                        <li>Medical Image Computing and Computer Assisted Intervention (MICCAI)</li>
-                        <li>IEEE Conference on Multimedia Expo (ICME)</li>
-                        <li>European Conference on Computer Vision (ECCV)</li>
-                        <li>International Conference of the Speech Communication Association (INTERSPEECH)</li>
-                        <li>IEEE International Symposium on Biomedical Imaging (ISBI)</li>
-                        <li>IEEE International Conference on Mobility, Sensing and Networking (MSN)</li>
-                        <li>Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)</li>
-                        <li>IEEE International Conference on Bioinformatics and Biomedicine (BIBM)</li>
-                        <li>International Conference on Artificial Intelligence and Statistics (AISTATS)</li>
-                        <li>...</li>
-                    </ul>
-                    
-                    <!-- Journal Reviewer -->
-                    <h3>Journal Reviewer</h3>
-                    <ul>
-                        <li>Nature Communication</li>
-                        <li>Science Partner Journal Cyborg and Bionic Systems <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">[Guest Editor]</a></li>
-                        <li>The Journal of the Acoustical Society of America</li>
-                        <li>Acta Acustica united with Acustica</li>
-                        <li>Speech Communication</li>
-                        <li>Computer Speech & Language<a href="https://www.sciencedirect.com/special-issue/332571/acoustical-intelligence-in-the-wild-advancing-acoustic-signal-understanding-in-open-environments" target="_blank">[Guest Editor]</a></li>
-                        <li>IEEE Transactions on Circuits and Systems for Video Technology <a href="https://ieee-cas.org/contact/kele-xu" target="_blank">[Editorial Board/Associate Editor]</a></li>
-                        <li>IEEE Transactions on Audio, Speech and Language Processing</li>
-                        <li>IEEE Transactions on Neural Networks and Learning Systems</li>
-                        <li>IEEE Transactions on Cognitive and Developmental Systems</li>
-                        <li>IEEE Transactions on Signal Processing</li>
-						<li>IEEE Transactions on Multimedia</li>
-                        <li>IEEE Transactions on Image Processing</li>
-                        <li>IEEE Transactions on Artificial Intelligence</li>
-                        <li>IEEE Transactions on Geoscience and Remote Sensing</li>
-                        <li>IEEE Geoscience and Remote Sensing Letters</li>
-                        <li>IEEE Signal Processing Letters</li>
-                        <li>IEEE Transactions on Systems, Man and Cybernetics: Systems</li>
-                        <li>IEEE Journal of Biomedical and Health Informatics</li>
-                        <li>IEEE Internet of Things Journal</li>
-                        <li>IEEE Transactions on Services Computing</li>
-                        <li>ACM Transactions on Intelligent Systems and Technology</li>
-                        <li>SCIENCE CHINA Information Sciences</li>
-                        <li>Frontiers in Artificial intelligence <a href="https://www.frontiersin.org/journals/big-data/sections/machine-learning-and-artificial-intelligence/editors" target="_blank">[Associate Editor]</a></li>
-                        <li>Neural Networks</li>
-                        <li>Biocybernetics and Biomedical Engineering</li>
-                        <li>Engineering Applications of Artificial Intelligence</li>
-                        <li>Biomedical Signal Processing & Control</li>
-                        <li>BMC Medical Imaging</li>
-                        <li>Intelligent Medicine</li>
-                        <li>Computer Methods and Programs in Biomedicine</li>
-                        <li>Computers in Biology and Medicine</li>
-                        <li>Expert Systems With Applications</li>
-                        <li>Knowledge-Based Systems</li>
-                        <li>Frontiers in Neuroscience</li>
-                        <li>Frontiers in Big Data <a href="https://www.frontiersin.org/journals/artificial-intelligence" target="_blank">[Associate Editor]</a></li>
-                        <li>Neurocomputing</li>
-                        <li>Sensors <a href="https://www.mdpi.com/journal/sensors/special_issues/4PJ45YQ956" target="_blank">[Guest Editor]</a></li>
-                        <li>...</li>
-                    </ul>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <h3>Editorial Roles & Guest Editorships</h3>
+                            <ul>
+                                <li>Associate Editor, IEEE Transactions on Circuits and Systems for Video Technology <a href="https://ieee-cas.org/contact/kele-xu" target="_blank">[Link]</a></li>
+                                <li>Associate Editor, Frontiers in Artificial Intelligence / Frontiers in Big Data <a href="https://www.frontiersin.org/journals/big-data/sections/machine-learning-and-artificial-intelligence/editors" target="_blank">[Link]</a></li>
+                                <li>Guest Editor, SPJ Cyborg and Bionic Systems <a href="https://spj.science.org/page/cbsystems/si/audio-inspired-methods-for-healthcare" target="_blank">[Link]</a></li>
+                                <li>Guest Editor, Computer Speech & Language <a href="https://www.sciencedirect.com/special-issue/332571/acoustical-intelligence-in-the-wild-advancing-acoustic-signal-understanding-in-open-environments" target="_blank">[Link]</a></li>
+                                <li>Guest Editor, Sensors <a href="https://www.mdpi.com/journal/sensors/special_issues/4PJ45YQ956" target="_blank">[Link]</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Professional Memberships</h3>
+                            <ul>
+                                <li>IEEE Senior Member</li>
+                                <li>China Computer Federation (CCF), Senior Member</li>
+                                <li>Chinese Association of Automation (CAA), Lifelong Member</li>
+                                <li>Acoustical Society of America (ASA), Full Member</li>
+                                <li>ACM, IEEE IADF TC, and Acoustical Society of China member</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Conference Service</h3>
+                            <p>Session Chair, Area Chair, PC Member, Meta-Reviewer, or External Reviewer for major AI, machine learning, multimedia, speech, computer vision, and biomedical conferences.</p>
+                            <p class="compact-note">ICLR, NeurIPS, ICML, IJCAI, AAAI, ICCV, CVPR, ACM MM, MM Asia, ICASSP, MICCAI, ICME, ECCV, INTERSPEECH, ISBI, MSN, APSIPA ASC, BIBM, AISTATS, and others.</p>
+                        </div>
+
+                        <div class="service-card">
+                            <h3>Journal Reviewing</h3>
+                            <p>Reviewer for leading journals across acoustics, speech, signal processing, multimedia, AI, remote sensing, biomedical engineering, and intelligent systems.</p>
+                            <p class="compact-note">Nature Communications, JASA, Speech Communication, IEEE TASLP, IEEE TNNLS, IEEE TMM, IEEE TIP, IEEE TAI, IEEE TGRS, IEEE JBHI, ACM TIST, Neural Networks, Neurocomputing, Expert Systems with Applications, Knowledge-Based Systems, and others.</p>
+                        </div>
+                    </div>
                 </div>
-                
                 <button class="show-more-btn" id="toggle-services-btn">
                     <i class="fas fa-chevron-down"></i> Show All Services
                 </button>
