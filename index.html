@@ -311,6 +311,36 @@
             gap: 0.7rem;
             font-size: 0.9rem;
         }
+        .visitor-stats {
+            display: grid;
+            gap: 0.45rem;
+            font-size: 0.88rem;
+        }
+
+        .visitor-stat-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .visitor-stat-item i {
+            color: var(--accent);
+            margin-top: 0.15rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .visitor-stat-item strong {
+            display: block;
+            color: var(--primary-dark);
+            font-size: 0.82rem;
+            line-height: 1.25;
+        }
+
+        .visitor-stat-item span {
+            color: var(--dark);
+            line-height: 1.35;
+        }
 
         .info-item {
             display: flex;
@@ -943,8 +973,34 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="sidebar-card">
+                    <h3>Visitor Stats</h3>
+                    <div class="visitor-stats">
+                        <div class="visitor-stat-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <strong>Local Visits</strong>
+                                <span id="visitor-local-count">...</span>
+                            </div>
+                        </div>
+                        <div class="visitor-stat-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Last Visit</strong>
+                                <span id="visitor-last-visit">...</span>
+                            </div>
+                        </div>
+                        <div class="visitor-stat-item">
+                            <i class="fas fa-location-dot"></i>
+                            <div>
+                                <strong>Approx. Locale</strong>
+                                <span id="visitor-locale">...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                <div class="sidebar-card">
                     <h3>External Links</h3>
                     <ul class="sidebar-links">
                         <li><a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><i class="fab fa-kaggle"></i> Kaggle Profile</a></li>
@@ -1270,10 +1326,36 @@
             setupFilterFunctionality();
         });
         
+        // ===== 本地访客统计 =====
+        function initializeVisitorStats() {
+            const countEl = document.getElementById('visitor-local-count');
+            const lastVisitEl = document.getElementById('visitor-last-visit');
+            const localeEl = document.getElementById('visitor-locale');
+            if (!countEl || !lastVisitEl || !localeEl) return;
+
+            const storageKey = 'kele-xu-local-visit-count';
+            const lastVisitKey = 'kele-xu-last-visit';
+            const previousCount = Number(localStorage.getItem(storageKey) || '0');
+            const currentCount = previousCount + 1;
+            const now = new Date();
+            const previousVisit = localStorage.getItem(lastVisitKey);
+
+            localStorage.setItem(storageKey, String(currentCount));
+            localStorage.setItem(lastVisitKey, now.toISOString());
+
+            countEl.textContent = `${currentCount} visits from this browser`;
+            lastVisitEl.textContent = previousVisit ? new Date(previousVisit).toLocaleString() : 'First visit from this browser';
+
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown timezone';
+            const language = navigator.language || 'Unknown language';
+            localeEl.textContent = `${timeZone} / ${language}`;
+        }
         // ===== 新闻数据处理 =====
         function initializeNewsData() {
             // 原始新闻数据 - 从原始HTML中提取的所有新闻，按时间倒序排列
             const rawNews = [
+\t\t\t\t{date: "2026-06", content: "Ranked as <strong>2nd</strong> place in <strong>ACM MM TRIDENT: Tri-modal Deepfake Perception, Detection, and Hallucination Grand Challenge</strong>."},
+\t\t\t\t{date: "2026-06", content: "Ranked as <strong>3rd</strong> place in <strong>ACM MM AAAD Challenge 2026: Adversarial Attacks on Deepfake Detection: Generated Media in Real-World Scenarios</strong>."},
 				{date: "2026-06", content: "One paper is accepted by <strong>IEEE Transactions on Information Forensics and Security (TIFS)</strong>."},
 				{date: "2026-06", content: "Five papers are accepted by <strong>InterSpeech</strong>."},
 				{date: "2026-06", content: "One paper is accepted by <strong>IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</strong>."},
