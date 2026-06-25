@@ -341,6 +341,47 @@
             color: var(--dark);
             line-height: 1.35;
         }
+        .visitor-map {
+            position: relative;
+            height: 92px;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                radial-gradient(circle at 24% 38%, rgba(0, 86, 179, 0.18) 0 8%, transparent 8.5%),
+                radial-gradient(circle at 48% 32%, rgba(0, 86, 179, 0.2) 0 10%, transparent 10.5%),
+                radial-gradient(circle at 70% 45%, rgba(0, 86, 179, 0.2) 0 12%, transparent 12.5%),
+                radial-gradient(circle at 82% 72%, rgba(0, 86, 179, 0.16) 0 7%, transparent 7.5%),
+                linear-gradient(135deg, #eaf5fb, #f8fbfd);
+            background-size: 28px 28px, 28px 28px, auto, auto, auto, auto, auto;
+            margin-top: 0.25rem;
+        }
+
+        .visitor-map-pin {
+            position: absolute;
+            left: 50%;
+            top: 45%;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 2px solid white;
+            box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.2);
+            transform: translate(-50%, -50%);
+        }
+
+        .visitor-map-label {
+            position: absolute;
+            left: 0.55rem;
+            bottom: 0.45rem;
+            max-width: calc(100% - 1.1rem);
+            color: var(--primary-dark);
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.25;
+        }
 
         .info-item {
             display: flex;
@@ -946,7 +987,6 @@
                         <li><a href="#others"><i class="fas fa-ellipsis-h"></i> Others</a></li>
                     </ul>
                 </div>
-                
                 <div class="sidebar-card">
                     <h3>Quick Info</h3>
                     <div class="quick-info">
@@ -973,7 +1013,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="sidebar-card">
                     <h3>Visitor Stats</h3>
                     <div class="visitor-stats">
@@ -998,9 +1037,13 @@
                                 <span id="visitor-locale">...</span>
                             </div>
                         </div>
+                        <div class="visitor-map" aria-label="Approximate visitor map based on browser timezone">
+                            <div class="visitor-map-pin" id="visitor-map-pin"></div>
+                            <div class="visitor-map-label" id="visitor-map-label">Locating from timezone...</div>
+                        </div>
                     </div>
                 </div>
-                                <div class="sidebar-card">
+                <div class="sidebar-card">
                     <h3>External Links</h3>
                     <ul class="sidebar-links">
                         <li><a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><i class="fab fa-kaggle"></i> Kaggle Profile</a></li>
@@ -1351,7 +1394,54 @@
 
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown timezone';
             const language = navigator.language || 'Unknown language';
+            const approximateLocation = getApproximateVisitorLocation(timeZone);
             localeEl.textContent = `${timeZone} / ${language}`;
+            updateVisitorMap(approximateLocation, timeZone);
+        }
+        function getApproximateVisitorLocation(timeZone) {
+            const locations = {
+                'Asia/Shanghai': { label: 'China', lat: 35.9, lon: 104.2 },
+                'Asia/Hong_Kong': { label: 'Hong Kong', lat: 22.3, lon: 114.2 },
+                'Asia/Taipei': { label: 'Taiwan', lat: 23.7, lon: 121.0 },
+                'Asia/Tokyo': { label: 'Japan', lat: 36.2, lon: 138.3 },
+                'Asia/Seoul': { label: 'South Korea', lat: 36.5, lon: 127.8 },
+                'Asia/Singapore': { label: 'Singapore', lat: 1.35, lon: 103.8 },
+                'Asia/Kolkata': { label: 'India', lat: 22.9, lon: 78.9 },
+                'Europe/London': { label: 'United Kingdom', lat: 54.0, lon: -2.0 },
+                'Europe/Paris': { label: 'France', lat: 46.2, lon: 2.2 },
+                'Europe/Berlin': { label: 'Germany', lat: 51.2, lon: 10.4 },
+                'America/New_York': { label: 'Eastern United States', lat: 40.7, lon: -74.0 },
+                'America/Chicago': { label: 'Central United States', lat: 41.9, lon: -87.6 },
+                'America/Denver': { label: 'Mountain United States', lat: 39.7, lon: -105.0 },
+                'America/Los_Angeles': { label: 'Western United States', lat: 34.1, lon: -118.2 },
+                'America/Toronto': { label: 'Canada', lat: 43.7, lon: -79.4 },
+                'Australia/Sydney': { label: 'Australia', lat: -33.9, lon: 151.2 }
+            };
+
+            if (locations[timeZone]) return locations[timeZone];
+
+            const region = timeZone.split('/')[0];
+            const fallback = {
+                Asia: { label: 'Asia', lat: 34, lon: 100 },
+                Europe: { label: 'Europe', lat: 50, lon: 10 },
+                America: { label: 'Americas', lat: 38, lon: -97 },
+                Africa: { label: 'Africa', lat: 0, lon: 20 },
+                Australia: { label: 'Australia', lat: -25, lon: 134 },
+                Pacific: { label: 'Pacific region', lat: -15, lon: -150 }
+            };
+            return fallback[region] || { label: 'Unknown region', lat: 20, lon: 0 };
+        }
+
+        function updateVisitorMap(location, timeZone) {
+            const pin = document.getElementById('visitor-map-pin');
+            const label = document.getElementById('visitor-map-label');
+            if (!pin || !label || !location) return;
+
+            const x = ((location.lon + 180) / 360) * 100;
+            const y = ((90 - location.lat) / 180) * 100;
+            pin.style.left = `${Math.min(96, Math.max(4, x))}%`;
+            pin.style.top = `${Math.min(92, Math.max(8, y))}%`;
+            label.textContent = `${location.label} (${timeZone})`;
         }
         // ===== 新闻数据处理 =====
         function initializeNewsData() {
