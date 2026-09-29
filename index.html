@@ -312,6 +312,7 @@
             font-size: 0.9rem;
         }
         .visitor-widget {
+            width: 100%;
             display: flex;
             min-height: 130px;
             align-items: center;
@@ -321,6 +322,16 @@
             border-radius: var(--border-radius);
             background-color: #f8fbfd;
             text-align: center;
+        }
+
+        #mapmyvisitors-inner {
+            width: 100%;
+            text-align: center;
+        }
+
+        #mapmyvisitors-inner iframe,
+        #mapmyvisitors-inner img {
+            max-width: 100%;
         }
 
         .visitor-widget-placeholder {
@@ -966,11 +977,14 @@
                 </div>
                 <div class="sidebar-card">
                     <h3>Visitor Map</h3>
-                    <div class="visitor-widget" id="clustrmaps-widget" data-clustrmaps-key="">
-                        <div class="visitor-widget-placeholder">
-                            ClustrMaps widget is ready. Generate a site key at
-                            <a href="https://clustrmaps.com/" target="_blank" rel="noopener">ClustrMaps</a>
-                            and paste it into <code>data-clustrmaps-key</code>.
+
+                    <div class="visitor-widget" id="mapmyvisitors-container">
+                        <div id="mapmyvisitors-inner">
+                            <script
+                                type="text/javascript"
+                                id="mapmyvisitors"
+                                src="https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&amp;cl=ffffff&amp;w=a">
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -1300,25 +1314,7 @@
             
             // 设置筛选功能
             setupFilterFunctionality();
-            
-            // Load optional third-party visitor map widget.
-            loadClustrMapsWidget();
         });
-        
-        // ===== ClustrMaps widget loader =====
-        function loadClustrMapsWidget() {
-            const widget = document.getElementById('clustrmaps-widget');
-            if (!widget) return;
-
-            const key = (widget.dataset.clustrmapsKey || '').trim();
-            if (!key) return;
-
-            const script = document.createElement('script');
-            script.id = 'clustrmaps';
-            script.async = true;
-            script.src = `https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=220&t=tt&d=${encodeURIComponent(key)}&co=0056b3&ct=ffffff&cmo=ff8800&cmn=00a8cc`;
-            widget.replaceChildren(script);
-        }
         // ===== 新闻数据处理 =====
         function initializeNewsData() {
             // 原始新闻数据 - 从原始HTML中提取的所有新闻，按时间倒序排列
