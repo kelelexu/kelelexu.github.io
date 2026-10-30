@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,7 +8,6 @@
     <title>Kele Xu | Associate Professor | NUDT</title>
     <link rel="shortcut icon" href="KELE2.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* ===== CSS Variables ===== */
         :root {
@@ -38,7 +37,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             line-height: 1.5;
             color: var(--dark);
             background-color: #f9fbfd;
@@ -46,7 +45,7 @@
         }
 
         h1, h2, h3, h4, h5 {
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             font-weight: 600;
             line-height: 1.3;
             margin-bottom: 0.7rem;
@@ -326,12 +325,22 @@
 
         #mapmyvisitors-inner {
             width: 100%;
+            max-width: 100%;
+            min-width: 0;
             text-align: center;
         }
 
-        #mapmyvisitors-inner iframe,
-        #mapmyvisitors-inner img {
+        #mapmyvisitors-inner iframe {
+            width: 100%;
             max-width: 100%;
+            border: 0;
+        }
+
+        #mapmyvisitors-inner img,
+        #mapmyvisitors-inner canvas,
+        #mapmyvisitors-inner svg {
+            max-width: 100%;
+            height: auto;
         }
 
         .visitor-widget-placeholder {
@@ -546,7 +555,7 @@
             padding: 0.55rem 0.8rem 0.55rem 2.1rem;
             border: 1px solid var(--gray-light);
             border-radius: var(--border-radius);
-            font-family: 'Inter', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             font-size: 0.92rem;
             transition: var(--transition);
         }
@@ -577,7 +586,7 @@
             background-color: white;
             border: 1px solid var(--gray-light);
             border-radius: var(--border-radius);
-            font-family: 'Inter', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             font-size: 0.82rem;
             cursor: pointer;
             transition: var(--transition);
@@ -681,20 +690,30 @@
         @media (max-width: 992px) {
             .main-container {
                 flex-direction: column;
+                align-items: stretch;
             }
-            
+
+            /* Put academic content before supplementary sidebar cards. */
+            .content {
+                order: 1;
+                width: 100%;
+                min-width: 0;
+            }
+
             .sidebar {
+                order: 2;
                 flex: none;
                 width: 100%;
+                min-width: 0;
                 position: static;
             }
-            
+
             .sidebar-content {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.85rem;
             }
-            
+
             .sidebar-card {
                 flex: 1;
                 min-width: 250px;
@@ -751,21 +770,34 @@
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
             }
-            
+
             .header-content h1 {
                 font-size: 1.6rem;
             }
-            
+
             .header-content .subtitle {
                 font-size: 0.92rem;
             }
-            
+
             .publication-links {
                 flex-wrap: wrap;
             }
-            
+
             .sidebar-content {
                 flex-direction: column;
+            }
+
+            /* The hamburger menu already provides mobile navigation. */
+            .sidebar-card:first-child {
+                display: none;
+            }
+
+            .content,
+            .sidebar,
+            .sidebar-content,
+            .sidebar-card {
+                min-width: 0;
+                width: 100%;
             }
         }
 
@@ -850,7 +882,7 @@
             border: none;
             border-radius: var(--border-radius);
             color: var(--primary);
-            font-family: 'Inter', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
@@ -980,11 +1012,17 @@
 
                     <div class="visitor-widget" id="mapmyvisitors-container">
                         <div id="mapmyvisitors-inner">
-                            <script
-                                type="text/javascript"
-                                id="mapmyvisitors"
-                                src="https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&amp;cl=ffffff&amp;w=a">
-                            </script>
+                            <div
+                                class="visitor-widget-placeholder"
+                                id="mapmyvisitors-placeholder"
+                                role="status"
+                                aria-live="polite">
+                                <span id="mapmyvisitors-status">Loading visitor map...</span>
+                                <a href="https://mapmyvisitors.com/" target="_blank" rel="noopener noreferrer">
+                                    Open MapMyVisitors
+                                </a>
+                            </div>
+                            <noscript>Enable JavaScript to view the visitor map.</noscript>
                         </div>
                     </div>
                 </div>
@@ -3330,6 +3368,94 @@
         }
 		
 		
+    </script>
+    <script>
+        // Load the visitor map after the page has been parsed.
+        // A MapMyVisitors outage must not affect the academic homepage.
+        (function () {
+            const mapScriptUrl =
+                "https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&cl=ffffff&w=a";
+
+            function loadVisitorMap() {
+                const host = document.getElementById("mapmyvisitors-inner");
+                const placeholder = document.getElementById("mapmyvisitors-placeholder");
+                const status = document.getElementById("mapmyvisitors-status");
+
+                if (!host || !placeholder || document.getElementById("mapmyvisitors")) {
+                    return;
+                }
+
+                function hasMapContent() {
+                    if (host.querySelector("iframe, img, canvas, svg")) {
+                        return true;
+                    }
+
+                    return Array.from(host.children).some(function (child) {
+                        return child !== placeholder && child.id !== "mapmyvisitors";
+                    });
+                }
+
+                function showUnavailable() {
+                    if (hasMapContent()) {
+                        placeholder.hidden = true;
+                        return;
+                    }
+
+                    placeholder.hidden = false;
+                    if (status) {
+                        status.textContent =
+                            "The visitor map is unavailable on this network.";
+                    }
+                }
+
+                const observer = new MutationObserver(function () {
+                    if (hasMapContent()) {
+                        placeholder.hidden = true;
+                        observer.disconnect();
+                    }
+                });
+
+                observer.observe(host, {
+                    childList: true,
+                    subtree: true
+                });
+
+                const script = document.createElement("script");
+                script.id = "mapmyvisitors";
+                script.async = true;
+                script.src = mapScriptUrl;
+
+                script.onerror = function () {
+                    observer.disconnect();
+                    showUnavailable();
+                };
+
+                script.onload = function () {
+                    window.setTimeout(function () {
+                        if (hasMapContent()) {
+                            placeholder.hidden = true;
+                            observer.disconnect();
+                        }
+                    }, 1200);
+                };
+
+                host.appendChild(script);
+
+                // Do not leave an empty map frame indefinitely on slow/blocked networks.
+                window.setTimeout(function () {
+                    if (!hasMapContent()) {
+                        observer.disconnect();
+                        showUnavailable();
+                    }
+                }, 12000);
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", loadVisitorMap, { once: true });
+            } else {
+                loadVisitorMap();
+            }
+        })();
     </script>
 </body>
 </html>
