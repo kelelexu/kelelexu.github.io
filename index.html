@@ -354,6 +354,61 @@
             font-weight: 600;
         }
 
+        #mapmyvisitors-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.8rem;
+        }
+
+        #mapmyvisitors-placeholder p {
+            margin-bottom: 0;
+        }
+
+        #mapmyvisitors-display {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        #mapmyvisitors-display[hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 992px) {
+            .visitor-widget {
+                min-height: 0;
+            }
+        }
+
+        #mapmyvisitors-display iframe,
+        #mapmyvisitors-display img,
+        #mapmyvisitors-display svg,
+        #mapmyvisitors-display canvas {
+            max-width: 100%;
+        }
+
+        .visitor-map-load-btn {
+            appearance: none;
+            border: 1px solid #0056b3;
+            background: #0056b3;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 0.55rem 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .visitor-map-load-btn:focus-visible {
+            outline: 3px solid #ff8800;
+            outline-offset: 2px;
+        }
+
         .info-item {
             display: flex;
             align-items: center;
@@ -718,6 +773,11 @@
                 flex: 1;
                 min-width: 250px;
             }
+
+            /* Keep third-party widgets after the academic/contact links. */
+            .sidebar-card:nth-child(2) { order: 1; }
+            .sidebar-card:nth-child(4) { order: 2; }
+            .sidebar-card:nth-child(3) { order: 3; }
         }
 
         @media (max-width: 768px) {
@@ -959,8 +1019,9 @@
                 <a href="#competitions">Awards</a>
                 <a href="#others">Others</a>
             </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" type="button"
+                aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
+                <span aria-hidden="true">☰</span>
             </button>
         </div>
     </nav>
@@ -1012,16 +1073,19 @@
 
                     <div class="visitor-widget" id="mapmyvisitors-container">
                         <div id="mapmyvisitors-inner">
-                            <div
-                                class="visitor-widget-placeholder"
-                                id="mapmyvisitors-placeholder"
-                                role="status"
-                                aria-live="polite">
-                                <span id="mapmyvisitors-status">Loading visitor map...</span>
+                            <div class="visitor-widget-placeholder" id="mapmyvisitors-placeholder">
+                                <p id="mapmyvisitors-status" role="status" aria-live="polite">
+                                    Visitor map is optional and may be unavailable on some mobile networks.
+                                </p>
+                                <button type="button" id="visitor-map-load-btn" class="visitor-map-load-btn"
+                                    aria-controls="mapmyvisitors-display" aria-expanded="false">
+                                    Load visitor map
+                                </button>
                                 <a href="https://mapmyvisitors.com/" target="_blank" rel="noopener noreferrer">
-                                    Open MapMyVisitors
+                                    Visit MapMyVisitors website
                                 </a>
                             </div>
+                            <div id="mapmyvisitors-display" class="visitor-map-display" hidden></div>
                             <noscript>Enable JavaScript to view the visitor map.</noscript>
                         </div>
                     </div>
@@ -1257,7 +1321,7 @@
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
+        <span aria-hidden="true">↑</span>
     </div>
 
     <script>
@@ -1271,7 +1335,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 移动菜单切换
             document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-                document.getElementById('navLinks').classList.toggle('active');
+                const menu = document.getElementById('navLinks');
+                const expanded = menu.classList.toggle('active');
+                this.setAttribute('aria-expanded', String(expanded));
             });
             
             // 返回顶部按钮
@@ -1571,7 +1637,7 @@
 
                 // Preprint 部分
 				{
-						"year": "2026",
+						"year": "preprint",
 						"authors": "Zijian Gao, Xingxing Zhang*, Liyuan Wang, Bo Ding, Xinjun Mao, Huaimin Wang, <u>Kele Xu*</u>",
 						"title": "Neuro-inspired cascaded memory coordination enables continual generalization",
 						"venue": "Nature Communication",
@@ -3370,90 +3436,71 @@
 		
     </script>
     <script>
-        // Load the visitor map after the page has been parsed.
-        // A MapMyVisitors outage must not affect the academic homepage.
+        // MapMyVisitors is optional: never block the academic homepage or
+        // claim that an empty third-party iframe is a successfully rendered map.
         (function () {
             const mapScriptUrl =
                 "https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&cl=ffffff&w=a";
 
-            function loadVisitorMap() {
-                const host = document.getElementById("mapmyvisitors-inner");
-                const placeholder = document.getElementById("mapmyvisitors-placeholder");
+            function setupVisitorMap() {
+                const display = document.getElementById("mapmyvisitors-display");
+                const button = document.getElementById("visitor-map-load-btn");
                 const status = document.getElementById("mapmyvisitors-status");
+                if (!display || !button || !status) return;
 
-                if (!host || !placeholder || document.getElementById("mapmyvisitors")) {
-                    return;
-                }
+                let requested = false;
+                const isMobileOrTablet = window.matchMedia("(max-width: 992px)").matches;
 
-                function hasMapContent() {
-                    if (host.querySelector("iframe, img, canvas, svg")) {
-                        return true;
-                    }
-
-                    return Array.from(host.children).some(function (child) {
-                        return child !== placeholder && child.id !== "mapmyvisitors";
-                    });
-                }
-
-                function showUnavailable() {
-                    if (hasMapContent()) {
-                        placeholder.hidden = true;
+                function toggleMap() {
+                    if (requested) {
+                        display.hidden = !display.hidden;
+                        const opened = !display.hidden;
+                        button.textContent = opened ? "Hide visitor map" : "Show visitor map";
+                        button.setAttribute("aria-expanded", String(opened));
                         return;
                     }
 
-                    placeholder.hidden = false;
-                    if (status) {
-                        status.textContent =
-                            "The visitor map is unavailable on this network.";
-                    }
+                    requested = true;
+                    display.hidden = false;
+                    button.textContent = "Hide visitor map";
+                    button.setAttribute("aria-expanded", "true");
+                    status.textContent = "Trying to load the visitor map. If it remains blank, this network or browser may block the widget.";
+
+                    const script = document.createElement("script");
+                    script.id = "mapmyvisitors";
+                    script.async = true;
+                    script.src = mapScriptUrl;
+
+                    script.onerror = function () {
+                        status.textContent = "MapMyVisitors could not be reached. The rest of this homepage is unaffected.";
+                        display.hidden = true;
+                        button.textContent = "Retry visitor map";
+                        button.setAttribute("aria-expanded", "false");
+                        requested = false;
+                        script.remove();
+                    };
+
+                    script.onload = function () {
+                        status.textContent = "Map loaded from MapMyVisitors. If the area is still blank, the widget may be blocked by your network or browser.";
+                    };
+
+                    display.appendChild(script);
                 }
 
-                const observer = new MutationObserver(function () {
-                    if (hasMapContent()) {
-                        placeholder.hidden = true;
-                        observer.disconnect();
-                    }
-                });
+                button.addEventListener("click", toggleMap);
 
-                observer.observe(host, {
-                    childList: true,
-                    subtree: true
-                });
-
-                const script = document.createElement("script");
-                script.id = "mapmyvisitors";
-                script.async = true;
-                script.src = mapScriptUrl;
-
-                script.onerror = function () {
-                    observer.disconnect();
-                    showUnavailable();
-                };
-
-                script.onload = function () {
-                    window.setTimeout(function () {
-                        if (hasMapContent()) {
-                            placeholder.hidden = true;
-                            observer.disconnect();
-                        }
-                    }, 1200);
-                };
-
-                host.appendChild(script);
-
-                // Do not leave an empty map frame indefinitely on slow/blocked networks.
-                window.setTimeout(function () {
-                    if (!hasMapContent()) {
-                        observer.disconnect();
-                        showUnavailable();
-                    }
-                }, 12000);
+                // Desktop keeps the automatic widget; phones show a compact
+                // explicit opt-in, so a failed third-party embed cannot dominate
+                // the mobile page with a large empty panel.
+                if (!isMobileOrTablet) {
+                    toggleMap();
+                }
             }
 
             if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", loadVisitorMap, { once: true });
+                document.addEventListener("DOMContentLoaded", setupVisitorMap, { once: true });
             } else {
-                loadVisitorMap();
+                setupVisitorMap();
             }
         })();
     </script>
