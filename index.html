@@ -310,63 +310,6 @@
             gap: 0.7rem;
             font-size: 0.9rem;
         }
-        .visitor-widget {
-            width: 100%;
-            display: flex;
-            min-height: 130px;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
-            background-color: #f8fbfd;
-            text-align: center;
-        }
-
-        #mapmyvisitors-inner {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            text-align: center;
-        }
-
-        #mapmyvisitors-inner iframe {
-            width: 100%;
-            max-width: 100%;
-            border: 0;
-        }
-
-        #mapmyvisitors-inner img,
-        #mapmyvisitors-inner canvas,
-        #mapmyvisitors-inner svg {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .visitor-widget-placeholder {
-            padding: 0.9rem;
-            color: var(--gray);
-            font-size: 0.86rem;
-            line-height: 1.45;
-        }
-
-        .visitor-widget-placeholder a {
-            font-weight: 600;
-        }
-
-
-
-
-
-        @media (max-width: 992px) {
-            .visitor-widget {
-                min-height: 0;
-            }
-        }
-
-
-
-
         .info-item {
             display: flex;
             align-items: center;
@@ -944,6 +887,9 @@
             background-color: rgba(255, 136, 0, 0.05);
         }
     </style>
+    <!-- 51.LA V6 visitor analytics: official SDK snippet; add once per page. -->
+    <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3RfqtU8M7i8faVEe",ck:"3RfqtU8M7i8faVEe"});</script>
 </head>
 
 <body>
@@ -1023,27 +969,6 @@
                                 <strong>Kaggle Grandmaster</strong>
                                 <div>Top ranks in ACM KDD Cup, Kaggle, Tianchi, CCF BDCI</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-card">
-                    <h3>Visitor Map</h3>
-
-                    <div class="visitor-widget" id="mapmyvisitors-container">
-                        <div id="mapmyvisitors-inner">
-                            <!--
-                              Load the official MapMyVisitors embed on every page view.
-                              defer downloads it without blocking HTML parsing, then runs
-                              after the document has been parsed on both desktop and mobile.
-                            -->
-                            <script
-                                defer
-                                type="text/javascript"
-                                id="mapmyvisitors"
-                                src="https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&amp;cl=ffffff&amp;w=a"
-                                onerror="var n=document.createElement('p'); n.className='visitor-widget-placeholder'; n.textContent='MapMyVisitors could not be reached on this network. Visitor tracking may not be recorded.'; this.parentNode.appendChild(n);">
-                            </script>
-                            <noscript>Enable JavaScript to view the visitor map.</noscript>
                         </div>
                     </div>
                 </div>
