@@ -310,6 +310,53 @@
             gap: 0.7rem;
             font-size: 0.9rem;
         }
+<<<<<<< Updated upstream
+=======
+        .visitor-widget {
+            width: 100%;
+            display: flex;
+            min-height: 130px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            background-color: #f8fbfd;
+            text-align: center;
+        }
+
+        #mapmyvisitors-inner {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            text-align: center;
+        }
+
+        #mapmyvisitors-inner iframe {
+            width: 100%;
+            max-width: 100%;
+            border: 0;
+        }
+
+        #mapmyvisitors-inner img,
+        #mapmyvisitors-inner canvas,
+        #mapmyvisitors-inner svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .visitor-widget-placeholder {
+            padding: 0.9rem;
+            color: var(--gray);
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        .visitor-widget-placeholder a {
+            font-weight: 600;
+        }
+
+>>>>>>> Stashed changes
         .info-item {
             display: flex;
             align-items: center;
@@ -973,6 +1020,28 @@
                     </div>
                 </div>
                 <div class="sidebar-card">
+<<<<<<< Updated upstream
+=======
+                    <h3>Visitor Map</h3>
+
+                    <div class="visitor-widget" id="mapmyvisitors-container">
+                        <div id="mapmyvisitors-inner">
+                            <div
+                                class="visitor-widget-placeholder"
+                                id="mapmyvisitors-placeholder"
+                                role="status"
+                                aria-live="polite">
+                                <span id="mapmyvisitors-status">Loading visitor map...</span>
+                                <a href="https://mapmyvisitors.com/" target="_blank" rel="noopener noreferrer">
+                                    Open MapMyVisitors
+                                </a>
+                            </div>
+                            <noscript>Enable JavaScript to view the visitor map.</noscript>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+>>>>>>> Stashed changes
                     <h3>External Links</h3>
                     <ul class="sidebar-links">
                         <li><a href="https://www.kaggle.com/kelexu/competitions" target="_blank"><i class="fab fa-kaggle"></i> Kaggle Profile</a></li>
@@ -3316,6 +3385,94 @@
         }
 		
 		
+    </script>
+    <script>
+        // Load the visitor map after the page has been parsed.
+        // A MapMyVisitors outage must not affect the academic homepage.
+        (function () {
+            const mapScriptUrl =
+                "https://mapmyvisitors.com/map.js?d=_2fJJ0JDySf60968YDHjyyyPDBYkPrF8SZzoFTIMYeQ&cl=ffffff&w=a";
+
+            function loadVisitorMap() {
+                const host = document.getElementById("mapmyvisitors-inner");
+                const placeholder = document.getElementById("mapmyvisitors-placeholder");
+                const status = document.getElementById("mapmyvisitors-status");
+
+                if (!host || !placeholder || document.getElementById("mapmyvisitors")) {
+                    return;
+                }
+
+                function hasMapContent() {
+                    if (host.querySelector("iframe, img, canvas, svg")) {
+                        return true;
+                    }
+
+                    return Array.from(host.children).some(function (child) {
+                        return child !== placeholder && child.id !== "mapmyvisitors";
+                    });
+                }
+
+                function showUnavailable() {
+                    if (hasMapContent()) {
+                        placeholder.hidden = true;
+                        return;
+                    }
+
+                    placeholder.hidden = false;
+                    if (status) {
+                        status.textContent =
+                            "The visitor map is unavailable on this network.";
+                    }
+                }
+
+                const observer = new MutationObserver(function () {
+                    if (hasMapContent()) {
+                        placeholder.hidden = true;
+                        observer.disconnect();
+                    }
+                });
+
+                observer.observe(host, {
+                    childList: true,
+                    subtree: true
+                });
+
+                const script = document.createElement("script");
+                script.id = "mapmyvisitors";
+                script.async = true;
+                script.src = mapScriptUrl;
+
+                script.onerror = function () {
+                    observer.disconnect();
+                    showUnavailable();
+                };
+
+                script.onload = function () {
+                    window.setTimeout(function () {
+                        if (hasMapContent()) {
+                            placeholder.hidden = true;
+                            observer.disconnect();
+                        }
+                    }, 1200);
+                };
+
+                host.appendChild(script);
+
+                // Do not leave an empty map frame indefinitely on slow/blocked networks.
+                window.setTimeout(function () {
+                    if (!hasMapContent()) {
+                        observer.disconnect();
+                        showUnavailable();
+                    }
+                }, 12000);
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", loadVisitorMap, { once: true });
+            } else {
+                loadVisitorMap();
+            }
+        })();
     </script>
 </body>
 </html>
